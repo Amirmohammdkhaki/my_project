@@ -1,0 +1,738 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block head_title %}آموزش پایتون | وبلاگ امیرمحمد خاکی{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'post_list' %}">خانه</a></li>
+<li class="breadcrumb-item active" aria-current="page">آموزش پایتون</li>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <!-- هدر بخش پایتون -->
+        <div class="text-center mb-5 fade-in">
+            <div class="python-logo mb-4">
+                <i class="bi bi-code-slash display-1 text-primary"></i>
+            </div>
+            <h1 class="display-4 fw-bold text-gradient mb-3">آموزش پایتون</h1>
+            <p class="lead theme-text">زبان برنامه‌نویسی ساده، قدرتمند و همه‌کاره</p>
+        </div>
+
+        <!-- کارت معرفی پایتون -->
+        <div class="card shadow-lg border-0 mb-5 fade-in">
+            <div class="card-body p-5">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fw-bold mb-4 theme-text">چرا پایتون؟</h2>
+                        <div class="features-list">
+                            <div class="feature-item d-flex align-items-center mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-3 fs-5"></i>
+                                <span class="fs-6 theme-text">سینتکس ساده و خوانا</span>
+                            </div>
+                            <div class="feature-item d-flex align-items-center mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-3 fs-5"></i>
+                                <span class="fs-6 theme-text">یادگیری آسان برای مبتدیان</span>
+                            </div>
+                            <div class="feature-item d-flex align-items-center mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-3 fs-5"></i>
+                                <span class="fs-6 theme-text">کتابخانه‌های گسترده و قدرتمند</span>
+                            </div>
+                            <div class="feature-item d-flex align-items-center mb-3">
+                                <i class="bi bi-check-circle-fill text-success me-3 fs-5"></i>
+                                <span class="fs-6 theme-text">جامعه فعال و پشتیبانی قوی</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="python-badge bg-primary text-white rounded-circle p-4 d-inline-block">
+                            <i class="bi bi-lightning-charge display-4"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- نمونه کدهای پایتون -->
+        <div class="row">
+            <!-- ردیف اول نمونه کدها -->
+            <div class="col-12 mb-4">
+                <h3 class="text-center mb-4 fade-in theme-text">نمونه کدهای پایتون</h3>
+                <div class="row">
+                    <!-- نمونه کد اول -->
+                    <div class="col-md-6 mb-4 fade-in">
+                        <div class="card border-0 shadow-sm h-100 code-card">
+                            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0"><i class="bi bi-chat-heart"></i> سلام کردن و محاسبات</h6>
+                                <span class="badge bg-light text-success">مبتدی</span>
+                            </div>
+                            <div class="card-body p-0 ltr-container position-relative">
+                                <button class="copy-btn position-absolute top-0 start-0 m-2 btn btn-sm btn-outline-secondary" onclick="copyCode(this)">
+                                    <i class="bi bi-clipboard"></i>
+                                    <span class="copy-text">کپی</span>
+                                </button>
+                                <pre dir="ltr"><code class="language-python"># تابع سلام کردن
+def greet(name):
+    return f"سلام {name}! به پایتون خوش آمدی"
+
+print(greet("کاربر عزیز"))
+
+# محاسبات سریع
+numbers = [1, 2, 3, 4, 5]
+squares = [x**2 for x in numbers]
+total = sum(numbers)
+
+print(f"مربع اعداد: {squares}")
+print(f"مجموع: {total}")</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- نمونه کد دوم -->
+                    <div class="col-md-6 mb-4 fade-in">
+                        <div class="card border-0 shadow-sm h-100 code-card">
+                            <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0"><i class="bi bi-calculator"></i> ماشین حساب ساده</h6>
+                                <span class="badge bg-light text-info">مبتدی</span>
+                            </div>
+                            <div class="card-body p-0 ltr-container position-relative">
+                                <button class="copy-btn position-absolute top-0 start-0 m-2 btn btn-sm btn-outline-secondary" onclick="copyCode(this)">
+                                    <i class="bi bi-clipboard"></i>
+                                    <span class="copy-text">کپی</span>
+                                </button>
+                                <pre dir="ltr"><code class="language-python">def calculator():
+    print("ماشین حساب پایتون")
+    num1 = float(input("عدد اول: "))
+    num2 = float(input("عدد دوم: "))
+    
+    print("1: جمع  2: تفریق")
+    print("3: ضرب  4: تقسیم")
+    
+    choice = input("انتخاب کنید: ")
+    
+    if choice == '1':
+        result = num1 + num2
+        print(f"نتیجه: {result}")
+    elif choice == '2':
+        result = num1 - num2
+        print(f"نتیجه: {result}")
+    elif choice == '3':
+        result = num1 * num2
+        print(f"نتیجه: {result}")
+    elif choice == '4':
+        if num2 != 0:
+            result = num1 / num2
+            print(f"نتیجه: {result}")
+        else:
+            print("خطا: تقسیم بر صفر")
+
+calculator()</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ردیف دوم نمونه کدها -->
+            <div class="col-12 mb-4">
+                <div class="row">
+                    <!-- نمونه کد سوم -->
+                    <div class="col-md-6 mb-4 fade-in">
+                        <div class="card border-0 shadow-sm h-100 code-card">
+                            <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0"><i class="bi bi-controller"></i> بازی حدس عدد</h6>
+                                <span class="badge bg-light text-warning">متوسط</span>
+                            </div>
+                            <div class="card-body p-0 ltr-container position-relative">
+                                <button class="copy-btn position-absolute top-0 start-0 m-2 btn btn-sm btn-outline-secondary" onclick="copyCode(this)">
+                                    <i class="bi bi-clipboard"></i>
+                                    <span class="copy-text">کپی</span>
+                                </button>
+                                <pre dir="ltr"><code class="language-python">import random
+
+def guess_number():
+    number = random.randint(1, 100)
+    attempts = 0
+    
+    print("عدد بین 1 تا 100 حدس بزن!")
+    
+    while True:
+        try:
+            guess = int(input("حدس شما: "))
+            attempts += 1
+            
+            if guess == number:
+                print(f"آفرین! در {attempts} مرحله حدس زدی")
+                break
+            elif guess < number:
+                print("برو بالا!")
+            else:
+                print("برو پایین!")
+                
+        except ValueError:
+            print("لطفاً عدد وارد کن!")
+
+guess_number()</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- نمونه کد چهارم -->
+                    <div class="col-md-6 mb-4 fade-in">
+                        <div class="card border-0 shadow-sm h-100 code-card">
+                            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0"><i class="bi bi-journal-text"></i> مدیریت لیست</h6>
+                                <span class="badge bg-light text-primary">مبتدی</span>
+                            </div>
+                            <div class="card-body p-0 ltr-container position-relative">
+                                <button class="copy-btn position-absolute top-0 start-0 m-2 btn btn-sm btn-outline-secondary" onclick="copyCode(this)">
+                                    <i class="bi bi-clipboard"></i>
+                                    <span class="copy-text">کپی</span>
+                                </button>
+                                <pre dir="ltr"><code class="language-python"># مدیریت لیست کارها
+todo_list = []
+
+def add_task(task):
+    todo_list.append(task)
+    print(f"کار '{task}' اضافه شد")
+
+def show_tasks():
+    if todo_list:
+        print("لیست کارها:")
+        for i, task in enumerate(todo_list, 1):
+            print(f"{i}. {task}")
+    else:
+        print("لیست خالی است")
+
+def remove_task(index):
+    if 0 <= index < len(todo_list):
+        removed = todo_list.pop(index)
+        print(f"کار '{removed}' حذف شد")
+    else:
+        print("شماره کار نامعتبر")
+
+# مثال استفاده
+add_task("یادگیری پایتون")
+add_task("انجام پروژه")
+show_tasks()</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- حوزه‌های کاربردی پایتون -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <h3 class="text-center mb-4 fade-in theme-text">حوزه‌های کاربردی پایتون</h3>
+                <div class="row">
+                    <!-- توسعه وب -->
+                    <div class="col-md-4 mb-4 fade-in">
+                        <div class="card h-100 border-0 shadow-sm hover-card">
+                            <div class="card-body text-center p-4">
+                                <div class="icon-wrapper bg-primary rounded-circle p-3 mb-3 mx-auto">
+                                    <i class="bi bi-globe text-white fs-3"></i>
+                                </div>
+                                <h5 class="fw-bold theme-text">توسعه وب</h5>
+                                <p class="theme-text-secondary small">
+                                    با فریمورک‌های قدرتمندی مانند Django و Flask
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- هوش مصنوعی و یادگیری ماشین -->
+                    <div class="col-md-4 mb-4 fade-in">
+                        <div class="card h-100 border-0 shadow-sm hover-card">
+                            <div class="card-body text-center p-4">
+                                <div class="icon-wrapper bg-success rounded-circle p-3 mb-3 mx-auto">
+                                    <i class="bi bi-cpu text-white fs-3"></i>
+                                </div>
+                                <h5 class="fw-bold theme-text">هوش مصنوعی</h5>
+                                <p class="theme-text-secondary small">
+                                    TensorFlow, PyTorch, Scikit-learn
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- علم داده -->
+                    <div class="col-md-4 mb-4 fade-in">
+                        <div class="card h-100 border-0 shadow-sm hover-card">
+                            <div class="card-body text-center p-4">
+                                <div class="icon-wrapper bg-info rounded-circle p-3 mb-3 mx-auto">
+                                    <i class="bi bi-graph-up text-white fs-3"></i>
+                                </div>
+                                <h5 class="fw-bold theme-text">علم داده</h5>
+                                <p class="theme-text-secondary small">
+                                    Pandas, NumPy, Matplotlib
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <!-- اتوماسیون -->
+                    <div class="col-md-4 mb-4 fade-in">
+                        <div class="card h-100 border-0 shadow-sm hover-card">
+                            <div class="card-body text-center p-4">
+                                <div class="icon-wrapper bg-warning rounded-circle p-3 mb-3 mx-auto">
+                                    <i class="bi bi-robot text-white fs-3"></i>
+                                </div>
+                                <h5 class="fw-bold theme-text">اتوماسیون</h5>
+                                <p class="theme-text-secondary small">
+                                    خودکارسازی کارهای تکراری و اسکریپت‌نویسی
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- توسعه اپلیکیشن -->
+                    <div class="col-md-4 mb-4 fade-in">
+                        <div class="card h-100 border-0 shadow-sm hover-card">
+                            <div class="card-body text-center p-4">
+                                <div class="icon-wrapper bg-danger rounded-circle p-3 mb-3 mx-auto">
+                                    <i class="bi bi-phone text-white fs-3"></i>
+                                </div>
+                                <h5 class="fw-bold theme-text">اپلیکیشن‌های موبایل</h5>
+                                <p class="theme-text-secondary small">
+                                    Kivy, BeeWare برای ساخت اپلیکیشن‌های چندسکویی
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- دکمه اقدام -->
+        <div class="text-center fade-in">
+            <div class="card bg-gradient-primary text-white border-0 shadow-lg">
+                <div class="card-body py-5">
+                    <h3 class="fw-bold mb-3">آماده یادگیری پایتون هستی؟</h3>
+                    <p class="mb-4">همین حالا سفر برنامه‌نویسی خودت رو شروع کن</p>
+                    <a href="{% url 'post_list' %}?category=python" class="btn btn-light btn-lg px-5">
+                        <i class="bi bi-arrow-left me-2"></i>
+                        مشاهده آموزش‌های پایتون
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.text-gradient {
+    background: linear-gradient(135deg, #3776ab 0%, #ffde57 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.python-badge {
+    transition: transform 0.3s ease;
+}
+
+.python-badge:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+}
+
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #3776ab 0%, #2c5f8a 100%);
+}
+
+.features-list .feature-item {
+    transition: transform 0.2s ease;
+}
+
+.features-list .feature-item:hover {
+    transform: translateX(5px);
+}
+
+/* استایل برای کدهای پایتون */
+.code-card {
+    transition: all 0.3s ease;
+}
+
+.code-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+}
+
+/* Container for LTR content in RTL page */
+.ltr-container {
+    direction: ltr;
+    unicode-bidi: plaintext;
+    text-align: left;
+}
+
+pre {
+    direction: ltr !important;
+    text-align: left !important;
+    unicode-bidi: plaintext !important;
+    background: #f8f9fa !important;
+    border: none !important;
+    border-radius: 0 0 8px 8px !important;
+    padding: 1.5rem !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    height: 100%;
+    min-height: 200px;
+    overflow-x: auto;
+}
+
+code.language-python {
+    direction: ltr !important;
+    text-align: left !important;
+    unicode-bidi: plaintext !important;
+    display: block;
+    color: #2c3e50 !important;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* هایلایت سینتکس - حالت روشن */
+.keyword { color: #d73a49; font-weight: bold; }
+.function { color: #6f42c1; }
+.string { color: #032f62; }
+.comment { color: #6a737d; font-style: italic; }
+.number { color: #005cc5; }
+
+.card-header {
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+    border-radius: 8px 8px 0 0 !important;
+}
+
+.badge {
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+/* دکمه کپی */
+.copy-btn {
+    z-index: 10;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    backdrop-filter: blur(5px);
+}
+
+.copy-btn:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.copy-btn.copied {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: white !important;
+}
+
+.copy-btn .copy-text {
+    font-size: 0.75rem;
+    margin-right: 4px;
+}
+
+/* اسکرول بار زیبا برای کدها */
+pre::-webkit-scrollbar {
+    height: 6px;
+}
+
+pre::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+pre::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* متن‌های با تم ثابت */
+.theme-text {
+    color: #212529;
+    transition: color 0.3s ease;
+}
+
+.theme-text-secondary {
+    color: #6c757d;
+    transition: color 0.3s ease;
+}
+
+/* حالت دارک مود */
+@media (prefers-color-scheme: dark) {
+    .code-card {
+        background-color: #1e1e1e !important;
+    }
+    
+    pre {
+        background: #2d2d2d !important;
+        color: #f8f8f2 !important;
+    }
+    
+    code.language-python {
+        color: #f8f8f2 !important;
+    }
+    
+    /* هایلایت سینتکس - حالت تاریک */
+    .keyword { color: #ff79c6; font-weight: bold; }
+    .function { color: #50fa7b; }
+    .string { color: #f1fa8c; }
+    .comment { color: #6272a4; font-style: italic; }
+    .number { color: #bd93f9; }
+    
+    .copy-btn {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
+        color: #f8f8f2 !important;
+    }
+    
+    .copy-btn:hover {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    
+    .copy-btn.copied {
+        background-color: #50fa7b !important;
+        color: #1e1e1e !important;
+    }
+    
+    pre::-webkit-scrollbar-track {
+        background: #2d2d2d;
+    }
+    
+    pre::-webkit-scrollbar-thumb {
+        background: #555;
+    }
+    
+    pre::-webkit-scrollbar-thumb:hover {
+        background: #777;
+    }
+    
+    /* رنگ متن‌ها در حالت تاریک */
+    .theme-text {
+        color: #f8f9fa !important;
+    }
+    
+    .theme-text-secondary {
+        color: #adb5bd !important;
+    }
+}
+
+/* انیمیشن fade-in */
+.fade-in {
+    animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tooltip برای کپی موفق */
+.tooltip-custom {
+    position: absolute;
+    background: #28a745;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    top: -30px;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.tooltip-custom.show {
+    opacity: 1;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// هایلایت سینتکس برای کدهای پایتون
+document.addEventListener('DOMContentLoaded', function() {
+    highlightCode();
+    initAnimations();
+    initThemeToggle();
+});
+
+function highlightCode() {
+    const codeBlocks = document.querySelectorAll('code.language-python');
+    
+    codeBlocks.forEach(block => {
+        let code = block.textContent;
+        
+        // هایلایت کلمات کلیدی
+        const keywords = ['def', 'class', 'return', 'if', 'else', 'elif', 'while', 'for', 'in', 'import', 'from', 'as', 'try', 'except', 'finally', 'with', 'self', 'True', 'False', 'None', 'and', 'or', 'not', 'pass', 'break', 'continue', 'lambda', 'yield'];
+        
+        keywords.forEach(keyword => {
+            const regex = new RegExp(`\\b${keyword}\\b`, 'g');
+            code = code.replace(regex, `<span class="keyword">${keyword}</span>`);
+        });
+        
+        // هایلایت توابع
+        const functionRegex = /(\w+)\s*\(/g;
+        code = code.replace(functionRegex, '<span class="function">$1</span>(');
+        
+        // هایلایت کامنت‌ها
+        const commentRegex = /(#.*)/g;
+        code = code.replace(commentRegex, '<span class="comment">$1</span>');
+        
+        // هایلایت رشته‌ها
+        const stringRegex = /(['"])(.*?)\1/g;
+        code = code.replace(stringRegex, '<span class="string">$1$2$1</span>');
+        
+        // هایلایت اعداد
+        const numberRegex = /\b(\d+\.?\d*)\b/g;
+        code = code.replace(numberRegex, '<span class="number">$1</span>');
+        
+        block.innerHTML = code;
+    });
+}
+
+// تابع کپی کردن کد
+function copyCode(button) {
+    const codeBlock = button.parentElement.querySelector('code');
+    const text = codeBlock.textContent;
+    
+    // ایجاد یک textarea موقت برای کپی
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    
+    try {
+        document.execCommand('copy');
+        
+        // تغییر ظاهر دکمه
+        button.classList.add('copied');
+        button.innerHTML = '<i class="bi bi-check"></i> <span class="copy-text">کپی شد!</span>';
+        
+        // نمایش tooltip
+        showTooltip(button, 'کپی با موفقیت انجام شد!');
+        
+        // بازگشت به حالت اولیه بعد از 2 ثانیه
+        setTimeout(() => {
+            button.classList.remove('copied');
+            button.innerHTML = '<i class="bi bi-clipboard"></i> <span class="copy-text">کپی</span>';
+        }, 2000);
+        
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
+        showTooltip(button, 'خطا در کپی کردن!');
+    }
+    
+    document.body.removeChild(textarea);
+}
+
+// نمایش tooltip
+function showTooltip(element, text) {
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tooltip-custom';
+    tooltip.textContent = text;
+    element.style.position = 'relative';
+    element.appendChild(tooltip);
+    
+    setTimeout(() => {
+        tooltip.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        tooltip.classList.remove('show');
+        setTimeout(() => {
+            if (tooltip.parentNode) {
+                tooltip.parentNode.removeChild(tooltip);
+            }
+        }, 300);
+    }, 2000);
+}
+
+// انیمیشن‌های ورودی
+function initAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.fade-in').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+}
+
+// تشخیص و اعمال حالت دارک مود
+function initThemeToggle() {
+    // بررسی تنظیمات سیستم
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // بررسی تنظیمات ذخیره شده
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    
+    // گوش دادن به تغییرات حالت سیستم
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        }
+    });
+}
+
+// اضافه کردن افکت hover به خطوط کد
+document.addEventListener('DOMContentLoaded', function() {
+    const codeBlocks = document.querySelectorAll('pre code');
+    
+    codeBlocks.forEach(block => {
+        const lines = block.innerHTML.split('\n');
+        const highlightedLines = lines.map(line => `<span class="code-line">${line}</span>`).join('\n');
+        block.innerHTML = highlightedLines;
+    });
+});
+</script>
+{% endblock %}

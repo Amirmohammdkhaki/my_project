@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصال اینترنت قطع است</title>
+    <style>
+        body {
+            font-family: 'Vazir', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 50px;
+            direction: rtl;
+        }
+        .offline-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: white;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="icon">📶</div>
+        <h1>اتصال اینترنت قطع است</h1>
+        <p>در حال حاضر به اینترنت متصل نیستید. برخی مطالب ممکن است در دسترس نباشند.</p>
+        <p>لطفاً اتصال اینترنت خود را بررسی کرده و دوباره تلاش کنید.</p>
+        <a href="/" class="btn">تلاش مجدد</a>
+    </div>
+</body>
+</html>

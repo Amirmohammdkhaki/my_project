@@ -1,0 +1,19 @@
+{
+    "name": "وبلاگ امیرمحمد",
+    "short_name": "AmirBlog",
+    "description": "وبلاگ شخصی امیرمحمد خاکی - برنامه‌نویسی و هوش مصنوعی",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0f0f23",
+    "theme_color": "#6366f1",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "/static/images/favicon.ico",
+            "sizes": "64x64",
+            "type": "image/x-icon"
+        }
+    ],
+    "categories": ["education", "blog"]
+}
+

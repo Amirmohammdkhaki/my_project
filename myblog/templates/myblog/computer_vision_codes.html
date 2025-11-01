@@ -1,0 +1,3193 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block head_title %}نمونه کدهای بینایی کامپیوتر - وبلاگ امیرمحمد{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'projects' %}">پروژه‌ها</a></li>
+<li class="breadcrumb-item active" aria-current="page">نمونه کدهای بینایی کامپیوتر</li>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h1 class="display-4 fw-bold text-primary mb-3">🎯 نمونه کدهای بینایی کامپیوتر</h1>
+            <p class="lead">📚 مجموعه جامع کدهای OpenCV، پردازش تصویر و هوش مصنوعی با Python</p>
+        </div>
+    </div>
+
+    <!-- بخش معرفی -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card bg-gradient-primary text-white shadow-lg">
+                <div class="card-body text-center py-4">
+                    <h3 class="fw-bold mb-3">🚀 پروژه‌های پیشرفته پردازش تصویر</h3>
+                    <p class="mb-0">مجموعه‌ای کامل از کدهای عملیاتی برای یادگیری و توسعه سیستم‌های بینایی کامپیوتر</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- بخش فیلتر و جستجو -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="searchInput" placeholder="جستجوی کدها...">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button class="btn btn-outline-primary filter-btn active" data-filter="all">همه</button>
+                                <button class="btn btn-outline-primary filter-btn" data-filter="detection">تشخیص</button>
+                                <button class="btn btn-outline-primary filter-btn" data-filter="filter">فیلتر</button>
+                                <button class="btn btn-outline-primary filter-btn" data-filter="tracking">ردیابی</button>
+                                <button class="btn btn-outline-primary filter-btn" data-filter="segmentation">بخش‌بندی</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <!-- بخش 1: تشخیص چهره پیشرفته -->
+            <div class="card shadow-lg mb-5 code-section" data-category="detection">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="bi bi-person-check me-2"></i>👤 تشخیص چهره پیشرفته با OpenCV</h4>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="copyCode('face-detection')">
+                            <i class="bi bi-clipboard"></i> کپی
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="downloadCode('face-detection')">
+                            <i class="bi bi-download"></i> دانلود
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-4">پیاده‌سازی سیستم کامل تشخیص چهره با قابلیت‌های مختلف</p>
+                    
+                    <div class="accordion mb-3" id="faceDetectionAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <i class="bi bi-info-circle me-2"></i> توضیحات پروژه
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faceDetectionAccordion">
+                                <div class="accordion-body">
+                                    <p>این پروژه یک سیستم پیشرفته برای تشخیص چهره با استفاده از OpenCV است که قابلیت‌های زیر را دارد:</p>
+                                    <ul>
+                                        <li>تشخیص چهره از نمای جلو و نیم‌رخ</li>
+                                        <li>تشخیص چشم‌ها در ناحیه چهره</li>
+                                        <li>ذخیره تاریخچه تشخیص‌ها</li>
+                                        <li>گزارش‌گیری آماری</li>
+                                        <li>پردازش در زمان واقعی</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <pre class="code-container p-4 rounded" style="direction: ltr; text-align: left; max-height: 400px; overflow-y: auto;" id="face-detection-code"><code class="language-python">
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Advanced Face Detection System
+سیستم پیشرفته تشخیص چهره با OpenCV
+"""
+
+import cv2
+import numpy as np
+import os
+import time
+from datetime import datetime
+import json
+import threading
+from queue import Queue
+import logging
+
+# تنظیم لاگینگ
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+class AdvancedFaceDetector:
+    """کلاس پیشرفته برای تشخیص و آنالیز چهره"""
+    
+    def __init__(self, config_file=None):
+        """مقداردهی اولیه"""
+        self.config = self._load_config(config_file)
+        
+        # بارگیری مدل‌های مختلف تشخیص چهره
+        self.face_cascade = cv2.CascadeClassifier(
+            cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+        )
+        self.profile_cascade = cv2.CascadeClassifier(
+            cv2.data.haarcascades + 'haarcascade_profileface.xml'
+        )
+        self.eye_cascade = cv2.CascadeClassifier(
+            cv2.data.haarcascades + 'haarcascade_eye.xml'
+        )
+        self.smile_cascade = cv2.CascadeClassifier(
+            cv2.data.haarcascades + 'haarcascade_smile.xml'
+        )
+        
+        # تنظیمات سیستم
+        self.detection_history = []
+        self.face_count = 0
+        self.start_time = time.time()
+        self.frame_queue = Queue(maxsize=10)
+        self.result_queue = Queue()
+        self.is_running = False
+        
+        # پارامترهای تشخیص
+        self.scale_factor = self.config.get('scale_factor', 1.1)
+        self.min_neighbors = self.config.get('min_neighbors', 5)
+        self.min_size = tuple(self.config.get('min_size', (30, 30)))
+        
+        # بارگیری مدل تشخیص چهره عمیق (DNN)
+        self._load_dnn_model()
+        
+    def _load_config(self, config_file):
+        """بارگیری تنظیمات از فایل"""
+        default_config = {
+            'scale_factor': 1.1,
+            'min_neighbors': 5,
+            'min_size': [30, 30],
+            'dnn_model': 'deploy.prototxt',
+            'dnn_weights': 'res10_300x300_ssd_iter_140000.caffemodel',
+            'confidence_threshold': 0.7
+        }
+        
+        if config_file and os.path.exists(config_file):
+            with open(config_file, 'r') as f:
+                user_config = json.load(f)
+                default_config.update(user_config)
+        
+        return default_config
+    
+    def _load_dnn_model(self):
+        """بارگیری مدل DNN برای تشخیص چهره"""
+        try:
+            model_file = self.config.get('dnn_model')
+            weights_file = self.config.get('dnn_weights')
+            
+            if os.path.exists(model_file) and os.path.exists(weights_file):
+                self.dnn_net = cv2.dnn.readNetFromCaffe(model_file, weights_file)
+                self.use_dnn = True
+                logger.info("مدل DNN با موفقیت بارگیری شد")
+            else:
+                self.use_dnn = False
+                logger.warning("فایل‌های مدل DNN یافت نشد، از Haar Cascade استفاده می‌شود")
+        except Exception as e:
+            logger.error(f"خطا در بارگیری مدل DNN: {e}")
+            self.use_dnn = False
+    
+    def detect_faces_advanced(self, frame):
+        """تشخیص چهره با الگوریتم پیشرفته"""
+        if self.use_dnn:
+            return self._detect_faces_dnn(frame)
+        else:
+            return self._detect_faces_haar(frame)
+    
+    def _detect_faces_dnn(self, frame):
+        """تشخیص چهره با مدل DNN"""
+        h, w = frame.shape[:2]
+        
+        # ایجاد blob از تصویر
+        blob = cv2.dnn.blobFromImage(
+            frame, 1.0, (300, 300), [104, 117, 123], False, False
+        )
+        
+        # اجرای مدل
+        self.dnn_net.setInput(blob)
+        detections = self.dnn_net.forward()
+        
+        faces = []
+        confidences = []
+        
+        for i in range(detections.shape[2]):
+            confidence = detections[0, 0, i, 2]
+            
+            if confidence > self.config.get('confidence_threshold', 0.7):
+                x1 = int(detections[0, 0, i, 3] * w)
+                y1 = int(detections[0, 0, i, 4] * h)
+                x2 = int(detections[0, 0, i, 5] * w)
+                y2 = int(detections[0, 0, i, 6] * h)
+                
+                faces.append((x1, y1, x2 - x1, y2 - y1))
+                confidences.append(confidence)
+        
+        return faces, confidences
+    
+    def _detect_faces_haar(self, frame):
+        """تشخیص چهره با Haar Cascade"""
+        # تبدیل به خاکستری
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        
+        # بهبود کنتراست تصویر
+        gray = cv2.equalizeHist(gray)
+        
+        # تشخیص چهره از نمای frontal
+        faces_frontal = self.face_cascade.detectMultiScale(
+            gray,
+            scaleFactor=self.scale_factor,
+            minNeighbors=self.min_neighbors,
+            minSize=self.min_size,
+            flags=cv2.CASCADE_SCALE_IMAGE
+        )
+        
+        # تشخیص چهره از نمای profile
+        faces_profile = self.profile_cascade.detectMultiScale(
+            gray,
+            scaleFactor=self.scale_factor,
+            minNeighbors=self.min_neighbors,
+            minSize=self.min_size
+        )
+        
+        # ترکیب نتایج
+        all_faces = list(faces_frontal) + list(faces_profile)
+        confidences = [1.0] * len(all_faces)
+        
+        return all_faces, confidences
+    
+    def analyze_facial_features(self, frame, face_rect):
+        """آنالیز ویژگی‌های چهره"""
+        x, y, w, h = face_rect
+        
+        # استخراج ناحیه چهره
+        face_roi = frame[y:y+h, x:x+w]
+        gray_roi = cv2.cvtColor(face_roi, cv2.COLOR_BGR2GRAY)
+        
+        features = {
+            'eyes': [],
+            'smile': None,
+            'glasses': False,
+            'beard': False,
+            'gender': None,
+            'age_range': None
+        }
+        
+        # تشخیص چشم‌ها
+        eyes = self.eye_cascade.detectMultiScale(gray_roi)
+        if len(eyes) >= 2:
+            features['eyes'] = eyes.tolist()
+        
+        # تشخیص لبخند
+        smiles = self.smile_cascade.detectMultiScale(
+            gray_roi[y+h//2:y+h, :],  # ناحیه پایین چهره
+            scaleFactor=1.7,
+            minNeighbors=22,
+            minSize=(25, 25)
+        )
+        
+        if len(smiles) > 0:
+            features['smile'] = True
+        
+        # آنالیز رنگ پوست (برای تشخیص عینک و ریش)
+        self._analyze_skin_features(face_roi, features)
+        
+        return features
+    
+    def _analyze_skin_features(self, face_roi, features):
+        """آنالیز ویژگی‌های پوست"""
+        # تبدیل به فضای رنگ HSV
+        hsv = cv2.cvtColor(face_roi, cv2.COLOR_BGR2HSV)
+        
+        # تشخیص عینک (بر اساس تاریکی در ناحیه چشم)
+        eye_region = hsv[:face_roi.shape[0]//2, :]
+        avg_brightness = np.mean(eye_region[:, :, 2])
+        
+        if avg_brightness < 100:
+            features['glasses'] = True
+        
+        # تشخیص ریش (بر اساس رنگ در ناحیه پایین چهره)
+        beard_region = hsv[3*face_roi.shape[0]//4:, :]
+        avg_saturation = np.mean(beard_region[:, :, 1])
+        
+        if avg_saturation < 50:
+            features['beard'] = True
+    
+    def draw_detection_info(self, frame, faces, confidences, features_list=None):
+        """رسم اطلاعات تشخیص روی تصویر"""
+        for i, (face_rect, confidence) in enumerate(zip(faces, confidences)):
+            x, y, w, h = face_rect
+            
+            # انتخاب رنگ بر اساس اعتماد
+            if confidence > 0.8:
+                color = (0, 255, 0)  # سبز - اعتماد بالا
+            elif confidence > 0.6:
+                color = (0, 255, 255)  # زرد - اعتماد متوسط
+            else:
+                color = (0, 0, 255)  # قرمز - اعتماد پایین
+            
+            # رسم مستطیل دور چهره
+            cv2.rectangle(frame, (x, y), (x+w, y+h), color, 2)
+            
+            # اضافه کردن متن شناسه و اعتماد
+            face_id = f"Face {i+1}"
+            conf_text = f"{confidence:.2f}"
+            cv2.putText(frame, face_id, (x, y-10), 
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
+            cv2.putText(frame, conf_text, (x, y+h+20),
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
+            
+            # رسم ویژگی‌های چهره
+            if features_list and i < len(features_list):
+                self._draw_facial_features(frame, face_rect, features_list[i])
+            
+            # ذخیره اطلاعات تشخیص
+            self._save_detection_data(x, y, w, h, confidence)
+    
+    def _draw_facial_features(self, frame, face_rect, features):
+        """رسم ویژگی‌های چهره"""
+        x, y, w, h = face_rect
+        
+        # رسم چشم‌ها
+        for eye in features.get('eyes', []):
+            ex, ey, ew, eh = eye
+            cv2.rectangle(frame, (x+ex, y+ey), (x+ex+ew, y+ey+eh), (255, 0, 0), 1)
+        
+        # نمایش لبخند
+        if features.get('smile'):
+            cv2.putText(frame, "Smiling :)", (x, y+h+40),
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        
+        # نمایش عینک
+        if features.get('glasses'):
+            cv2.putText(frame, "Glasses", (x, y+h+60),
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
+    
+    def _save_detection_data(self, x, y, w, h, confidence):
+        """ذخیره داده‌های تشخیص"""
+        detection_data = {
+            'timestamp': datetime.now().isoformat(),
+            'position': {'x': x, 'y': y, 'width': w, 'height': h},
+            'confidence': confidence,
+            'face_id': self.face_count + 1
+        }
+        self.detection_history.append(detection_data)
+        self.face_count += 1
+    
+    def process_frame_async(self, frame):
+        """پردازش فریم به صورت غیرهمزمان"""
+        if not self.frame_queue.full():
+            self.frame_queue.put(frame)
+        
+        if not self.result_queue.empty():
+            return self.result_queue.get()
+        
+        return None
+    
+    def start_async_processing(self):
+        """شروع پردازش غیرهمزمان"""
+        self.is_running = True
+        self.processing_thread = threading.Thread(target=self._process_frames)
+        self.processing_thread.start()
+    
+    def _process_frames(self):
+        """پردازش فریم‌ها در ترد جداگانه"""
+        while self.is_running:
+            try:
+                if not self.frame_queue.empty():
+                    frame = self.frame_queue.get(timeout=1)
+                    faces, confidences = self.detect_faces_advanced(frame)
+                    self.result_queue.put((faces, confidences))
+            except Exception as e:
+                logger.error(f"خطا در پردازش فریم: {e}")
+    
+    def stop_async_processing(self):
+        """توقف پردازش غیرهمزمان"""
+        self.is_running = False
+        if hasattr(self, 'processing_thread'):
+            self.processing_thread.join()
+    
+    def get_statistics(self):
+        """دریافت آمار سیستم"""
+        current_time = time.time()
+        runtime = current_time - self.start_time
+        
+        stats = {
+            'total_faces_detected': self.face_count,
+            'runtime_seconds': round(runtime, 2),
+            'detections_per_minute': round(self.face_count / (runtime / 60), 2),
+            'last_detection': self.detection_history[-1] if self.detection_history else None,
+            'average_confidence': np.mean([d['confidence'] for d in self.detection_history]) if self.detection_history else 0,
+            'detection_rate': len(self.detection_history) / runtime if runtime > 0 else 0
+        }
+        
+        return stats
+    
+    def save_detection_report(self, filename='face_detection_report.json'):
+        """ذخیره گزارش کامل تشخیص"""
+        report = {
+            'system_info': {
+                'version': '2.0',
+                'created_at': datetime.now().isoformat(),
+                'total_detections': self.face_count,
+                'config': self.config
+            },
+            'detection_history': self.detection_history,
+            'statistics': self.get_statistics()
+        }
+        
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(report, f, indent=2, ensure_ascii=False)
+        
+        logger.info(f"گزارش تشخیص در فایل '{filename}' ذخیره شد")
+
+def main():
+    """تابع اصلی اجرای سیستم تشخیص چهره"""
+    print("🚀 شروع سیستم تشخیص چهره پیشرفته...")
+    print("=" * 50)
+    
+    # ایجاد شیء تشخیص‌دهنده
+    detector = AdvancedFaceDetector()
+    
+    # شروع پردازش غیرهمزمان
+    detector.start_async_processing()
+    
+    # راه‌اندازی دوربین
+    cap = cv2.VideoCapture(0)
+    
+    if not cap.isOpened():
+        print("❌ خطا: امکان اتصال به دوربین وجود ندارد!")
+        return
+    
+    print("✅ دوربین با موفقیت راه‌اندازی شد")
+    print("📝 راهنما: برای خروج از برنامه کلید 'q' را فشار دهید")
+    print("-" * 50)
+    
+    try:
+        while True:
+            # خواندن فریم از دوربین
+            ret, frame = cap.read()
+            
+            if not ret:
+                print("❌ خطا در خواندن فریم از دوربین")
+                break
+            
+            # پردازش غیرهمزمان
+            result = detector.process_frame_async(frame)
+            
+            if result:
+                faces, confidences = result
+                
+                # آنالیز ویژگی‌های چهره
+                features_list = []
+                for face_rect in faces:
+                    features = detector.analyze_facial_features(frame, face_rect)
+                    features_list.append(features)
+                
+                # رسم اطلاعات روی تصویر
+                detector.draw_detection_info(frame, faces, confidences, features_list)
+            
+            # نمایش آمار لحظه‌ای
+            stats = detector.get_statistics()
+            stats_text = [
+                f"Faces Detected: {len(faces) if result else 0}",
+                f"Total Faces: {stats['total_faces_detected']}",
+                f"Runtime: {stats['runtime_seconds']}s",
+                f"Avg Confidence: {stats['average_confidence']:.2f}"
+            ]
+            
+            for i, text in enumerate(stats_text):
+                y_position = 30 + (i * 25)
+                cv2.putText(frame, text, (10, y_position),
+                           cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+            
+            # نمایش تصویر
+            cv2.imshow('Advanced Face Detection System', frame)
+            
+            # خروج با فشار دادن کلید 'q'
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                print("\n🛑 توقف سیستم توسط کاربر...")
+                break
+                
+    except KeyboardInterrupt:
+        print("\n🛑 توقف سیستم...")
+    except Exception as e:
+        print(f"❌ خطا در اجرای سیستم: {e}")
+    finally:
+        # توقف پردازش غیرهمزمان
+        detector.stop_async_processing()
+        
+        # آزاد کردن منابع
+        cap.release()
+        cv2.destroyAllWindows()
+        
+        # ذخیره گزارش نهایی
+        detector.save_detection_report()
+        
+        # نمایش آمار نهایی
+        final_stats = detector.get_statistics()
+        print("\n📈 آمار نهایی سیستم:")
+        print(f"   👥 کل چهره‌های تشخیص داده شده: {final_stats['total_faces_detected']}")
+        print(f"   ⏱️ زمان اجرا: {final_stats['runtime_seconds']} ثانیه")
+        print(f"   📊 میانگین تشخیص در دقیقه: {final_stats['detections_per_minute']}")
+        print(f"   🎯 میانگین اعتماد: {final_stats['average_confidence']:.2f}")
+        print(f"   📈 نرخ تشخیص: {final_stats['detection_rate']:.2f} فریم/ثانیه")
+        print("=" * 50)
+        print("✅ سیستم با موفقیت خاتمه یافت")
+
+if __name__ == "__main__":
+    main()
+                    </code></pre>
+                    
+                    <!-- بخش خروجی کد -->
+                    <div class="mt-3">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0">خروجی نمونه</h6>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="toggleOutput('face-detection-output')">
+                                    <i class="bi bi-eye"></i> نمایش
+                                </button>
+                            </div>
+                            <div class="card-body d-none" id="face-detection-output">
+                                <pre class="bg-light p-3 rounded">
+🚀 شروع سیستم تشخیص چهره پیشرفته...
+==================================================
+✅ دوربین با موفقیت راه‌اندازی شد
+📝 راهنما: برای خروج از برنامه کلید 'q' را فشار دهید
+--------------------------------------------------
+📈 آمار نهایی سیستم:
+   👥 کل چهره‌های تشخیص داده شده: 15
+   ⏱️ زمان اجرا: 120.5 ثانیه
+   📊 میانگین تشخیص در دقیقه: 7.5
+   🎯 میانگین اعتماد: 0.85
+   📈 نرخ تشخیص: 0.12 فریم/ثانیه
+==================================================
+✅ سیستم با موفقیت خاتمه یافت
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش 2: فیلترهای تصویری پیشرفته -->
+            <div class="card shadow-lg mb-5 code-section" data-category="filter">
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="bi bi-filter-circle me-2"></i>🎨 فیلترهای تصویری پیشرفته</h4>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="copyCode('image-filters')">
+                            <i class="bi bi-clipboard"></i> کپی
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="downloadCode('image-filters')">
+                            <i class="bi bi-download"></i> دانلود
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-4">پیاده‌سازی انواع فیلترهای تصویری و افکت‌های گرافیکی</p>
+                    
+                    <div class="accordion mb-3" id="imageFiltersAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                    <i class="bi bi-info-circle me-2"></i> توضیحات پروژه
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#imageFiltersAccordion">
+                                <div class="accordion-body">
+                                    <p>این پروژه مجموعه‌ای از فیلترهای پیشرفته تصویری است که شامل موارد زیر می‌شود:</p>
+                                    <ul>
+                                        <li>فیلترهای تاری (Gaussian, Median, Bilateral)</li>
+                                        <li>فیلترهای بهبود تصویر (Sharpen, Emboss)</li>
+                                        <li>فیلترهای تشخیص لبه (Canny, Sobel)</li>
+                                        <li>افکت‌های هنری (Sepia, Cartoon, Sketch)</li>
+                                        <li>فیلتر نقاشی روغنی</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <pre class="code-container p-4 rounded" style="direction: ltr; text-align: left; max-height: 400px; overflow-y: auto;" id="image-filters-code"><code class="language-python">
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Advanced Image Filters and Effects
+فیلترها و افکت‌های پیشرفته تصویری
+"""
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+from enum import Enum
+import os
+import time
+import json
+from datetime import datetime
+
+class FilterType(Enum):
+    """انواع فیلترهای موجود"""
+    GAUSSIAN_BLUR = "gaussian_blur"
+    MEDIAN_BLUR = "median_blur"
+    BILATERAL_FILTER = "bilateral"
+    SHARPEN = "sharpen"
+    EDGE_DETECTION = "edge_detection"
+    EMBOSS = "emboss"
+    SEPIA = "sepia"
+    CARTOON = "cartoon"
+    SKETCH = "sketch"
+    OIL_PAINTING = "oil_painting"
+    VINTAGE = "vintage"
+    HDR = "hdr"
+    NIGHT_VISION = "night_vision"
+    THERMAL = "thermal"
+
+class AdvancedImageProcessor:
+    """پردازشگر پیشرفته تصویر"""
+    
+    def __init__(self):
+        self.filter_history = []
+        self.performance_stats = {}
+        self.original_image = None
+        self.processed_images = {}
+        
+    def load_image(self, image_path):
+        """بارگیری تصویر از مسیر"""
+        try:
+            self.original_image = cv2.imread(image_path)
+            if self.original_image is None:
+                raise ValueError(f"تصویر در مسیر {image_path} یافت نشد")
+            return True
+        except Exception as e:
+            print(f"خطا در بارگیری تصویر: {e}")
+            return False
+    
+    def save_image(self, image, filename):
+        """ذخیره تصویر"""
+        try:
+            cv2.imwrite(filename, image)
+            print(f"تصویر در فایل {filename} ذخیره شد")
+            return True
+        except Exception as e:
+            print(f"خطا در ذخیره تصویر: {e}")
+            return False
+    
+    def apply_gaussian_blur(self, image, kernel_size=15, sigma=0):
+        """اعمال فیلتر گوسی"""
+        if kernel_size % 2 == 0:
+            kernel_size += 1
+            
+        start_time = time.time()
+        blurred = cv2.GaussianBlur(image, (kernel_size, kernel_size), sigma)
+        processing_time = time.time() - start_time
+        
+        self._record_performance("Gaussian Blur", processing_time)
+        return blurred
+    
+    def apply_median_blur(self, image, kernel_size=15):
+        """اعمال فیلتر میانه"""
+        if kernel_size % 2 == 0:
+            kernel_size += 1
+            
+        start_time = time.time()
+        blurred = cv2.medianBlur(image, kernel_size)
+        processing_time = time.time() - start_time
+        
+        self._record_performance("Median Blur", processing_time)
+        return blurred
+    
+    def apply_bilateral_filter(self, image, d=15, sigma_color=75, sigma_space=75):
+        """اعمال فیلتر دوطرفه برای حفظ لبه‌ها"""
+        start_time = time.time()
+        filtered = cv2.bilateralFilter(image, d, sigma_color, sigma_space)
+        processing_time = time.time() - start_time
+        
+        self._record_performance("Bilateral Filter", processing_time)
+        return filtered
+    
+    def apply_sharpen_filter(self, image, strength=1.0):
+        """اعمال فیلتر شارپن"""
+        kernel = np.array([[-1, -1, -1],
+                          [-1,  9, -1],
+                          [-1, -1, -1]]) * strength
+        start_time = time.time()
+        sharpened = cv2.filter2D(image, -1, kernel)
+        processing_time = time.time() - start_time
+        
+        self._record_performance("Sharpen", processing_time)
+        return sharpened
+    
+    def apply_edge_detection(self, image, low_threshold=50, high_threshold=150):
+        """تشخیص لبه با الگوریتم Canny"""
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        
+        start_time = time.time()
+        edges = cv2.Canny(gray, low_threshold, high_threshold)
+        # تبدیل به تصویر رنگی
+        edges_colored = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
+        processing_time = time.time() - start_time
+        
+        self._record_performance("Edge Detection", processing_time)
+        return edges_colored
+    
+    def apply_emboss_filter(self, image):
+        """اعمال افکت امباس (برجسته)"""
+        kernel = np.array([[-2, -1, 0],
+                          [-1,  1, 1],
+                          [ 0,  1, 2]])
+        start_time = time.time()
+        embossed = cv2.filter2D(image, -1, kernel)
+        processing_time = time.time() - start_time
+        
+        self._record_performance("Emboss", processing_time)
+        return embossed
+    
+    def apply_sepia_filter(self, image):
+        """اعمال افکت سپیا (عکس قدیمی)"""
+        sepia_filter = np.array([[0.272, 0.534, 0.131],
+                                [0.349, 0.686, 0.168],
+                                [0.393, 0.769, 0.189]])
+        start_time = time.time()
+        sepia = cv2.transform(image, sepia_filter)
+        # محدود کردن مقادیر به بازه 0-255
+        sepia = np.clip(sepia, 0, 255)
+        processing_time = time.time() - start_time
+        
+        self._record_performance("Sepia", processing_time)
+        return sepia.astype(np.uint8)
+    
+    def apply_cartoon_effect(self, image):
+        """اعمال افکت کارتونی"""
+        start_time = time.time()
+        
+        # کاهش نویز
+        color = cv2.bilateralFilter(image, 9, 250, 250)
+        
+        # تبدیل به خاکستری
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        
+        # اعمال فیلتر میانه
+        gray = cv2.medianBlur(gray, 7)
+        
+        # تشخیص لبه
+        edges = cv2.adaptiveThreshold(gray, 255, 
+                                    cv2.ADAPTIVE_THRESH_MEAN_C, 
+                                    cv2.THRESH_BINARY, 9, 2)
+        
+        # تبدیل لبه‌ها به تصویر رنگی
+        edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
+        
+        # ترکیب با تصویر رنگی
+        cartoon = cv2.bitwise_and(color, edges)
+        
+        processing_time = time.time() - start_time
+        self._record_performance("Cartoon", processing_time)
+        return cartoon
+    
+    def apply_sketch_effect(self, image):
+        """اعمال افکت طراحی مداد"""
+        start_time = time.time()
+        
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        
+        # معکوس کردن تصویر
+        inverted = 255 - gray
+        
+        # اعمال فیلتر گوسی
+        blurred = cv2.GaussianBlur(inverted, (21, 21), 0)
+        
+        # ترکیب برای ایجاد افکت طراحی
+        sketch = cv2.divide(gray, 255 - blurred, scale=256)
+        sketch_colored = cv2.cvtColor(sketch, cv2.COLOR_GRAY2BGR)
+        
+        processing_time = time.time() - start_time
+        self._record_performance("Sketch", processing_time)
+        return sketch_colored
+    
+    def apply_oil_painting_effect(self, image, radius=5, levels=20):
+        """اعمال افکت نقاشی روغنی"""
+        start_time = time.time()
+        
+        h, w = image.shape[:2]
+        oil_painting = np.zeros_like(image)
+        
+        for i in range(radius, h - radius):
+            for j in range(radius, w - radius):
+                # استخراج ناحیه
+                region = image[i-radius:i+radius+1, j-radius:j+radius+1]
+                
+                # محاسبه هیستوگرام برای هر کانال
+                intensity_counts = np.zeros(levels)
+                avg_color = np.zeros(3)
+                
+                for x in range(region.shape[0]):
+                    for y in range(region.shape[1]):
+                        # محاسبه شدت
+                        intensity = int(np.mean(region[x, y]) * (levels - 1) / 255)
+                        intensity_counts[intensity] += 1
+                        avg_color += region[x, y]
+                
+                # یافتن شدت غالب
+                dominant_intensity = np.argmax(intensity_counts)
+                
+                # تنظیم رنگ پیکسل
+                oil_painting[i, j] = avg_color / np.sum(intensity_counts)
+        
+        processing_time = time.time() - start_time
+        self._record_performance("Oil Painting", processing_time)
+        return oil_painting.astype(np.uint8)
+    
+    def apply_vintage_effect(self, image):
+        """اعمال افکت عکس قدیمی"""
+        start_time = time.time()
+        
+        # تبدیل به فضای رنگ LAB
+        lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+        l, a, b = cv2.split(lab)
+        
+        # کاهش کنتراست در کانال L
+        l = cv2.multiply(l, 0.8)
+        
+        # افزایش رنگ‌های گرم در کانال a و b
+        a = cv2.add(a, 10)
+        b = cv2.add(b, 10)
+        
+        # ترکیب کانال‌ها
+        lab = cv2.merge([l, a, b])
+        
+        # تبدیل به BGR
+        vintage = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+        
+        # اضافه کردن نویز
+        noise = np.random.normal(0, 15, vintage.shape).astype(np.uint8)
+        vintage = cv2.add(vintage, noise)
+        
+        # کاهش وضوح لبه‌ها
+        vintage = cv2.GaussianBlur(vintage, (3, 3), 0)
+        
+        processing_time = time.time() - start_time
+        self._record_performance("Vintage", processing_time)
+        return vintage
+    
+    def apply_hdr_effect(self, image):
+        """اعمال افکت HDR (High Dynamic Range)"""
+        start_time = time.time()
+        
+        # تبدیل به فضای رنگ LAB
+        lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+        l, a, b = cv2.split(lab)
+        
+        # اعمال CLAHE (Contrast Limited Adaptive Histogram Equalization)
+        clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
+        l = clahe.apply(l)
+        
+        # ترکیب کانال‌ها
+        lab = cv2.merge([l, a, b])
+        
+        # تبدیل به BGR
+        hdr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+        
+        processing_time = time.time() - start_time
+        self._record_performance("HDR", processing_time)
+        return hdr
+    
+    def apply_night_vision_effect(self, image):
+        """اعمال افکت دید در شب"""
+        start_time = time.time()
+        
+        # تبدیل به خاکستری
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        
+        # افزایش کنتراست
+        gray = cv2.equalizeHist(gray)
+        
+        # تبدیل به تصویر رنگی با سبز
+        night_vision = np.zeros_like(image)
+        night_vision[:, :, 1] = gray  # کانال سبز
+        
+        # اضافه کردن نویز
+        noise = np.random.normal(0, 10, gray.shape).astype(np.uint8)
+        night_vision[:, :, 1] = cv2.add(night_vision[:, :, 1], noise)
+        
+        # اضافه کردن خطوط اسکن
+        for i in range(0, night_vision.shape[0], 4):
+            night_vision[i:i+2, :, :] = 0
+        
+        processing_time = time.time() - start_time
+        self._record_performance("Night Vision", processing_time)
+        return night_vision
+    
+    def apply_thermal_effect(self, image):
+        """اعمال افکت حرارتی"""
+        start_time = time.time()
+        
+        # تبدیل به خاکستری
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        
+        # معکوس کردن (مناطق روشن به داغ تبدیل می‌شوند)
+        gray = 255 - gray
+        
+        # اعمال colormap برای شبیه‌سازی تصاویر حرارتی
+        thermal = cv2.applyColorMap(gray, cv2.COLORMAP_JET)
+        
+        processing_time = time.time() - start_time
+        self._record_performance("Thermal", processing_time)
+        return thermal
+    
+    def create_filter_comparison(self, image, filter_types):
+        """ایجاد مقایسه بین فیلترهای مختلف"""
+        fig, axes = plt.subplots(3, 4, figsize=(20, 15))
+        axes = axes.ravel()
+        
+        # تصویر اصلی
+        axes[0].imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        axes[0].set_title('Original Image')
+        axes[0].axis('off')
+        
+        # اعمال فیلترها
+        for i, filter_type in enumerate(filter_types[:11], 1):
+            filtered_image = self.apply_filter(image, filter_type)
+            axes[i].imshow(cv2.cvtColor(filtered_image, cv2.COLOR_BGR2RGB))
+            axes[i].set_title(filter_type.value.replace('_', ' ').title())
+            axes[i].axis('off')
+        
+        plt.tight_layout()
+        return fig
+    
+    def apply_filter(self, image, filter_type):
+        """اعمال فیلتر بر اساس نوع"""
+        filter_methods = {
+            FilterType.GAUSSIAN_BLUR: lambda img: self.apply_gaussian_blur(img),
+            FilterType.MEDIAN_BLUR: lambda img: self.apply_median_blur(img),
+            FilterType.BILATERAL_FILTER: lambda img: self.apply_bilateral_filter(img),
+            FilterType.SHARPEN: lambda img: self.apply_sharpen_filter(img),
+            FilterType.EDGE_DETECTION: lambda img: self.apply_edge_detection(img),
+            FilterType.EMBOSS: lambda img: self.apply_emboss_filter(img),
+            FilterType.SEPIA: lambda img: self.apply_sepia_filter(img),
+            FilterType.CARTOON: lambda img: self.apply_cartoon_effect(img),
+            FilterType.SKETCH: lambda img: self.apply_sketch_effect(img),
+            FilterType.OIL_PAINTING: lambda img: self.apply_oil_painting_effect(img),
+            FilterType.VINTAGE: lambda img: self.apply_vintage_effect(img),
+            FilterType.HDR: lambda img: self.apply_hdr_effect(img),
+            FilterType.NIGHT_VISION: lambda img: self.apply_night_vision_effect(img),
+            FilterType.THERMAL: lambda img: self.apply_thermal_effect(img)
+        }
+        
+        return filter_methods[filter_type](image)
+    
+    def _record_performance(self, filter_name, processing_time):
+        """ثبت عملکرد فیلتر"""
+        if filter_name not in self.performance_stats:
+            self.performance_stats[filter_name] = []
+        
+        self.performance_stats[filter_name].append(processing_time)
+    
+    def get_performance_report(self):
+        """دریافت گزارش عملکرد"""
+        report = {}
+        
+        for filter_name, times in self.performance_stats.items():
+            if times:
+                report[filter_name] = {
+                    'count': len(times),
+                    'total_time': sum(times),
+                    'average_time': sum(times) / len(times),
+                    'min_time': min(times),
+                    'max_time': max(times)
+                }
+        
+        return report
+    
+    def save_performance_report(self, filename='filter_performance.json'):
+        """ذخیره گزارش عملکرد"""
+        report = {
+            'timestamp': datetime.now().isoformat(),
+            'performance': self.get_performance_report()
+        }
+        
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(report, f, indent=2, ensure_ascii=False)
+        
+        print(f"گزارش عملکرد در فایل {filename} ذخیره شد")
+
+def demonstrate_filters():
+    """نمایش عملکرد فیلترهای مختلف"""
+    print("🎨 شروع نمایش فیلترهای تصویری...")
+    
+    # ایجاد پردازشگر
+    processor = AdvancedImageProcessor()
+    
+    # خواندن تصویر نمونه
+    image_path = 'sample_image.jpg'
+    
+    if not os.path.exists(image_path):
+        # ایجاد تصویر نمونه در صورت عدم وجود
+        print("📝 ایجاد تصویر نمونه...")
+        image = np.random.randint(0, 255, (400, 600, 3), dtype=np.uint8)
+        cv2.imwrite(image_path, image)
+    
+    if not processor.load_image(image_path):
+        print("❌ خطا در بارگیری تصویر")
+        return
+    
+    image = processor.original_image
+    
+    # لیست فیلترها برای نمایش
+    filters_to_show = [
+        FilterType.GAUSSIAN_BLUR,
+        FilterType.MEDIAN_BLUR,
+        FilterType.BILATERAL_FILTER,
+        FilterType.SHARPEN,
+        FilterType.EDGE_DETECTION,
+        FilterType.EMBOSS,
+        FilterType.SEPIA,
+        FilterType.CARTOON,
+        FilterType.SKETCH,
+        FilterType.VINTAGE,
+        FilterType.HDR,
+        FilterType.NIGHT_VISION
+    ]
+    
+    # ایجاد مقایسه
+    print("🖼️ در حال ایجاد مقایسه فیلترها...")
+    fig = processor.create_filter_comparison(image, filters_to_show)
+    plt.savefig('filter_comparison.png', dpi=300, bbox_inches='tight')
+    plt.show()
+    
+    print("✅ مقایسه فیلترها در فایل 'filter_comparison.png' ذخیره شد")
+    
+    # نمایش نمونه‌ای از افکت‌های جدید
+    vintage = processor.apply_vintage_effect(image)
+    processor.save_image(vintage, 'vintage_effect.jpg')
+    print("🎞️ افکت قدیمی در فایل 'vintage_effect.jpg' ذخیره شد")
+    
+    hdr = processor.apply_hdr_effect(image)
+    processor.save_image(hdr, 'hdr_effect.jpg')
+    print("🌆 افکت HDR در فایل 'hdr_effect.jpg' ذخیره شد")
+    
+    night_vision = processor.apply_night_vision_effect(image)
+    processor.save_image(night_vision, 'night_vision_effect.jpg')
+    print("🌃 افکت دید در شب در فایل 'night_vision_effect.jpg' ذخیره شد")
+    
+    thermal = processor.apply_thermal_effect(image)
+    processor.save_image(thermal, 'thermal_effect.jpg')
+    print("🌡️ افکت حرارتی در فایل 'thermal_effect.jpg' ذخیره شد")
+    
+    # ذخیره گزارش عملکرد
+    processor.save_performance_report()
+
+if __name__ == "__main__":
+    demonstrate_filters()
+                    </code></pre>
+                    
+                    <!-- بخش خروجی کد -->
+                    <div class="mt-3">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0">خروجی نمونه</h6>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="toggleOutput('image-filters-output')">
+                                    <i class="bi bi-eye"></i> نمایش
+                                </button>
+                            </div>
+                            <div class="card-body d-none" id="image-filters-output">
+                                <pre class="bg-light p-3 rounded">
+🎨 شروع نمایش فیلترهای تصویری...
+📝 ایجاد تصویر نمونه...
+🖼️ در حال ایجاد مقایسه فیلترها...
+✅ مقایسه فیلترها در فایل 'filter_comparison.png' ذخیره شد
+🎞️ افکت قدیمی در فایل 'vintage_effect.jpg' ذخیره شد
+🌆 افکت HDR در فایل 'hdr_effect.jpg' ذخیره شد
+🌃 افکت دید در شب در فایل 'night_vision_effect.jpg' ذخیره شد
+🌡️ افکت حرارتی در فایل 'thermal_effect.jpg' ذخیره شد
+گزارش عملکرد در فایل filter_performance.json ذخیره شد
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش 3: سیستم تشخیص حرکت -->
+            <div class="card shadow-lg mb-5 code-section" data-category="tracking">
+                <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="bi bi-activity me-2"></i>🏃‍♂️ سیستم تشخیص حرکت هوشمند</h4>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-dark" onclick="copyCode('motion-detection')">
+                            <i class="bi bi-clipboard"></i> کپی
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-dark" onclick="downloadCode('motion-detection')">
+                            <i class="bi bi-download"></i> دانلود
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-4">پیاده‌سازی سیستم نظارت ویدیویی با قابلیت تشخیص حرکت</p>
+                    
+                    <div class="accordion mb-3" id="motionDetectionAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                    <i class="bi bi-info-circle me-2"></i> توضیحات پروژه
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#motionDetectionAccordion">
+                                <div class="accordion-body">
+                                    <p>این پروژه یک سیستم هوشمند برای تشخیص حرکت در ویدیو است که قابلیت‌های زیر را دارد:</p>
+                                    <ul>
+                                        <li>تشخیص حرکت با استفاده از Background Subtraction</li>
+                                        <li>آنالیز نواحی دارای حرکت</li>
+                                        <li>ثبت رویدادهای حرکت</li>
+                                        <li>گزارش‌گیری آماری</li>
+                                        <li>نمایش timeline فعالیت</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <pre class="code-container p-4 rounded" style="direction: ltr; text-align: left; max-height: 400px; overflow-y: auto;" id="motion-detection-code"><code class="language-python">
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Intelligent Motion Detection System
+سیستم هوشمند تشخیص حرکت
+"""
+
+import cv2
+import numpy as np
+import time
+import json
+from datetime import datetime, timedelta
+from collections import deque
+import threading
+import queue
+import logging
+import os
+
+# تنظیم لاگینگ
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+class MotionAnalyzer:
+    """آنالایزر حرکت برای تشخیص و تحلیل حرکت در ویدیو"""
+    
+    def __init__(self, min_area=500, threshold=25, history_length=100, config_file=None):
+        self.config = self._load_config(config_file)
+        self.min_area = self.config.get('min_area', min_area)
+        self.threshold = self.config.get('threshold', threshold)
+        self.history_length = self.config.get('history_length', history_length)
+        
+        # تاریخچه حرکت
+        self.motion_history = deque(maxlen=self.history_length)
+        self.motion_events = []
+        
+        # background subtractor
+        self.bg_subtractor = cv2.createBackgroundSubtractorMOG2(
+            history=500, 
+            varThreshold=16, 
+            detectShadows=True
+        )
+        
+        # آمار سیستم
+        self.motion_count = 0
+        self.start_time = time.time()
+        self.last_motion_time = None
+        
+        # صف برای پردازش غیرهمزمان
+        self.frame_queue = queue.Queue(maxsize=10)
+        self.result_queue = queue.Queue()
+        self.is_running = False
+        
+        # تنظیمات هشدار
+        self.alert_enabled = self.config.get('alert_enabled', True)
+        self.alert_cooldown = self.config.get('alert_cooldown', 30)  # ثانیه
+        self.last_alert_time = 0
+        
+        # تنظیمات ضبط
+        self.recording_enabled = self.config.get('recording_enabled', False)
+        self.recording_duration = self.config.get('recording_duration', 10)  # ثانیه
+        self.video_writer = None
+        self.recording_start_time = None
+        
+    def _load_config(self, config_file):
+        """بارگیری تنظیمات از فایل"""
+        default_config = {
+            'min_area': 500,
+            'threshold': 25,
+            'history_length': 100,
+            'alert_enabled': True,
+            'alert_cooldown': 30,
+            'recording_enabled': False,
+            'recording_duration': 10,
+            'detection_zones': [],
+            'notification_settings': {
+                'email': '',
+                'push_notification': False
+            }
+        }
+        
+        if config_file and os.path.exists(config_file):
+            try:
+                with open(config_file, 'r') as f:
+                    user_config = json.load(f)
+                    default_config.update(user_config)
+            except Exception as e:
+                logger.error(f"خطا در بارگیری فایل تنظیمات: {e}")
+        
+        return default_config
+    
+    def detect_motion(self, frame):
+        """تشخیص حرکت در فریم فعلی"""
+        # اعمال background subtraction
+        fg_mask = self.bg_subtractor.apply(frame)
+        
+        # حذف سایه‌ها
+        _, fg_mask = cv2.threshold(fg_mask, 244, 255, cv2.THRESH_BINARY)
+        
+        # حذف نویز
+        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        fg_mask = cv2.morphologyEx(fg_mask, cv2.MORPH_OPEN, kernel)
+        fg_mask = cv2.morphologyEx(fg_mask, cv2.MORPH_CLOSE, kernel)
+        
+        return fg_mask
+    
+    def analyze_motion_regions(self, frame, motion_mask):
+        """آنالیز نواحی دارای حرکت"""
+        # یافتن کانتورها
+        contours, _ = cv2.findContours(motion_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        
+        motion_regions = []
+        motion_detected = False
+        
+        for contour in contours:
+            # محاسبه مساحت کانتور
+            area = cv2.contourArea(contour)
+            
+            if area > self.min_area:
+                motion_detected = True
+                
+                # محاسبه مستطیل محدود کننده
+                x, y, w, h = cv2.boundingRect(contour)
+                
+                # بررسی اگر در ناحیه تشخیص مشخص شده باشد
+                if self._is_in_detection_zone(x, y, w, h):
+                    # ذخیره اطلاعات منطقه
+                    region_info = {
+                        'bbox': (x, y, w, h),
+                        'area': area,
+                        'center': (x + w//2, y + h//2),
+                        'contour': contour.tolist()
+                    }
+                    motion_regions.append(region_info)
+                    
+                    # رسم روی تصویر
+                    cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+                    cv2.putText(frame, f"Motion", (x, y-10),
+                               cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        
+        # ثبت رویداد حرکت
+        if motion_detected:
+            self._record_motion_event(motion_regions)
+            
+            # بررسی هشدار
+            if self.alert_enabled:
+                self._check_alert(motion_regions)
+            
+            # بررسی ضبط
+            if self.recording_enabled:
+                self._handle_recording(frame)
+        
+        return motion_regions, motion_detected
+    
+    def _is_in_detection_zone(self, x, y, w, h):
+        """بررسی اگر ناحیه حرکت در نواحی تشخیص مشخص شده باشد"""
+        if not self.config.get('detection_zones'):
+            return True  # اگر ناحیه‌ای مشخص نشده، همه چیز را تشخیص دهد
+        
+        center_x, center_y = x + w//2, y + h//2
+        
+        for zone in self.config['detection_zones']:
+            zone_x, zone_y, zone_w, zone_h = zone
+            if (zone_x <= center_x <= zone_x + zone_w and 
+                zone_y <= center_y <= zone_y + zone_h):
+                return True
+        
+        return False
+    
+    def _record_motion_event(self, regions):
+        """ثبت رویداد حرکت"""
+        event = {
+            'timestamp': datetime.now().isoformat(),
+            'regions': regions,
+            'region_count': len(regions),
+            'total_area': sum(region['area'] for region in regions)
+        }
+        
+        self.motion_events.append(event)
+        self.motion_count += 1
+        self.last_motion_time = time.time()
+        
+        # اضافه به تاریخچه
+        self.motion_history.append({
+            'time': time.time(),
+            'motion_detected': True,
+            'region_count': len(regions)
+        })
+    
+    def _check_alert(self, regions):
+        """بررسی و ارسال هشدار"""
+        current_time = time.time()
+        
+        # بررسی دوره انتظار هشدار
+        if current_time - self.last_alert_time < self.alert_cooldown:
+            return
+        
+        # بررسی شدت حرکت
+        total_area = sum(region['area'] for region in regions)
+        
+        # اگر حرکت قابل توجهی وجود دارد، هشدار ارسال کن
+        if total_area > self.min_area * 2:  # حرکت بزرگتر از حداقل
+            self._send_alert(regions)
+            self.last_alert_time = current_time
+    
+    def _send_alert(self, regions):
+        """ارسال هشدار"""
+        logger.warning(f"🚨 حرکت تشخیص داده شد - {len(regions)} منطقه")
+        
+        # در اینجا می‌توانید هشدار را از طریق ایمیل، پیامک یا نوتیفیکیشن ارسال کنید
+        
+        # ذخیره تصویر از لحظه حرکت
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        alert_image_path = f"motion_alert_{timestamp}.jpg"
+        
+        # این تصویر باید از فریم فعلی گرفته شود
+        # cv2.imwrite(alert_image_path, frame)
+        
+        logger.info(f"تصویر هشدار در {alert_image_path} ذخیره شد")
+    
+    def _handle_recording(self, frame):
+        """مدیریت ضبط ویدیو"""
+        current_time = time.time()
+        
+        # اگر در حال ضبط نیستیم، شروع کن
+        if self.video_writer is None:
+            self._start_recording()
+        
+        # اگر در حال ضبط هستیم، فریم را اضافه کن
+        if self.video_writer is not None:
+            self.video_writer.write(frame)
+            
+            # بررسی مدت زمان ضبط
+            if current_time - self.recording_start_time >= self.recording_duration:
+                self._stop_recording()
+    
+    def _start_recording(self):
+        """شروع ضبط ویدیو"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        video_path = f"motion_recording_{timestamp}.avi"
+        
+        # تنظیمات ویدیو
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        fps = 20
+        frame_size = (640, 480)  # باید با اندازه فریم مطابقت داشته باشد
+        
+        self.video_writer = cv2.VideoWriter(video_path, fourcc, fps, frame_size)
+        self.recording_start_time = time.time()
+        
+        logger.info(f"شروع ضبط ویدیو در {video_path}")
+    
+    def _stop_recording(self):
+        """توقف ضبط ویدیو"""
+        if self.video_writer is not None:
+            self.video_writer.release()
+            self.video_writer = None
+            logger.info("ضبط ویدیو متوقف شد")
+    
+    def get_motion_statistics(self):
+        """دریافت آمار حرکت"""
+        current_time = time.time()
+        runtime = current_time - self.start_time
+        
+        # محاسبه فعالیت اخیر (5 دقیقه گذشته)
+        recent_threshold = current_time - 300  # 5 دقیقه
+        recent_events = [e for e in self.motion_history 
+                        if e['time'] > recent_threshold]
+        
+        stats = {
+            'total_motion_events': self.motion_count,
+            'runtime_minutes': round(runtime / 60, 2),
+            'events_per_minute': round(self.motion_count / (runtime / 60), 2),
+            'recent_activity': len(recent_events),
+            'last_motion_time': self.last_motion_time,
+            'current_status': 'ACTIVE' if self.last_motion_time and 
+                                (current_time - self.last_motion_time) < 60 else 'IDLE'
+        }
+        
+        return stats
+    
+    def draw_analytics_overlay(self, frame, stats):
+        """رسم اطلاعات آنالیتیکس روی تصویر"""
+        # پس‌زمینه نیمه شفاف برای متن
+        overlay = frame.copy()
+        cv2.rectangle(overlay, (10, 10), (300, 150), (0, 0, 0), -1)
+        cv2.addWeighted(overlay, 0.6, frame, 0.4, 0, frame)
+        
+        # نمایش آمار
+        texts = [
+            f"Motion Events: {stats['total_motion_events']}",
+            f"Runtime: {stats['runtime_minutes']} min",
+            f"Events/Min: {stats['events_per_minute']}",
+            f"Recent Activity: {stats['recent_activity']}",
+            f"Status: {stats['current_status']}"
+        ]
+        
+        for i, text in enumerate(texts):
+            y_pos = 40 + (i * 25)
+            cv2.putText(frame, text, (20, y_pos),
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+        
+        # نمایش timeline فعالیت
+        self._draw_activity_timeline(frame, stats)
+        
+        # نمایش نواحی تشخیص
+        self._draw_detection_zones(frame)
+        
+        # نمایش وضعیت ضبط
+        if self.video_writer is not None:
+            cv2.putText(frame, "REC", (frame.shape[1] - 60, 30),
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+            cv2.circle(frame, (frame.shape[1] - 20, 30), 5, (0, 0, 255), -1)
+    
+    def _draw_activity_timeline(self, frame, stats):
+        """رسم timeline فعالیت"""
+        timeline_height = 50
+        timeline_width = 200
+        timeline_x = frame.shape[1] - timeline_width - 20
+        timeline_y = 20
+        
+        # رسم پس‌زمینه timeline
+        cv2.rectangle(frame, 
+                     (timeline_x, timeline_y),
+                     (timeline_x + timeline_width, timeline_y + timeline_height),
+                     (50, 50, 50), -1)
+        
+        # رسم فعالیت‌های اخیر
+        if self.motion_history:
+            max_time = max(event['time'] for event in self.motion_history)
+            min_time = min(event['time'] for event in self.motion_history)
+            time_range = max_time - min_time if max_time != min_time else 1
+            
+            for event in self.motion_history:
+                if event['motion_detected']:
+                    x_pos = timeline_x + int(
+                        (event['time'] - min_time) / time_range * timeline_width
+                    )
+                    intensity = min(event['region_count'] * 2, 10)
+                    cv2.line(frame,
+                            (x_pos, timeline_y),
+                            (x_pos, timeline_y + timeline_height),
+                            (0, 255, 0), intensity)
+        
+        cv2.putText(frame, "Activity Timeline", 
+                   (timeline_x, timeline_y - 5),
+                   cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1)
+    
+    def _draw_detection_zones(self, frame):
+        """رسم نواحی تشخیص"""
+        for zone in self.config.get('detection_zones', []):
+            x, y, w, h = zone
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 255, 0), 2)
+            cv2.putText(frame, "Detection Zone", (x, y-10),
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
+    
+    def start_async_processing(self):
+        """شروع پردازش غیرهمزمان"""
+        self.is_running = True
+        self.processing_thread = threading.Thread(target=self._process_frames)
+        self.processing_thread.start()
+    
+    def _process_frames(self):
+        """پردازش فریم‌ها در ترد جداگانه"""
+        while self.is_running:
+            try:
+                if not self.frame_queue.empty():
+                    frame = self.frame_queue.get(timeout=1)
+                    motion_mask = self.detect_motion(frame)
+                    motion_regions, motion_detected = self.analyze_motion_regions(
+                        frame, motion_mask
+                    )
+                    self.result_queue.put((frame, motion_regions, motion_detected))
+            except Exception as e:
+                logger.error(f"خطا در پردازش فریم: {e}")
+    
+    def stop_async_processing(self):
+        """توقف پردازش غیرهمزمان"""
+        self.is_running = False
+        if hasattr(self, 'processing_thread'):
+            self.processing_thread.join()
+        
+        # توقف ضبط اگر در حال ضبط هستیم
+        if self.video_writer is not None:
+            self._stop_recording()
+    
+    def save_motion_report(self, filename='motion_detection_report.json'):
+        """ذخیره گزارش کامل تشخیص حرکت"""
+        report = {
+            'system_info': {
+                'version': '2.0',
+                'created_at': datetime.now().isoformat(),
+                'config': self.config
+            },
+            'motion_events': self.motion_events,
+            'statistics': self.get_motion_statistics()
+        }
+        
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(report, f, indent=2, ensure_ascii=False)
+        
+        logger.info(f"گزارش تشخیص حرکت در فایل '{filename}' ذخیره شد")
+
+class IntelligentMotionDetectionSystem:
+    """سیستم کامل تشخیص حرکت هوشمند"""
+    
+    def __init__(self, config_file=None):
+        self.motion_analyzer = MotionAnalyzer(config_file=config_file)
+        self.is_running = False
+        self.alert_callback = None
+        
+    def start_monitoring(self, video_source=0, alert_callback=None):
+        """شروع نظارت"""
+        self.alert_callback = alert_callback
+        self.is_running = True
+        
+        print("🚀 شروع سیستم تشخیص حرکت هوشمند...")
+        print("📊 سیستم در حال نظارت بر حرکت...")
+        
+        # شروع پردازش غیرهمزمان
+        self.motion_analyzer.start_async_processing()
+        
+        cap = cv2.VideoCapture(video_source)
+        
+        if not cap.isOpened():
+            print("❌ خطا در اتصال به منبع ویدیو")
+            return
+        
+        try:
+            while self.is_running:
+                ret, frame = cap.read()
+                
+                if not ret:
+                    print("❌ خطا در خواندن فریم")
+                    break
+                
+                # تغییر اندازه فریم برای پردازش سریع‌تر
+                frame = cv2.resize(frame, (640, 480))
+                
+                # پردازش غیرهمزمان
+                if not self.motion_analyzer.frame_queue.full():
+                    self.motion_analyzer.frame_queue.put(frame.copy())
+                
+                # دریافت نتایج
+                if not self.motion_analyzer.result_queue.empty():
+                    processed_frame, motion_regions, motion_detected = self.motion_analyzer.result_queue.get()
+                    
+                    # دریافت آمار
+                    stats = self.motion_analyzer.get_motion_statistics()
+                    
+                    # رسم اطلاعات
+                    self.motion_analyzer.draw_analytics_overlay(processed_frame, stats)
+                    
+                    # نمایش نتایج
+                    cv2.imshow('Intelligent Motion Detection', processed_frame)
+                    cv2.imshow('Motion Mask', self.motion_analyzer.detect_motion(frame))
+                
+                # بررسی هشدار
+                if motion_detected and self.alert_callback:
+                    self.alert_callback(motion_regions)
+                
+                # خروج با کلید 'q'
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    print("\n🛑 توقف سیستم توسط کاربر...")
+                    break
+                    
+        except KeyboardInterrupt:
+            print("\n🛑 توقف سیستم...")
+        except Exception as e:
+            print(f"❌ خطا در اجرای سیستم: {e}")
+        finally:
+            cap.release()
+            cv2.destroyAllWindows()
+            self.is_running = False
+            
+            # توقف پردازش غیرهمزمان
+            self.motion_analyzer.stop_async_processing()
+            
+            # نمایش آمار نهایی
+            final_stats = self.motion_analyzer.get_motion_statistics()
+            self._print_final_report(final_stats)
+            
+            # ذخیره گزارش
+            self.motion_analyzer.save_motion_report()
+    
+    def _print_final_report(self, stats):
+        """چاپ گزارش نهایی"""
+        print("\n" + "="*50)
+        print("📈 گزارش نهایی سیستم تشخیص حرکت")
+        print("="*50)
+        print(f"   🎯 کل رویدادهای حرکت: {stats['total_motion_events']}")
+        print(f"   ⏱️ زمان اجرا: {stats['runtime_minutes']} دقیقه")
+        print(f"   📊 میانگین رویداد در دقیقه: {stats['events_per_minute']}")
+        print(f"   🔥 فعالیت اخیر: {stats['recent_activity']} رویداد")
+        print(f"   🚦 وضعیت نهایی: {stats['current_status']}")
+        print("="*50)
+    
+    def stop_monitoring(self):
+        """توقف نظارت"""
+        self.is_running = False
+
+def motion_alert_handler(motion_regions):
+    """مدیریت هشدارهای حرکت"""
+    print(f"🚨 هشدار! حرکت تشخیص داده شد - {len(motion_regions)} منطقه")
+    
+    for i, region in enumerate(motion_regions):
+        print(f"   📍 منطقه {i+1}: موقعیت {region['center']}, مساحت {region['area']}")
+
+def main():
+    """تابع اصلی اجرای سیستم"""
+    print("🏃‍♂️ سیستم تشخیص حرکت هوشمند")
+    print("📝 این سیستم حرکت را در ویدیو تشخیص و تحلیل می‌کند")
+    
+    # ایجاد فایل تنظیمات نمونه اگر وجود ندارد
+    config_file = "motion_detection_config.json"
+    if not os.path.exists(config_file):
+        config = {
+            "min_area": 500,
+            "threshold": 25,
+            "history_length": 100,
+            "alert_enabled": True,
+            "alert_cooldown": 30,
+            "recording_enabled": False,
+            "recording_duration": 10,
+            "detection_zones": [
+                [100, 100, 200, 200],  # ناحیه تشخیص اول
+                [400, 300, 150, 150]   # ناحیه تشخیص دوم
+            ]
+        }
+        
+        with open(config_file, 'w') as f:
+            json.dump(config, f, indent=2)
+        
+        print(f"📝 فایل تنظیمات نمونه در {config_file} ایجاد شد")
+    
+    system = IntelligentMotionDetectionSystem(config_file=config_file)
+    
+    # شروع نظارت با callback هشدار
+    system.start_monitoring(
+        video_source=0,  # استفاده از دوربین پیش‌فرض
+        alert_callback=motion_alert_handler
+    )
+
+if __name__ == "__main__":
+    main()
+                    </code></pre>
+                    
+                    <!-- بخش خروجی کد -->
+                    <div class="mt-3">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0">خروجی نمونه</h6>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="toggleOutput('motion-detection-output')">
+                                    <i class="bi bi-eye"></i> نمایش
+                                </button>
+                            </div>
+                            <div class="card-body d-none" id="motion-detection-output">
+                                <pre class="bg-light p-3 rounded">
+🚀 شروع سیستم تشخیص حرکت هوشمند...
+📊 سیستم در حال نظارت بر حرکت...
+📝 فایل تنظیمات نمونه در motion_detection_config.json ایجاد شد
+🚨 هشدار! حرکت تشخیص داده شد - 2 منطقه
+   📍 منطقه 1: موقعیت (320, 240), مساحت 1250
+   📍 منطقه 2: موقعیت (480, 360), مساحت 850
+
+==================================================
+📈 گزارش نهایی سیستم تشخیص حرکت
+==================================================
+   🎯 کل رویدادهای حرکت: 12
+   ⏱️ زمان اجرا: 5.25 دقیقه
+   📊 میانگین رویداد در دقیقه: 2.29
+   🔥 فعالیت اخیر: 3 رویداد
+   🚦 وضعیت نهایی: IDLE
+==================================================
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش 4: سیستم تشخیص اشیاء با YOLO -->
+            <div class="card shadow-lg mb-5 code-section" data-category="detection">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="bi bi-bounding-box me-2"></i>📦 سیستم تشخیص اشیاء با YOLO</h4>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="copyCode('yolo-detection')">
+                            <i class="bi bi-clipboard"></i> کپی
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="downloadCode('yolo-detection')">
+                            <i class="bi bi-download"></i> دانلود
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-4">پیاده‌سازی سیستم تشخیص اشیاء در زمان واقعی با مدل YOLO</p>
+                    
+                    <div class="accordion mb-3" id="yoloDetectionAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                    <i class="bi bi-info-circle me-2"></i> توضیحات پروژه
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#yoloDetectionAccordion">
+                                <div class="accordion-body">
+                                    <p>این پروژه یک سیستم تشخیص اشیاء در زمان واقعی با استفاده از مدل YOLO است که قابلیت‌های زیر را دارد:</p>
+                                    <ul>
+                                        <li>تشخیص اشیاء با استفاده از YOLOv3</li>
+                                        <li>پردازش در زمان واقعی</li>
+                                        <li>نمایش اعتماد تشخیص</li>
+                                        <li>آمار و آنالیز تشخیص</li>
+                                        <li>گزارش‌گیری کامل</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <pre class="code-container p-4 rounded" style="direction: ltr; text-align: left; max-height: 400px; overflow-y: auto;" id="yolo-detection-code"><code class="language-python">
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Real-time Object Detection with YOLO
+سیستم تشخیص اشیاء در زمان واقعی با YOLO
+"""
+
+import cv2
+import numpy as np
+import time
+import requests
+import json
+from datetime import datetime
+import os
+import threading
+import queue
+import logging
+
+# تنظیم لاگینگ
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+class YOLODetector:
+    """کلاس تشخیص اشیاء با YOLO"""
+    
+    def __init__(self, config_path, weights_path, classes_path, confidence_threshold=0.5, nms_threshold=0.4):
+        self.confidence_threshold = confidence_threshold
+        self.nms_threshold = nms_threshold
+        
+        # بارگیری مدل YOLO
+        try:
+            self.net = cv2.dnn.readNetFromDarknet(config_path, weights_path)
+            self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
+            self.net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
+            self.model_loaded = True
+            logger.info("مدل YOLO با موفقیت بارگیری شد")
+        except Exception as e:
+            logger.error(f"خطا در بارگیری مدل YOLO: {e}")
+            self.model_loaded = False
+        
+        # بارگیری نام کلاس‌ها
+        try:
+            with open(classes_path, 'r') as f:
+                self.classes = [line.strip() for line in f.readlines()]
+            logger.info(f"{len(self.classes)} کلاس با موفقیت بارگیری شد")
+        except Exception as e:
+            logger.error(f"خطا در بارگیری فایل کلاس‌ها: {e}")
+            self.classes = []
+        
+        # گرفتن نام لایه‌های خروجی
+        if self.model_loaded:
+            layer_names = self.net.getLayerNames()
+            self.output_layers = [layer_names[i - 1] for i in self.net.getUnconnectedOutLayers()]
+        
+        # رنگ‌های مختلف برای کلاس‌ها
+        self.colors = np.random.uniform(0, 255, size=(len(self.classes), 3))
+        
+        # آمار تشخیص
+        self.detection_history = []
+        self.frame_count = 0
+        self.start_time = time.time()
+        
+        # صف برای پردازش غیرهمزمان
+        self.frame_queue = queue.Queue(maxsize=5)
+        self.result_queue = queue.Queue()
+        self.is_running = False
+        
+        # تنظیمات پردازش
+        self.target_size = (416, 416)
+        self.processing_times = []
+    
+    def detect_objects(self, frame):
+        """تشخیص اشیاء در فریم"""
+        if not self.model_loaded:
+            return [], 0
+        
+        self.frame_count += 1
+        
+        height, width = frame.shape[:2]
+        
+        # ایجاد blob از تصویر
+        blob = cv2.dnn.blobFromImage(frame, 1/255.0, self.target_size, swapRB=True, crop=False)
+        self.net.setInput(blob)
+        
+        # اجرای forward pass
+        start_time = time.time()
+        layer_outputs = self.net.forward(self.output_layers)
+        inference_time = time.time() - start_time
+        
+        # ذخیره زمان پردازش
+        self.processing_times.append(inference_time)
+        if len(self.processing_times) > 100:
+            self.processing_times.pop(0)
+        
+        # پردازش نتایج
+        boxes = []
+        confidences = []
+        class_ids = []
+        
+        for output in layer_outputs:
+            for detection in output:
+                scores = detection[5:]
+                class_id = np.argmax(scores)
+                confidence = scores[class_id]
+                
+                if confidence > self.confidence_threshold:
+                    # محاسبه مختصات جعبه محدود کننده
+                    center_x = int(detection[0] * width)
+                    center_y = int(detection[1] * height)
+                    w = int(detection[2] * width)
+                    h = int(detection[3] * height)
+                    
+                    # مختصات گوشه بالا-چپ
+                    x = int(center_x - w / 2)
+                    y = int(center_y - h / 2)
+                    
+                    boxes.append([x, y, w, h])
+                    confidences.append(float(confidence))
+                    class_ids.append(class_id)
+        
+        # اعمال Non-Maximum Suppression
+        indices = cv2.dnn.NMSBoxes(boxes, confidences, self.confidence_threshold, self.nms_threshold)
+        
+        detected_objects = []
+        
+        if len(indices) > 0:
+            for i in indices.flatten():
+                x, y, w, h = boxes[i]
+                confidence = confidences[i]
+                class_id = class_ids[i]
+                
+                detected_objects.append({
+                    'class_id': class_id,
+                    'class_name': self.classes[class_id] if class_id < len(self.classes) else 'unknown',
+                    'confidence': confidence,
+                    'bbox': (x, y, w, h),
+                    'center': (x + w//2, y + h//2)
+                })
+        
+        # ثبت در تاریخچه
+        self._record_detection(detected_objects, inference_time)
+        
+        return detected_objects, inference_time
+    
+    def _record_detection(self, detected_objects, inference_time):
+        """ثبت اطلاعات تشخیص"""
+        detection_data = {
+            'timestamp': datetime.now().isoformat(),
+            'frame_number': self.frame_count,
+            'objects_detected': len(detected_objects),
+            'inference_time': inference_time,
+            'objects': detected_objects
+        }
+        
+        self.detection_history.append(detection_data)
+        
+        # محدود کردن تاریخچه
+        if len(self.detection_history) > 1000:
+            self.detection_history.pop(0)
+    
+    def draw_detections(self, frame, detected_objects):
+        """رسم جعبه‌های محدود کننده و اطلاعات روی تصویر"""
+        for obj in detected_objects:
+            x, y, w, h = obj['bbox']
+            class_name = obj['class_name']
+            confidence = obj['confidence']
+            class_id = obj['class_id']
+            
+            # انتخاب رنگ بر اساس کلاس
+            if class_id < len(self.colors):
+                color = self.colors[class_id].astype(int).tolist()
+            else:
+                color = (0, 255, 0)  # سبز به عنوان رنگ پیش‌فرض
+            
+            # رسم جعبه محدود کننده
+            cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
+            
+            # رسم برچسب
+            label = f"{class_name}: {confidence:.2f}"
+            label_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)[0]
+            
+            # پس‌زمینه برچسب
+            cv2.rectangle(frame, (x, y - label_size[1] - 10), 
+                         (x + label_size[0], y), color, -1)
+            
+            # متن برچسب
+            cv2.putText(frame, label, (x, y - 5),
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+            
+            # رسم مرکز شیء
+            center_x, center_y = obj['center']
+            cv2.circle(frame, (center_x, center_y), 3, color, -1)
+    
+    def draw_analytics(self, frame, detected_objects, inference_time):
+        """رسم اطلاعات آنالیتیکس"""
+        # پس‌زمینه نیمه شفاف
+        overlay = frame.copy()
+        cv2.rectangle(overlay, (10, 10), (350, 120), (0, 0, 0), -1)
+        cv2.addWeighted(overlay, 0.6, frame, 0.4, 0, frame)
+        
+        # آمار لحظه‌ای
+        current_time = time.time()
+        runtime = current_time - self.start_time
+        fps = self.frame_count / runtime if runtime > 0 else 0
+        
+        # محاسبه میانگین زمان پردازش
+        avg_inference_time = sum(self.processing_times) / len(self.processing_times) if self.processing_times else 0
+        
+        texts = [
+            f"Objects Detected: {len(detected_objects)}",
+            f"Inference Time: {inference_time*1000:.1f}ms",
+            f"Avg Inference: {avg_inference_time*1000:.1f}ms",
+            f"FPS: {fps:.1f}",
+            f"Frame: {self.frame_count}",
+            f"Runtime: {runtime:.1f}s"
+        ]
+        
+        for i, text in enumerate(texts):
+            y_pos = 35 + (i * 20)
+            cv2.putText(frame, text, (20, y_pos),
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+        
+        # نمایش توزیع کلاس‌ها
+        class_counts = {}
+        for obj in detected_objects:
+            class_name = obj['class_name']
+            class_counts[class_name] = class_counts.get(class_name, 0) + 1
+        
+        y_pos = 140
+        for class_name, count in list(class_counts.items())[:5]:  # نمایش 5 کلاس اول
+            text = f"{class_name}: {count}"
+            cv2.putText(frame, text, (20, y_pos),
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1)
+            y_pos += 15
+    
+    def get_detection_statistics(self):
+        """دریافت آمار تشخیص"""
+        total_objects = sum(len(detection['objects']) for detection in self.detection_history)
+        avg_inference_time = np.mean([detection['inference_time'] 
+                                    for detection in self.detection_history[-100:]])  # 100 فریم آخر
+        
+        stats = {
+            'total_frames': self.frame_count,
+            'total_objects_detected': total_objects,
+            'average_inference_time': avg_inference_time,
+            'objects_per_frame': total_objects / self.frame_count if self.frame_count > 0 else 0,
+            'runtime': time.time() - self.start_time,
+            'fps': self.frame_count / (time.time() - self.start_time) if time.time() - self.start_time > 0 else 0
+        }
+        
+        return stats
+    
+    def save_detection_report(self, filename='yolo_detection_report.json'):
+        """ذخیره گزارش تشخیص"""
+        report = {
+            'system_info': {
+                'model': 'YOLO Object Detection',
+                'confidence_threshold': self.confidence_threshold,
+                'nms_threshold': self.nms_threshold,
+                'total_frames_processed': self.frame_count,
+                'report_generated': datetime.now().isoformat()
+            },
+            'detection_history': self.detection_history[-1000:],  # 1000 تشخیص آخر
+            'statistics': self.get_detection_statistics()
+        }
+        
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(report, f, indent=2, ensure_ascii=False)
+        
+        logger.info(f"گزارش تشخیص در فایل '{filename}' ذخیره شد")
+    
+    def start_async_processing(self):
+        """شروع پردازش غیرهمزمان"""
+        self.is_running = True
+        self.processing_thread = threading.Thread(target=self._process_frames)
+        self.processing_thread.start()
+    
+    def _process_frames(self):
+        """پردازش فریم‌ها در ترد جداگانه"""
+        while self.is_running:
+            try:
+                if not self.frame_queue.empty():
+                    frame = self.frame_queue.get(timeout=1)
+                    detected_objects, inference_time = self.detect_objects(frame)
+                    self.result_queue.put((frame, detected_objects, inference_time))
+            except Exception as e:
+                logger.error(f"خطا در پردازش فریم: {e}")
+    
+    def stop_async_processing(self):
+        """توقف پردازش غیرهمزمان"""
+        self.is_running = False
+        if hasattr(self, 'processing_thread'):
+            self.processing_thread.join()
+
+def download_yolo_files():
+    """دانلود فایل‌های مورد نیاز YOLO"""
+    base_url = "https://github.com/pjreddie/darknet/raw/master/"
+    
+    files = {
+        "yolov3.cfg": f"{base_url}cfg/yolov3.cfg",
+        "yolov3.weights": "https://pjreddie.com/media/files/yolov3.weights",
+        "coco.names": f"{base_url}data/coco.names"
+    }
+    
+    for filename, url in files.items():
+        if not os.path.exists(filename):
+            print(f"در حال دانلود {filename}...")
+            try:
+                response = requests.get(url, stream=True)
+                response.raise_for_status()
+                
+                with open(filename, 'wb') as f:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        f.write(chunk)
+                
+                print(f"✅ {filename} با موفقیت دانلود شد")
+            except Exception as e:
+                print(f"❌ خطا در دانلود {filename}: {e}")
+                return False
+    
+    return True
+
+def main():
+    """تابع اصلی اجرای سیستم تشخیص اشیاء"""
+    print("🚀 شروع سیستم تشخیص اشیاء با YOLO...")
+    print("📦 در حال بارگیری مدل...")
+    
+    # مسیر فایل‌های مدل YOLO
+    config_path = 'yolov3.cfg'
+    weights_path = 'yolov3.weights'
+    classes_path = 'coco.names'
+    
+    # بررسی وجود فایل‌ها و دانلود در صورت عدم وجود
+    if not all(os.path.exists(path) for path in [config_path, weights_path, classes_path]):
+        print("📥 برخی فایل‌های YOLO یافت نشد، در حال دانلود...")
+        if not download_yolo_files():
+            print("❌ خطا در دانلود فایل‌های YOLO")
+            return
+    
+    try:
+        # ایجاد تشخیص‌دهنده
+        detector = YOLODetector(config_path, weights_path, classes_path)
+        
+        if not detector.model_loaded:
+            print("❌ مدل YOLO بارگیری نشد")
+            return
+        
+        # شروع پردازش غیرهمزمان
+        detector.start_async_processing()
+        
+        # راه‌اندازی دوربین
+        cap = cv2.VideoCapture(0)
+        
+        if not cap.isOpened():
+            print("❌ خطا در اتصال به دوربین")
+            return
+        
+        print("📹 دوربین راه‌اندازی شد")
+        print("🎯 در حال تشخیص اشیاء... (برای خروج کلید 'q' را فشار دهید)")
+        
+        while True:
+            ret, frame = cap.read()
+            
+            if not ret:
+                print("❌ خطا در خواندن فریم")
+                break
+            
+            # تغییر اندازه فریم برای پردازش سریع‌تر
+            frame = cv2.resize(frame, (640, 480))
+            
+            # پردازش غیرهمزمان
+            if not detector.frame_queue.full():
+                detector.frame_queue.put(frame.copy())
+            
+            # دریافت نتایج
+            if not detector.result_queue.empty():
+                processed_frame, detected_objects, inference_time = detector.result_queue.get()
+                
+                # رسم نتایج
+                detector.draw_detections(processed_frame, detected_objects)
+                detector.draw_analytics(processed_frame, detected_objects, inference_time)
+                
+                # نمایش تصویر
+                cv2.imshow('YOLO Object Detection', processed_frame)
+            
+            # خروج با کلید 'q'
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                print("\n🛑 توقف سیستم...")
+                break
+                
+    except Exception as e:
+        print(f"❌ خطا در اجرای سیستم: {e}")
+    finally:
+        # توقف پردازش غیرهمزمان
+        detector.stop_async_processing()
+        
+        # آزاد کردن منابع
+        if 'cap' in locals():
+            cap.release()
+        cv2.destroyAllWindows()
+        
+        # ذخیره گزارش
+        detector.save_detection_report()
+        
+        # نمایش آمار نهایی
+        final_stats = detector.get_detection_statistics()
+        print("\n📈 آمار نهایی سیستم:")
+        print(f"   🎯 کل فریم‌های پردازش شده: {final_stats['total_frames']}")
+        print(f"   📦 کل اشیاء تشخیص داده شده: {final_stats['total_objects_detected']}")
+        print(f"   ⚡ میانگین زمان inference: {final_stats['average_inference_time']*1000:.1f}ms")
+        print(f"   📊 میانگین اشیاء در فریم: {final_stats['objects_per_frame']:.2f}")
+        print(f"   ⏱️ زمان اجرا: {final_stats['runtime']:.1f} ثانیه")
+        print(f"   🚀 FPS: {final_stats['fps']:.1f}")
+
+if __name__ == "__main__":
+    main()
+                    </code></pre>
+                    
+                    <!-- بخش خروجی کد -->
+                    <div class="mt-3">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0">خروجی نمونه</h6>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="toggleOutput('yolo-detection-output')">
+                                    <i class="bi bi-eye"></i> نمایش
+                                </button>
+                            </div>
+                            <div class="card-body d-none" id="yolo-detection-output">
+                                <pre class="bg-light p-3 rounded">
+🚀 شروع سیستم تشخیص اشیاء با YOLO...
+📦 در حال بارگیری مدل...
+80 کلاس با موفقیت بارگیری شد
+مدل YOLO با موفقیت بارگیری شد
+📹 دوربین راه‌اندازی شد
+🎯 در حال تشخیص اشیاء... (برای خروج کلید 'q' را فشار دهید)
+
+📈 آمار نهایی سیستم:
+   🎯 کل فریم‌های پردازش شده: 245
+   📦 کل اشیاء تشخیص داده شده: 532
+   ⚡ میانگین زمان inference: 125.3ms
+   📊 میانگین اشیاء در فریم: 2.17
+   ⏱️ زمان اجرا: 45.2 ثانیه
+   🚀 FPS: 5.4
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش 5: بخش‌بندی تصویر -->
+            <div class="card shadow-lg mb-5 code-section" data-category="segmentation">
+                <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="bi bi-layers me-2"></i>🎨 بخش‌بندی تصویر با DeepLab</h4>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="copyCode('image-segmentation')">
+                            <i class="bi bi-clipboard"></i> کپی
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-light" onclick="downloadCode('image-segmentation')">
+                            <i class="bi bi-download"></i> دانلود
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-4">پیاده‌سازی سیستم بخش‌بندی تصویر با استفاده از مدل DeepLab</p>
+                    
+                    <div class="accordion mb-3" id="imageSegmentationAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                                    <i class="bi bi-info-circle me-2"></i> توضیحات پروژه
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingFive" data-bs-parent="#imageSegmentationAccordion">
+                                <div class="accordion-body">
+                                    <p>این پروژه یک سیستم بخش‌بندی تصویر با استفاده از مدل DeepLab است که قابلیت‌های زیر را دارد:</p>
+                                    <ul>
+                                        <li>بخش‌بندی معنایی تصویر</li>
+                                        <li>رنگ‌آمیزی کلاس‌های مختلف</li>
+                                        <li>آنالیز نتایج بخش‌بندی</li>
+                                        <li>استخراج اشیاء خاص</li>
+                                        <li>اندازه‌گیری ویژگی‌های اشیاء</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <pre class="code-container p-4 rounded" style="direction: ltr; text-align: left; max-height: 400px; overflow-y: auto;" id="image-segmentation-code"><code class="language-python">
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Image Segmentation with DeepLab
+بخش‌بندی تصویر با DeepLab
+"""
+
+import cv2
+import numpy as np
+import torch
+import torchvision.transforms as transforms
+from PIL import Image
+import matplotlib.pyplot as plt
+from typing import List, Tuple, Dict
+import time
+import json
+from datetime import datetime
+import os
+import logging
+
+# تنظیم لاگینگ
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+class DeepLabSegmentation:
+    """کلاس بخش‌بندی تصویر با DeepLab"""
+    
+    def __init__(self, model_name='deeplabv3_resnet101', device='cuda' if torch.cuda.is_available() else 'cpu'):
+        self.device = device
+        self.model_name = model_name
+        self.model = None
+        self.preprocess = None
+        self.class_names = self._get_class_names()
+        self.colors = self._generate_colors()
+        
+        # بارگیری مدل
+        self._load_model()
+        
+        # آمار پردازش
+        self.processing_times = []
+    
+    def _get_class_names(self):
+        """دریافت نام کلاس‌های Pascal VOC"""
+        return [
+            'background', 'aeroplane', 'bicycle', 'bird', 'boat', 'bottle',
+            'bus', 'car', 'cat', 'chair', 'cow', 'diningtable', 'dog',
+            'horse', 'motorbike', 'person', 'pottedplant', 'sheep', 'sofa',
+            'train', 'tvmonitor'
+        ]
+    
+    def _generate_colors(self):
+        """تولید رنگ‌های منحصر به فرد برای هر کلاس"""
+        np.random.seed(42)
+        colors = []
+        for _ in range(len(self.class_names)):
+            color = (np.random.randint(0, 255), 
+                    np.random.randint(0, 255), 
+                    np.random.randint(0, 255))
+            colors.append(color)
+        return colors
+    
+    def _load_model(self):
+        """بارگیری مدل DeepLab"""
+        try:
+            logger.info(f"در حال بارگیری مدل {self.model_name}...")
+            
+            if self.model_name == 'deeplabv3_resnet101':
+                self.model = torch.hub.load('pytorch/vision:v0.10.0', 
+                                          'deeplabv3_resnet101', 
+                                          pretrained=True)
+            elif self.model_name == 'deeplabv3_mobilenet':
+                self.model = torch.hub.load('pytorch/vision:v0.10.0', 
+                                          'deeplabv3_mobilenet_v3_large', 
+                                          pretrained=True)
+            else:
+                logger.error(f"مدل {self.model_name} پشتیبانی نمی‌شود")
+                return
+            
+            self.model.to(self.device)
+            self.model.eval()
+            
+            # تنظیمات پیش‌پردازش
+            self.preprocess = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.485, 0.456, 0.406], 
+                                   std=[0.229, 0.224, 0.225]),
+            ])
+            
+            logger.info(f"✅ مدل {self.model_name} با موفقیت بارگیری شد")
+            
+        except Exception as e:
+            logger.error(f"خطا در بارگیری مدل: {e}")
+            self.model = None
+    
+    def preprocess_image(self, image: np.ndarray) -> torch.Tensor:
+        """پیش‌پردازش تصویر"""
+        # تبدیل به PIL Image
+        if isinstance(image, np.ndarray):
+            image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        
+        # پیش‌پردازش
+        input_tensor = self.preprocess(image)
+        input_batch = input_tensor.unsqueeze(0)  # ایجاد batch dimension
+        
+        return input_batch.to(self.device)
+    
+    def segment_image(self, image: np.ndarray) -> Tuple[np.ndarray, Dict]:
+        """بخش‌بندی تصویر"""
+        if self.model is None:
+            raise ValueError("مدل بارگیری نشده است")
+        
+        start_time = time.time()
+        
+        # پیش‌پردازش
+        input_batch = self.preprocess_image(image)
+        
+        # اجرای مدل
+        with torch.no_grad():
+            output = self.model(input_batch)['out'][0]
+        
+        # تبدیل خروجی به numpy
+        output_predictions = output.argmax(0).cpu().numpy()
+        
+        # ایجاد ماسک رنگی
+        colored_mask = self._create_colored_mask(output_predictions)
+        
+        # آنالیز نتایج
+        analysis = self._analyze_segmentation(output_predictions)
+        
+        inference_time = time.time() - start_time
+        
+        # ذخیره زمان پردازش
+        self.processing_times.append(inference_time)
+        if len(self.processing_times) > 100:
+            self.processing_times.pop(0)
+        
+        return colored_mask, {
+            'mask': output_predictions,
+            'analysis': analysis,
+            'inference_time': inference_time
+        }
+    
+    def _create_colored_mask(self, mask: np.ndarray) -> np.ndarray:
+        """ایجاد ماسک رنگی از خروجی بخش‌بندی"""
+        h, w = mask.shape
+        colored_mask = np.zeros((h, w, 3), dtype=np.uint8)
+        
+        for class_id in range(len(self.class_names)):
+            colored_mask[mask == class_id] = self.colors[class_id]
+        
+        return colored_mask
+    
+    def _analyze_segmentation(self, mask: np.ndarray) -> Dict:
+        """آنالیز نتایج بخش‌بندی"""
+        unique, counts = np.unique(mask, return_counts=True)
+        total_pixels = mask.size
+        
+        class_distribution = {}
+        for class_id, count in zip(unique, counts):
+            class_name = self.class_names[class_id]
+            percentage = (count / total_pixels) * 100
+            class_distribution[class_name] = {
+                'pixel_count': int(count),
+                'percentage': float(percentage),
+                'color': self.colors[class_id]
+            }
+        
+        # پیدا کردن کلاس‌های اصلی
+        main_classes = sorted(class_distribution.items(), 
+                            key=lambda x: x[1]['percentage'], 
+                            reverse=True)[:5]
+        
+        return {
+            'class_distribution': class_distribution,
+            'main_classes': main_classes,
+            'total_classes_detected': len(unique),
+            'dominant_class': main_classes[0][0] if main_classes else None
+        }
+    
+    def overlay_mask(self, original_image: np.ndarray, mask: np.ndarray, 
+                    alpha: float = 0.5) -> np.ndarray:
+        """ترکیب ماسک با تصویر اصلی"""
+        # تغییر اندازه ماسک اگر لازم باشد
+        if mask.shape[:2] != original_image.shape[:2]:
+            mask = cv2.resize(mask, (original_image.shape[1], original_image.shape[0]))
+        
+        # ترکیب تصاویر
+        overlay = cv2.addWeighted(original_image, 1 - alpha, mask, alpha, 0)
+        
+        return overlay
+    
+    def create_segmentation_visualization(self, original_image: np.ndarray, 
+                                        mask: np.ndarray, 
+                                        analysis: Dict) -> np.ndarray:
+        """ایجاد تصویر کامل بخش‌بندی شده"""
+        h, w = original_image.shape[:2]
+        
+        # ایجاد تصویر ترکیبی
+        overlay = self.overlay_mask(original_image, mask, 0.6)
+        
+        # اضافه کردن اطلاعات کلاس‌ها
+        y_offset = 30
+        for class_name, info in analysis['main_classes']:
+            color = info['color']
+            percentage = info['percentage']
+            
+            # رسم مستطیل رنگی
+            cv2.rectangle(overlay, (10, y_offset - 20), (40, y_offset), color, -1)
+            
+            # متن اطلاعات
+            text = f"{class_name}: {percentage:.1f}%"
+            cv2.putText(overlay, text, (50, y_offset),
+                       cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+            
+            y_offset += 30
+        
+        # اضافه کردن عنوان
+        cv2.putText(overlay, "Semantic Segmentation", (10, h - 20),
+                   cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+        
+        return overlay
+    
+    def extract_object_masks(self, mask: np.ndarray, 
+                           target_classes: List[str]) -> Dict[str, np.ndarray]:
+        """استخراج ماسک اشیاء خاص"""
+        object_masks = {}
+        
+        for class_name in target_classes:
+            if class_name in self.class_names:
+                class_id = self.class_names.index(class_name)
+                object_mask = (mask == class_id).astype(np.uint8) * 255
+                object_masks[class_name] = object_mask
+        
+        return object_masks
+    
+    def measure_object_properties(self, original_image: np.ndarray, 
+                                mask: np.ndarray) -> Dict[str, Dict]:
+        """اندازه‌گیری ویژگی‌های اشیاء"""
+        properties = {}
+        
+        for class_id in np.unique(mask):
+            if class_id == 0:  # نادیده گرفتن پس‌زمینه
+                continue
+            
+            class_name = self.class_names[class_id]
+            class_mask = (mask == class_id).astype(np.uint8)
+            
+            # پیدا کردن کانتورها
+            contours, _ = cv2.findContours(class_mask, cv2.RETR_EXTERNAL, 
+                                         cv2.CHAIN_APPROX_SIMPLE)
+            
+            if contours:
+                # بزرگترین کانتور
+                largest_contour = max(contours, key=cv2.contourArea)
+                
+                # محاسبه ویژگی‌ها
+                area = cv2.contourArea(largest_contour)
+                perimeter = cv2.arcLength(largest_contour, True)
+                
+                if perimeter > 0:
+                    circularity = 4 * np.pi * area / (perimeter ** 2)
+                else:
+                    circularity = 0
+                
+                # مستطیل محاطی
+                x, y, w, h = cv2.boundingRect(largest_contour)
+                
+                # لحظه‌های تصویر
+                moments = cv2.moments(largest_contour)
+                if moments['m00'] != 0:
+                    cx = int(moments['m10'] / moments['m00'])
+                    cy = int(moments['m01'] / moments['m00'])
+                else:
+                    cx, cy = x + w // 2, y + h // 2
+                
+                properties[class_name] = {
+                    'area': float(area),
+                    'perimeter': float(perimeter),
+                    'circularity': float(circularity),
+                    'bounding_box': (x, y, w, h),
+                    'centroid': (cx, cy),
+                    'aspect_ratio': float(w / h) if h > 0 else 0
+                }
+        
+        return properties
+    
+    def real_time_segmentation(self, camera_index=0):
+        """بخش‌بندی در زمان واقعی از دوربین"""
+        cap = cv2.VideoCapture(camera_index)
+        
+        if not cap.isOpened():
+            logger.error("خطا در اتصال به دوربین")
+            return
+        
+        logger.info("🎥 شروع بخش‌بندی در زمان واقعی...")
+        logger.info("برای خروج کلید 'q' را فشار دهید")
+        
+        try:
+            while True:
+                ret, frame = cap.read()
+                
+                if not ret:
+                    break
+                
+                # تغییر اندازه فریم برای پردازش سریع‌تر
+                frame = cv2.resize(frame, (640, 480))
+                
+                # بخش‌بندی تصویر
+                try:
+                    colored_mask, results = self.segment_image(frame)
+                    
+                    # ایجاد تصویر نهایی
+                    visualization = self.create_segmentation_visualization(
+                        frame, colored_mask, results['analysis']
+                    )
+                    
+                    # نمایش زمان inference
+                    avg_inference_time = sum(self.processing_times) / len(self.processing_times) if self.processing_times else 0
+                    cv2.putText(visualization, 
+                               f"Avg Inference: {avg_inference_time*1000:.1f}ms",
+                               (10, visualization.shape[0] - 50),
+                               cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+                    
+                except Exception as e:
+                    logger.error(f"خطا در بخش‌بندی: {e}")
+                    visualization = frame
+                
+                cv2.imshow('Real-time Segmentation', visualization)
+                
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
+                    
+        except KeyboardInterrupt:
+            logger.info("\n🛑 توقف توسط کاربر")
+        finally:
+            cap.release()
+            cv2.destroyAllWindows()
+    
+    def save_segmentation_report(self, results: Dict, filename='segmentation_report.json'):
+        """ذخیره گزارش بخش‌بندی"""
+        report = {
+            'timestamp': datetime.now().isoformat(),
+            'model': self.model_name,
+            'device': self.device,
+            'results': results,
+            'performance': {
+                'average_inference_time': sum(self.processing_times) / len(self.processing_times) if self.processing_times else 0,
+                'total_processed': len(self.processing_times)
+            }
+        }
+        
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(report, f, indent=2, ensure_ascii=False)
+        
+        logger.info(f"گزارش بخش‌بندی در فایل '{filename}' ذخیره شد")
+
+def main():
+    """تابع اصلی اجرای سیستم"""
+    print("🎨 سیستم بخش‌بندی تصویر با DeepLab")
+    print("=" * 50)
+    
+    # ایجاد بخش‌بند
+    segmenter = DeepLabSegmentation()
+    
+    if segmenter.model is None:
+        print("❌ مدل بارگیری نشد، خروج از برنامه")
+        return
+    
+    # بخش‌بندی تصویر نمونه
+    image_path = "sample_image.jpg"
+    
+    try:
+        # خواندن تصویر
+        if os.path.exists(image_path):
+            image = cv2.imread(image_path)
+        else:
+            # ایجاد تصویر نمونه
+            print("📝 ایجاد تصویر نمونه...")
+            image = np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)
+            cv2.imwrite(image_path, image)
+        
+        # بخش‌بندی
+        print("🔄 در حال بخش‌بندی تصویر...")
+        colored_mask, results = segmenter.segment_image(image)
+        
+        # ایجاد تصویر نهایی
+        visualization = segmenter.create_segmentation_visualization(
+            image, colored_mask, results['analysis']
+        )
+        
+        # ذخیره نتایج
+        cv2.imwrite("segmentation_result.jpg", visualization)
+        cv2.imwrite("segmentation_mask.jpg", colored_mask)
+        
+        print("✅ بخش‌بندی با موفقیت انجام شد")
+        print(f"⏱️ زمان پردازش: {results['inference_time']*1000:.1f} میلی‌ثانیه")
+        print(f"🎯 کلاس‌های تشخیص داده شده: {results['analysis']['total_classes_detected']}")
+        print(f"🏆 کلاس اصلی: {results['analysis']['dominant_class']}")
+        
+        # اندازه‌گیری ویژگی‌ها
+        properties = segmenter.measure_object_properties(image, results['mask'])
+        print("\n📊 ویژگی‌های اشیاء:")
+        for class_name, props in properties.items():
+            print(f"   {class_name}:")
+            print(f"      مساحت: {props['area']:.0f} پیکسل")
+            print(f"      محیط: {props['perimeter']:.0f} پیکسل")
+            print(f"      گردی: {props['circularity']:.2f}")
+        
+        # ذخیره گزارش
+        segmenter.save_segmentation_report(results)
+        
+        # بخش‌بندی در زمان واقعی
+        print("\n🎥 شروع بخش‌بندی در زمان واقعی...")
+        segmenter.real_time_segmentation()
+        
+    except Exception as e:
+        print(f"❌ خطا: {e}")
+
+if __name__ == "__main__":
+    main()
+                    </code></pre>
+                    
+                    <!-- بخش خروجی کد -->
+                    <div class="mt-3">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0">خروجی نمونه</h6>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="toggleOutput('image-segmentation-output')">
+                                    <i class="bi bi-eye"></i> نمایش
+                                </button>
+                            </div>
+                            <div class="card-body d-none" id="image-segmentation-output">
+                                <pre class="bg-light p-3 rounded">
+🎨 سیستم بخش‌بندی تصویر با DeepLab
+==================================================
+در حال بارگیری مدل deeplabv3_resnet101...
+✅ مدل deeplabv3_resnet101 با موفقیت بارگیری شد
+📝 ایجاد تصویر نمونه...
+🔄 در حال بخش‌بندی تصویر...
+✅ بخش‌بندی با موفقیت انجام شد
+⏱️ زمان پردازش: 245.3 میلی‌ثانیه
+🎯 کلاس‌های تشخیص داده شده: 8
+🏆 کلاس اصلی: background
+
+📊 ویژگی‌های اشیاء:
+   person:
+      مساحت: 12540 پیکسل
+      محیط: 580 پیکسل
+      گردی: 0.47
+   car:
+      مساحت: 8750 پیکسل
+      محیط: 420 پیکسل
+      گردی: 0.62
+
+🎥 شروع بخش‌بندی در زمان واقعی...
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- اطلاعات تکمیلی -->
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div class="card border-primary">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">📚 کتابخانه‌های مورد استفاده</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>OpenCV:</strong> پردازش تصویر و ویدیو</li>
+                        <li><strong>NumPy:</strong> محاسبات عددی و آرایه‌ها</li>
+                        <li><strong>Matplotlib:</strong> بصری‌سازی و نمودارها</li>
+                        <li><strong>TensorFlow/PyTorch:</strong> یادگیری عمیق</li>
+                        <li><strong>YOLO/DeepLab:</strong> مدل‌های تشخیص اشیاء</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-info">
+                <div class="card-body">
+                    <h5 class="card-title text-info">⚡ قابلیت‌های پیاده‌سازی شده</h5>
+                    <ul class="list-unstyled">
+                        <li>تشخیص چهره و اشیاء پیشرفته</li>
+                        <li>فیلترهای تصویری و افکت‌های گرافیکی</li>
+                        <li>سیستم تشخیص حرکت هوشمند</li>
+                        <li>تشخیص اشیاء در زمان واقعی با YOLO</li>
+                        <li>بخش‌بندی تصویر با DeepLab</li>
+                        <li>آنالیز و گزارش‌گیری خودکار</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- بخش آمار و نمودارها -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">📊 آمار و عملکرد پروژه‌ها</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h2 class="text-primary">5+</h2>
+                                    <p class="card-text">پروژه کامل</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h2 class="text-success">2000+</h2>
+                                    <p class="card-text">خط کد</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h2 class="text-warning">15+</h2>
+                                    <p class="card-text">الگوریتم مختلف</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h2 class="text-info">100%</h2>
+                                    <p class="card-text">کد منبع باز</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- نمودار پیشرفت -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h6 class="mb-3">نمودار پیشرفت پروژه‌ها</h6>
+                            <div class="progress mb-3" style="height: 25px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">تشخیص چهره: 100%</div>
+                            </div>
+                            <div class="progress mb-3" style="height: 25px;">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">فیلترهای تصویری: 100%</div>
+                            </div>
+                            <div class="progress mb-3" style="height: 25px;">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">تشخیص حرکت: 100%</div>
+                            </div>
+                            <div class="progress mb-3" style="height: 25px;">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">YOLO: 100%</div>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">بخش‌بندی تصویر: 100%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <div class="card bg-gradient-primary text-white shadow-lg">
+                <div class="card-body py-5">
+                    <h3 class="fw-bold mb-3">🎯 پروژه‌های بیشتر و کدهای کامل</h3>
+                    <p class="mb-4">برای مشاهده پروژه‌های کامل و کدهای بیشتر به مخزن GitHub مراجعه کنید</p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a href="{% url 'projects' %}" class="btn btn-light btn-lg">
+                            <i class="bi bi-arrow-left me-2"></i>بازگشت به پروژه‌ها
+                        </a>
+                        <a href="https://github.com/Amirmohammdkhaki" class="btn btn-outline-light btn-lg" target="_blank">
+                            <i class="bi bi-github me-2"></i>مشاهده کد کامل
+                        </a>
+                        <a href="{% url 'post_list' %}" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-journal-code me-2"></i>مقالات آموزشی
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 1rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .code-container {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 0.5rem;
+        font-size: 0.85rem;
+        line-height: 1.4;
+        position: relative;
+    }
+    
+    /* استایل برای حالت روز */
+    .code-container code {
+        color: #d63384;
+        font-family: 'Courier New', monospace;
+    }
+    
+    /* استایل برای حالت شب */
+    [data-theme="dark"] .code-container {
+        background: #2d3748;
+        border-color: #4a5568;
+    }
+    
+    [data-theme="dark"] .code-container code {
+        color: #68d391;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .card-header {
+        border-radius: 1rem 1rem 0 0 !important;
+    }
+    
+    /* استایل برای دکمه کپی */
+    .copy-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+    }
+    
+    .copy-button:hover {
+        opacity: 1;
+    }
+    
+    /* استایل برای حالت شب */
+    [data-theme="dark"] .card {
+        background-color: #2d3748;
+        color: #e2e8f0;
+    }
+    
+    [data-theme="dark"] .card-header {
+        background-color: #1a202c !important;
+    }
+    
+    [data-theme="dark"] .text-muted {
+        color: #a0aec0 !important;
+    }
+    
+    [data-theme="dark"] .border-primary {
+        border-color: #4299e1 !important;
+    }
+    
+    [data-theme="dark"] .border-info {
+        border-color: #63b3ed !important;
+    }
+    
+    [data-theme="dark"] .text-primary {
+        color: #63b3ed !important;
+    }
+    
+    [data-theme="dark"] .text-info {
+        color: #63b3ed !important;
+    }
+    
+    /* استایل برای بخش‌های کد */
+    .code-section {
+        transition: all 0.3s ease;
+    }
+    
+    .code-section:hover {
+        transform: translateY(-3px);
+    }
+    
+    /* استایل برای فیلترها */
+    .filter-btn {
+        transition: all 0.2s ease;
+    }
+    
+    .filter-btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    .filter-btn.active {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+    }
+    
+    /* استایل برای بخش خروجی */
+    .output-section {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    
+    /* انیمیشن‌ها */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .fade-in {
+        animation: fadeIn 0.5s ease-in;
+    }
+</style>
+
+<script>
+// اسکریپت برای هایلایت کد و دکمه کپی
+document.addEventListener('DOMContentLoaded', function() {
+    // اضافه کردن قابلیت کپی کردن کد
+    const codeBlocks = document.querySelectorAll('pre code');
+    
+    codeBlocks.forEach((codeBlock) => {
+        const pre = codeBlock.parentElement;
+        
+        // ایجاد دکمه کپی
+        const copyButton = document.createElement('button');
+        copyButton.className = 'btn btn-sm btn-outline-secondary copy-button';
+        copyButton.innerHTML = '<i class="bi bi-clipboard"></i>';
+        copyButton.title = 'کپی کد';
+        
+        pre.style.position = 'relative';
+        pre.appendChild(copyButton);
+        
+        copyButton.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(codeBlock.textContent);
+                copyButton.innerHTML = '<i class="bi bi-check"></i>';
+                copyButton.className = 'btn btn-sm btn-success copy-button';
+                
+                setTimeout(() => {
+                    copyButton.innerHTML = '<i class="bi bi-clipboard"></i>';
+                    copyButton.className = 'btn btn-sm btn-outline-secondary copy-button';
+                }, 2000);
+            } catch (err) {
+                console.error('خطا در کپی کردن: ', err);
+            }
+        });
+    });
+    
+    // انیمیشن برای کارت‌ها
+    const cards = document.querySelectorAll('.card');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.6s ease';
+        observer.observe(card);
+    });
+    
+    // تشخیص حالت شب و تنظیم استایل‌های مناسب
+    function checkDarkMode() {
+        const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark' || 
+                          window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (isDarkMode) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+    }
+    
+    // بررسی اولیه حالت شب
+    checkDarkMode();
+    
+    // گوش دادن به تغییرات حالت شب
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', checkDarkMode);
+    }
+    
+    // گوش دادن به تغییرات دکمه حالت شب (اگر وجود داشته باشد)
+    const darkModeToggle = document.querySelector('.dark-mode-toggle');
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', () => {
+            const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDarkMode) {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        });
+    }
+    
+    // فیلتر کردن بخش‌های کد
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const codeSections = document.querySelectorAll('.code-section');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // حذف کلاس active از همه دکمه‌ها
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // اضافه کردن کلاس active به دکمه فعلی
+            button.classList.add('active');
+            
+            const filter = button.getAttribute('data-filter');
+            
+            codeSections.forEach(section => {
+                if (filter === 'all' || section.getAttribute('data-category').includes(filter)) {
+                    section.style.display = 'block';
+                    section.classList.add('fade-in');
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    // جستجوی کدها
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            codeSections.forEach(section => {
+                const title = section.querySelector('.card-header h4').textContent.toLowerCase();
+                const description = section.querySelector('.card-body p').textContent.toLowerCase();
+                const code = section.querySelector('code').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm) || code.includes(searchTerm)) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        });
+    }
+});
+
+// توابع کمکی
+function copyCode(codeId) {
+    const codeElement = document.getElementById(codeId + '-code');
+    const codeText = codeElement.textContent;
+    
+    navigator.clipboard.writeText(codeText).then(() => {
+        // نمایش پیام موفقیت
+        showToast('کد با موفقیت کپی شد', 'success');
+    }).catch(err => {
+        console.error('خطا در کپی کردن: ', err);
+        showToast('خطا در کپی کردن کد', 'error');
+    });
+}
+
+function downloadCode(codeId) {
+    const codeElement = document.getElementById(codeId + '-code');
+    const codeText = codeElement.textContent;
+    const fileName = codeId + '.py';
+    
+    const blob = new Blob([codeText], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    
+    // نمایش پیام موفقیت
+    showToast('کد با موفقیت دانلود شد', 'success');
+}
+
+function toggleOutput(outputId) {
+    const outputElement = document.getElementById(outputId);
+    const button = event.target.closest('button');
+    
+    if (outputElement.classList.contains('d-none')) {
+        outputElement.classList.remove('d-none');
+        button.innerHTML = '<i class="bi bi-eye-slash"></i> مخفی';
+    } else {
+        outputElement.classList.add('d-none');
+        button.innerHTML = '<i class="bi bi-eye"></i> نمایش';
+    }
+}
+
+function showToast(message, type = 'info') {
+    // ایجاد toast
+    const toast = document.createElement('div');
+    toast.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'primary'} border-0`;
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    
+    toast.innerHTML = `
+        <div class="d-flex">
+            <div class="toast-body">
+                ${message}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    `;
+    
+    // ایجاد container برای toast اگر وجود ندارد
+    let toastContainer = document.querySelector('.toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+        document.body.appendChild(toastContainer);
+    }
+    
+    // اضافه کردن toast به container
+    toastContainer.appendChild(toast);
+    
+    // نمایش toast
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+    
+    // حذف toast پس از مخفی شدن
+    toast.addEventListener('hidden.bs.toast', () => {
+        toast.remove();
+    });
+}
+</script>
+{% endblock %}

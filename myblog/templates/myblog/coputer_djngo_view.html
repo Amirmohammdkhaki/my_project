@@ -1,0 +1,1042 @@
+{% extends "_base.html" %}
+
+{% block head_title %}آموزش Django Views | وبلاگ امیرمحمد{% endblock %}
+
+{% block breadcrumb_items %}
+    <li class="breadcrumb-item active" aria-current="page">Django Views</li>
+{% endblock %}
+
+{% block content %}
+<!-- ===================================
+     MAIN CONTAINER
+==================================== -->
+<div class="container-fluid px-3">
+    
+    <!-- ===================================
+         HERO SECTION WITH STICKY HEADER
+    ===================================== -->
+    <section class="hero-section text-center py-4 mb-4 fade-in position-relative" id="heroSection">
+        <div class="position-relative z-2">
+            <div class="badge bg-primary text-white px-3 py-1 mb-2">
+                <i class="bi bi-bookmark-star me-2"></i>آموزش پیشرفته
+            </div>
+            <h1 class="display-5 fw-bold mb-3 gradient-text">
+                مسلط شدن به Django Views
+            </h1>
+            <p class="lead mx-auto" style="max-width: 600px;">
+                از مبانی تا تکنیک‌های پیشرفته: راهنمای کامل برای ساخت Viewهای قدرتمند و کارآمد در Django
+            </p>
+            <div class="d-flex justify-content-center gap-2 mt-3 flex-wrap">
+                <span class="badge bg-light text-dark px-2 py-1">
+                    <i class="bi bi-clock me-1"></i> ۱۵ دقیقه
+                </span>
+                <span class="badge bg-light text-dark px-2 py-1">
+                    <i class="bi bi-bar-chart me-1"></i> متوسط
+                </span>
+                <span class="badge bg-light text-dark px-2 py-1">
+                    <i class="bi bi-calendar3 me-1"></i> ۱۴۰۲/۰۶/۱۵
+                </span>
+                <span class="badge bg-light text-dark px-2 py-1">
+                    <i class="bi bi-eye me-1"></i> ۲,۳۴۵ بازدید
+                </span>
+            </div>
+        </div>
+        
+        <!-- Background Elements -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden z-1">
+            <div class="hero-circle circle-1"></div>
+            <div class="hero-circle circle-2"></div>
+            <div class="hero-circle circle-3"></div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         TABLE OF CONTENTS AND MAIN CONTENT
+    ===================================== -->
+    <div class="row mb-4">
+        <!-- Sidebar with TOC -->
+        <div class="col-lg-3">
+            <div class="sticky-top" style="top: 80px;">
+                <!-- Table of Contents Card -->
+                <div class="card shadow-sm border-0 mb-3">
+                    <div class="card-body p-2">
+                        <h5 class="card-title mb-2">
+                            <i class="bi bi-list-ul me-2 text-primary"></i>فهرست مطالب
+                        </h5>
+                        <nav class="toc">
+                            <ul class="list-unstyled">
+                                <li class="mb-1">
+                                    <a href="#intro" class="text-decoration-none d-flex align-items-center">
+                                        <span class="badge bg-primary me-2" style="font-size: 0.7rem;">1</span>
+                                        Views در Django چیست؟
+                                    </a>
+                                </li>
+                                <li class="mb-1">
+                                    <a href="#generic" class="text-decoration-none d-flex align-items-center">
+                                        <span class="badge bg-primary me-2" style="font-size: 0.7rem;">2</span>
+                                        Generic Views
+                                    </a>
+                                </li>
+                                <li class="mb-1">
+                                    <a href="#types" class="text-decoration-none d-flex align-items-center">
+                                        <span class="badge bg-primary me-2" style="font-size: 0.7rem;">3</span>
+                                        انواع Views
+                                    </a>
+                                </li>
+                                <li class="mb-1">
+                                    <a href="#fbv" class="text-decoration-none d-flex align-items-center">
+                                        <span class="badge bg-primary me-2" style="font-size: 0.7rem;">4</span>
+                                        Function-Based Views
+                                    </a>
+                                </li>
+                                <li class="mb-1">
+                                    <a href="#cbv" class="text-decoration-none d-flex align-items-center">
+                                        <span class="badge bg-primary me-2" style="font-size: 0.7rem;">5</span>
+                                        Class-Based Views
+                                    </a>
+                                </li>
+                                <li class="mb-1">
+                                    <a href="#common-mistakes" class="text-decoration-none d-flex align-items-center">
+                                        <span class="badge bg-danger me-2" style="font-size: 0.7rem;">6</span>
+                                        اشتباهات رایج
+                                    </a>
+                                </li>
+                                <li class="mb-1">
+                                    <a href="#best" class="text-decoration-none d-flex align-items-center">
+                                        <span class="badge bg-primary me-2" style="font-size: 0.7rem;">7</span>
+                                        بهترین روش‌ها
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                
+                <!-- Tags Section -->
+                <div class="card shadow-sm border-0 mb-3">
+                    <div class="card-body p-2">
+                        <h5 class="card-title mb-2">
+                            <i class="bi bi-tags me-2 text-primary"></i>برچسب‌ها
+                        </h5>
+                        <div class="d-flex flex-wrap gap-1">
+                            <a href="#" class="badge bg-light text-dark text-decoration-none">Django</a>
+                            <a href="#" class="badge bg-light text-dark text-decoration-none">Python</a>
+                            <a href="#" class="badge bg-light text-dark text-decoration-none">Views</a>
+                            <a href="#" class="badge bg-light text-dark text-decoration-none">Backend</a>
+                            <a href="#" class="badge bg-light text-dark text-decoration-none">Web Dev</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Newsletter Signup -->
+                <div class="card shadow-sm border-0 bg-gradient-primary text-white">
+                    <div class="card-body p-2">
+                        <h5 class="card-title mb-2">
+                            <i class="bi bi-envelope me-2"></i>خبرنامه
+                        </h5>
+                        <p class="small mb-2">برای دریافت آخرین مقالات، عضو خبرنامه ما شوید.</p>
+                        <form>
+                            <div class="mb-2">
+                                <input type="email" class="form-control form-control-sm" placeholder="ایمیل شما">
+                            </div>
+                            <button type="submit" class="btn btn-light btn-sm w-100">عضویت</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9">
+            <!-- Introduction Section -->
+            <section id="intro" class="content-section mb-4 fade-in">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="icon-box bg-primary bg-opacity-10 rounded-circle p-2 me-2">
+                                <i class="bi bi-lightbulb text-primary fs-5"></i>
+                            </div>
+                            <div>
+                                <h2 class="h5 mb-0">Views در Django چیست؟</h2>
+                                <p class="text-muted mb-0 small">قلب تپنده اپلیکیشن Django شما</p>
+                            </div>
+                        </div>
+                        <p class="mb-2">
+                            Views در Django مانند مغز اپلیکیشن شما عمل می‌کنند - آن‌ها درخواست‌ها را پردازش کرده و تصمیم می‌گیرند چه پاسخی به کاربر برگردانند.
+                        </p>
+                        <div class="alert alert-info border-0 bg-light py-2">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <strong>نکته کلیدی:</strong> هر View یک تابع یا کلاس پایتون است که یک درخواست وب (HttpRequest) را دریافت کرده و یک پاسخ وب (HttpResponse) را برمی‌گرداند.
+                        </div>
+                        
+                        <!-- Interactive Diagram -->
+                        <div class="mt-3 p-2 bg-light rounded">
+                            <h6 class="mb-2">چرخه درخواست-پاسخ در Django</h6>
+                            <div class="request-response-diagram">
+                                <div class="diagram-step text-center mb-2">
+                                    <div class="step-circle bg-primary text-white rounded-circle mx-auto mb-1">1</div>
+                                    <p class="small mb-0">کاربر درخواست را ارسال می‌کند</p>
+                                </div>
+                                <div class="diagram-arrow text-center mb-2">
+                                    <i class="bi bi-arrow-down text-primary"></i>
+                                </div>
+                                <div class="diagram-step text-center mb-2">
+                                    <div class="step-circle bg-info text-white rounded-circle mx-auto mb-1">2</div>
+                                    <p class="small mb-0">URL Dispatcher درخواست را به View مناسب ارسال می‌کند</p>
+                                </div>
+                                <div class="diagram-arrow text-center mb-2">
+                                    <i class="bi bi-arrow-down text-info"></i>
+                                </div>
+                                <div class="diagram-step text-center">
+                                    <div class="step-circle bg-success text-white rounded-circle mx-auto mb-1">3</div>
+                                    <p class="small mb-0">View درخواست را پردازش کرده و پاسخ را برمی‌گرداند</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Generic Views Section -->
+            <section id="generic" class="content-section mb-4 fade-in">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-3">
+                        <h2 class="h5 mb-3">
+                            <i class="bi bi-lightning-charge text-primary me-2"></i>
+                            Generic Views - قدرت واقعی Django
+                        </h2>
+                        <p class="mb-3">Django مجموعه‌ای از Viewهای آماده برای کارهای رایج ارائه می‌دهد که توسعه را سریع‌تر می‌کنند:</p>
+                        
+                        <div class="accordion" id="genericViewsAccordion">
+                            <!-- ListView -->
+                            <div class="accordion-item border-0 mb-2">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button py-2" type="button" data-bs-toggle="collapse" data-bs-target="#listView">
+                                        <i class="bi bi-list-ul me-2"></i>
+                                        ListView - نمایش لیست اشیاء
+                                    </button>
+                                </h2>
+                                <div id="listView" class="accordion-collapse collapse show" data-bs-parent="#genericViewsAccordion">
+                                    <div class="accordion-body p-2">
+                                        <pre class="bg-light p-2 rounded" dir="ltr"><code>from django.views.generic import ListView
+from .models import Post
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+    ordering = ['-created_at']</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- DetailView -->
+                            <div class="accordion-item border-0 mb-2">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#detailView">
+                                        <i class="bi bi-file-text me-2"></i>
+                                        DetailView - نمایش جزئیات یک شیء
+                                    </button>
+                                </h2>
+                                <div id="detailView" class="accordion-collapse collapse" data-bs-parent="#genericViewsAccordion">
+                                    <div class="accordion-body p-2">
+                                        <pre class="bg-light p-2 rounded" dir="ltr"><code>from django.views.generic import DetailView
+from .models import Post
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+    slug_url_kwarg = 'post_slug'
+    context_object_name = 'post'</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- CreateView -->
+                            <div class="accordion-item border-0 mb-2">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#createView">
+                                        <i class="bi bi-plus-circle me-2"></i>
+                                        CreateView - ایجاد شیء جدید
+                                    </button>
+                                </h2>
+                                <div id="createView" class="accordion-collapse collapse" data-bs-parent="#genericViewsAccordion">
+                                    <div class="accordion-body p-2">
+                                        <pre class="bg-light p-2 rounded" dir="ltr"><code>from django.views.generic import CreateView
+from .models import Post
+from django.urls import reverse_lazy
+
+class PostCreateView(CreateView):
+    model = Post
+    template_name = 'blog/post_form.html'
+    fields = ['title', 'content', 'category']
+    success_url = reverse_lazy('post_list')</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- UpdateView -->
+                            <div class="accordion-item border-0 mb-2">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#updateView">
+                                        <i class="bi bi-pencil-square me-2"></i>
+                                        UpdateView - ویرایش شیء موجود
+                                    </button>
+                                </h2>
+                                <div id="updateView" class="accordion-collapse collapse" data-bs-parent="#genericViewsAccordion">
+                                    <div class="accordion-body p-2">
+                                        <pre class="bg-light p-2 rounded" dir="ltr"><code>from django.views.generic import UpdateView
+from .models import Post
+from django.urls import reverse_lazy
+
+class PostUpdateView(UpdateView):
+    model = Post
+    template_name = 'blog/post_form.html'
+    fields = ['title', 'content', 'category']
+    slug_url_kwarg = 'post_slug'
+    
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'post_slug': self.object.slug})
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- DeleteView -->
+                            <div class="accordion-item border-0">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#deleteView">
+                                        <i class="bi bi-trash me-2"></i>
+                                        DeleteView - حذف شیء
+                                    </button>
+                                </h2>
+                                <div id="deleteView" class="accordion-collapse collapse" data-bs-parent="#genericViewsAccordion">
+                                    <div class="accordion-body p-2">
+                                        <pre class="bg-light p-2 rounded" dir="ltr"><code>from django.views.generic import DeleteView
+from .models import Post
+from django.urls import reverse_lazy
+
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'blog/post_confirm_delete.html'
+    slug_url_kwarg = 'post_slug'
+    success_url = reverse_lazy('post_list')
+    
+    def get_queryset(self):
+        return Post.objects.filter(author=self.request.user)</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-success border-0 mt-3 py-2">
+                            <i class="bi bi-lightbulb me-2"></i>
+                            <strong>نکته حرفه‌ای:</strong> با استفاده از Generic Views می‌توانید تا ۷۰٪ در کدنویسی صرفه‌جویی کنید.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Types of Views Section -->
+            <section id="types" class="content-section mb-4 fade-in">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-3">
+                        <h2 class="h5 mb-3">
+                            <i class="bi bi-diagram-3 text-primary me-2"></i>
+                            انواع Views در Django
+                        </h2>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 bg-light">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="icon-box bg-success bg-opacity-10 rounded-circle p-2 me-2">
+                                                <i class="bi bi-code-slash text-success"></i>
+                                            </div>
+                                            <h6 class="mb-0">Function-Based Views</h6>
+                                        </div>
+                                        <p class="small mb-2">توابع ساده پایتون که برای منطق‌های مستقیم و خوانا ایده‌آل هستند.</p>
+                                        <ul class="small list-unstyled mb-0">
+                                            <li><i class="bi bi-check-circle text-success me-1"></i> سادگی و خوانایی بالا</li>
+                                            <li><i class="bi bi-check-circle text-success me-1"></i> مناسب برای شروع‌کنندگان</li>
+                                            <li><i class="bi bi-check-circle text-success me-1"></i> منطق مستقیم و قابل فهم</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 bg-light">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div class="icon-box bg-info bg-opacity-10 rounded-circle p-2 me-2">
+                                                <i class="bi bi-layers text-info"></i>
+                                            </div>
+                                            <h6 class="mb-0">Class-Based Views</h6>
+                                        </div>
+                                        <p class="small mb-2">کلاس‌های پایتون که قابلیت استفاده مجدد و گسترش پذیری را فراهم می‌کنند.</p>
+                                        <ul class="small list-unstyled mb-0">
+                                            <li><i class="bi bi-check-circle text-info me-1"></i> قابلیت ارث‌بری</li>
+                                            <li><i class="bi bi-check-circle text-info me-1"></i> کد کمتر برای کارهای تکراری</li>
+                                            <li><i class="bi bi-check-circle text-info me-1"></i> سازماندهی بهتر کد</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Function-Based Views Section -->
+            <section id="fbv" class="content-section mb-2 fade-in">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-3">
+                        <h2 class="h5 mb-3">
+                            <i class="bi bi-code-square text-primary me-2"></i>
+                            Function-Based Views
+                        </h2>
+                        <p class="mb-3">بیایید با یک مثال ساده شروع کنیم:</p>
+                        
+                        <div class="code-example mb-2">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-dark">views.py</span>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="copyCode(this)">
+                                    <i class="bi bi-clipboard me-1"></i>کپی
+                                </button>
+                            </div>
+                            <pre class="bg-dark text-light p-2 rounded" dir="ltr"><code>from django.http import HttpResponse
+from django.shortcuts import render
+
+def hello_world(request):
+    """یک View ساده که پیام خوشامدگویی را برمی‌گرداند"""
+    return HttpResponse("Hello, Django World!")
+
+def home_page(request):
+    """View اصلی با استفاده از template"""
+    context = {
+        'title': 'صفحه اصلی',
+        'posts': [
+            {'title': 'پست اول', 'content': 'محتوای پست اول...'},
+            {'title': 'پست دوم', 'content': 'محتوای پست دوم...'}
+        ]
+    }
+    return render(request, 'home.html', context)</code></pre>
+                        </div>
+
+                        <div class="alert alert-warning border-0 py-2 mb-0">
+                            <i class="bi bi-lightbulb me-2"></i>
+                            <strong>نکته:</strong> همیشه از توابع با نام‌های توصیفی استفاده کنید تا کد شما خواناتر باشد.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Class-Based Views Section -->
+            <section id="cbv" class="content-section mb-3 fade-in">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-3">
+                        <h2 class="h5 mb-3">
+                            <i class="bi bi-box text-primary me-2"></i>
+                            Class-Based Views
+                        </h2>
+                        <p class="mb-3">CBVs قدرت واقعی Django را نشان می‌دهند:</p>
+                        
+                        <div class="code-example mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-dark">views.py</span>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="copyCode(this)">
+                                    <i class="bi bi-clipboard me-1"></i>کپی
+                                </button>
+                            </div>
+                            <pre class="bg-dark text-light p-2 rounded" dir="ltr"><code>from django.views import View
+from django.shortcuts import render
+from django.http import JsonResponse
+
+class HomePageView(View):
+    """View اصلی با استفاده از کلاس"""
+    
+    def get(self, request):
+        """پاسخ به درخواست‌های GET"""
+        context = {
+            'title': 'صفحه اصلی',
+            'message': 'به سایت من خوش آمدید!'
+        }
+        return render(request, 'home.html', context)
+    
+    def post(self, request):
+        """پاسخ به درخواست‌های POST"""
+        name = request.POST.get('name', '')
+        return JsonResponse({'message': f'سلام {name}!'})
+    
+    def dispatch(self, request, *args, **kwargs):
+        """متد اصلی که نوع درخواست را مشخص می‌کند"""
+        return super().dispatch(request, *args, **kwargs)</code></pre>
+                        </div>
+
+                        <div class="row g-2 mt-2">
+                            <div class="col-md-4">
+                                <div class="text-center p-2 bg-light rounded">
+                                    <i class="bi bi-shield-check text-success fs-4 mb-1"></i>
+                                    <h6 class="small">امنیت بیشتر</h6>
+                                    <p class="small text-muted mb-0">کنترل بهتر روی دسترسی‌ها</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-center p-2 bg-light rounded">
+                                    <i class="bi bi-arrow-repeat text-info fs-4 mb-1"></i>
+                                    <h6 class="small">قابلیت استفاده مجدد</h6>
+                                    <p class="small text-muted mb-0">کد کمتر، کارایی بیشتر</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-center p-2 bg-light rounded">
+                                    <i class="bi bi-gear text-primary fs-4 mb-1"></i>
+                                    <h6 class="small">انعطاف‌پذیری</h6>
+                                    <p class="small text-muted mb-0">گسترش آسان با Mixins</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Common Mistakes Section -->
+            <section id="common-mistakes" class="content-section mb-4 fade-in">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-3">
+                        <h2 class="h5 mb-3">
+                            <i class="bi bi-exclamation-triangle text-danger me-2"></i>
+                            اشتباهات رایج در Django Views
+                        </h2>
+                        <p class="mb-3">در اینجا چند نمونه از کدهای اشتباه و راه‌حل صحیح آن‌ها را مشاهده می‌کنید:</p>
+                        
+                        <!-- Mistake 1: Model Definition -->
+                        <div class="mb-3">
+                            <h6 class="text-danger mb-2">
+                                <i class="bi bi-x-circle me-2"></i>
+                                اشتباه شماره ۱: تعریف نادرست Model
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="code-example mb-2">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="badge bg-danger">کد اشتباه</span>
+                                        </div>
+                                        <pre class="bg-danger bg-opacity-10 text-danger p-2 rounded" dir="ltr"><code># models.py - اشتباه
+from django.db import models
+
+class Post(models.Model):
+    title = models.CharField()
+    content = models.TextField(blank=True)
+    author = models.CharField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.title</code></pre>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-example mb-2">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="badge bg-success">کد صحیح</span>
+                                        </div>
+                                        <pre class="bg-success bg-opacity-10 text-success p-2 rounded" dir="ltr"><code># models.py - صحیح
+from django.db import models
+from django.contrib.auth.models import User
+
+class Post(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.title</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-warning border-0 py-2">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <strong>مشکل:</strong> CharField نیاز به max_length دارد، نباید blank=True برای فیلدهای ضروری استفاده کرد.
+                            </div>
+                        </div>
+                        
+                        <!-- Mistake 2: View Logic -->
+                        <div class="mb-3">
+                            <h6 class="text-danger mb-2">
+                                <i class="bi bi-x-circle me-2"></i>
+                                اشتباه شماره ۲: منطق نادرست در View
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="code-example mb-2">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="badge bg-danger">کد اشتباه</span>
+                                        </div>
+                                        <pre class="bg-danger bg-opacity-10 text-danger p-2 rounded" dir="ltr"><code># views.py - اشتباه
+from django.shortcuts import render
+from .models import Post
+
+def post_list(request):
+    posts = Post.objects.all()
+    if request.user.is_authenticated:
+        posts = posts.filter(author=request.user)
+    return render(request, 'post_list.html', {'posts': posts})</code></pre>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-example mb-2">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="badge bg-success">کد صحیح</span>
+                                        </div>
+                                        <pre class="bg-success bg-opacity-10 text-success p-2 rounded" dir="ltr"><code># views.py - صحیح
+from django.shortcuts import render
+from .models import Post
+
+def post_list(request):
+    if request.user.is_authenticated:
+        posts = Post.objects.filter(author=request.user)
+    else:
+        posts = Post.objects.filter(published=True)
+    return render(request, 'post_list.html', {'posts': posts})</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-warning border-0 py-2">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <strong>مشکل:</strong> در کد اشتباه، کاربران مهمان هیچ پستی نمی‌بینند و فیلتر کردن ناکارآمد است.
+                            </div>
+                        </div>
+                        
+                        <!-- Mistake 3: Form Handling -->
+                        <div class="mb-3">
+                            <h6 class="text-danger mb-2">
+                                <i class="bi bi-x-circle me-2"></i>
+                                اشتباه شماره ۳: مدیریت نادرست فرم‌ها
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="code-example mb-2">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="badge bg-danger">کد اشتباه</span>
+                                        </div>
+                                        <pre class="bg-danger bg-opacity-10 text-danger p-2 rounded" dir="ltr"><code># views.py - اشتباه
+from django.shortcuts import render, redirect
+from .forms import PostForm
+from .models import Post
+
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        form.save()
+        return redirect('post_list')
+    else:
+        form = PostForm()
+    return render(request, 'create_post.html', {'form': form})</code></pre>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-example mb-2">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="badge bg-success">کد صحیح</span>
+                                        </div>
+                                        <pre class="bg-success bg-opacity-10 text-success p-2 rounded" dir="ltr"><code># views.py - صحیح
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import PostForm
+from .models import Post
+
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            messages.success(request, 'پست با موفقیت ایجاد شد!')
+            return redirect('post_detail', slug=post.slug)
+    else:
+        form = PostForm()
+    return render(request, 'create_post.html', {'form': form})</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-warning border-0 py-2">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <strong>مشکل:</strong> عدم بررسی is_valid()، عدم تنظیم نویسنده، عدم نمایش پیام به کاربر.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Best Practices Section -->
+            <section id="best" class="content-section mb-4 fade-in">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-3">
+                        <h2 class="h5 mb-3">
+                            <i class="bi bi-trophy text-warning me-2"></i>
+                            بهترین روش‌ها و نکات کلیدی
+                        </h2>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="d-flex mb-2">
+                                    <div class="badge bg-success rounded-circle p-2 me-2">
+                                        <i class="bi bi-check"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 small">از Mixins استفاده کنید</h6>
+                                        <p class="small text-muted mb-0">برای افزودن قابلیت‌های مشترک به چند View</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex mb-2">
+                                    <div class="badge bg-success rounded-circle p-2 me-2">
+                                        <i class="bi bi-check"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 small">منطق را در Models نگه دارید</h6>
+                                        <p class="small text-muted mb-0">Views باید سبک و متمرکز بر پردازش درخواست باشند</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex mb-2">
+                                    <div class="badge bg-success rounded-circle p-2 me-2">
+                                        <i class="bi bi-check"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 small">از Decorators برای احراز هویت استفاده کنید</h6>
+                                        <p class="small text-muted mb-0">@login_required, @permission_required</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex mb-2">
+                                    <div class="badge bg-success rounded-circle p-2 me-2">
+                                        <i class="bi bi-check"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 small">پیام‌های خطای مناسب برگردانید</h6>
+                                        <p class="small text-muted mb-0">404, 403, 500 با صفحات خطای سفارشی</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action Section -->
+            <section class="content-section mb-4 fade-in">
+                <div class="card border-0 bg-gradient-primary text-white">
+                    <div class="card-body p-4 text-center">
+                        <h3 class="mb-2">آماده برای تمرین هستید؟</h3>
+                        <p class="mb-3">حالا که با Views در Django آشنا شدید، زمان آن است که دانش خود را به عمل تبدیل کنید!</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="btn btn-light">
+                                <i class="bi bi-play-circle me-2"></i>شروع تمرین
+                            </a>
+                            <a href="#" class="btn btn-outline-light">
+                                <i class="bi bi-download me-2"></i>دانلود سورس کد
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Related Articles Section -->
+            <section class="content-section mb-4 fade-in">
+                <h3 class="h5 mb-3">
+                    <i class="bi bi-book text-primary me-2"></i>
+                    مقالات مرتبط
+                </h3>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-3">
+                                <div class="badge bg-info mb-2">پیشرفته</div>
+                                <h6 class="card-title">Django REST Framework</h6>
+                                <p class="card-text small text-muted">ساخت API با DRF و ViewSets</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">ادامه مطلب</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-3">
+                                <div class="badge bg-success mb-2">مقدماتی</div>
+                                <h6 class="card-title">Django Models</h6>
+                                <p class="card-text small text-muted">آشنایی با Models و ORM</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">ادامه مطلب</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-3">
+                                <div class="badge bg-warning mb-2">متوسط</div>
+                                <h6 class="card-title">Django Templates</h6>
+                                <p class="card-text small text-muted">کار با قالب‌ها و تگ‌ها</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">ادامه مطلب</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- ===================================
+     STYLES
+==================================== -->
+<style>
+/* ===== Variables ===== */
+:root {
+    --primary-color: #6366f1;
+    --secondary-color: #4f46e5;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --info-color: #3b82f6;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --transition: all 0.3s ease;
+}
+
+/* ===== Base Styles ===== */
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.hero-section {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(79, 70, 229, 0.1));
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.2);
+    animation: float 20s infinite ease-in-out;
+}
+
+.circle-1 { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+.circle-2 { width: 120px; height: 120px; bottom: 10%; right: 15%; animation-delay: 5s; }
+.circle-3 { width: 60px; height: 60px; top: 50%; right: 40%; animation-delay: 10s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.icon-box {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.code-example {
+    position: relative;
+}
+
+.toc a {
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.toc a:hover {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.content-section {
+    scroll-margin-top: 80px;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: rgba(99, 102, 241, 0.1);
+    color: var(--primary-color);
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+}
+
+pre code {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    background: transparent;
+}
+
+/* Custom scrollbar for code blocks */
+pre::-webkit-scrollbar {
+    height: 6px;
+}
+
+pre::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+pre::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Enhanced code block styling */
+.code-example pre {
+    position: relative;
+    margin: 0;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Syntax highlighting colors */
+pre .keyword { color: #ff79c6; }
+pre .string { color: #f1fa8c; }
+pre .comment { color: #6272a4; }
+pre .function { color: #50fa7b; }
+pre .number { color: #bd93f9; }
+
+/* Error code styling */
+pre.bg-danger code {
+    color: #dc3545;
+}
+
+/* Success code styling */
+pre.bg-success code {
+    color: #198754;
+}
+
+/* Request-Response Diagram */
+.request-response-diagram {
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.step-circle {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.diagram-arrow {
+    font-size: 1.2rem;
+}
+
+/* Dark Mode Adjustments */
+[data-theme="dark"] .hero-section {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(79, 70, 229, 0.2));
+}
+
+[data-theme="dark"] .code-example pre {
+    background-color: #2d2d2d;
+}
+
+[data-theme="dark"] pre.bg-light {
+    background-color: #2d2d2d !important;
+}
+
+[data-theme="dark"] pre.bg-dark {
+    background-color: #1a1a1a !important;
+}
+</style>
+
+<!-- ===================================
+     SCRIPTS
+==================================== -->
+<script>
+// ===================================
+// UTILITY FUNCTIONS
+// ===================================
+function copyCode(button) {
+    const codeBlock = button.closest('.code-example').querySelector('code');
+    const textArea = document.createElement('textarea');
+    textArea.value = codeBlock.textContent;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    
+    const originalHTML = button.innerHTML;
+    button.innerHTML = '<i class="bi bi-check me-1"></i>کپی شد!';
+    button.classList.remove('btn-outline-secondary');
+    button.classList.add('btn-success');
+    
+    setTimeout(() => {
+        button.innerHTML = originalHTML;
+        button.classList.remove('btn-success');
+        button.classList.add('btn-outline-secondary');
+    }, 2000);
+}
+
+// ===================================
+// INITIALIZATION
+// ===================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll for TOC links
+    document.querySelectorAll('.toc a').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add syntax highlighting to code blocks
+    const codeBlocks = document.querySelectorAll('pre code');
+    codeBlocks.forEach(block => {
+        // Skip if already highlighted
+        if (block.classList.contains('highlighted')) return;
+        
+        // Get the original text content
+        const text = block.textContent;
+        
+        // Clear the block to avoid HTML tags showing
+        block.innerHTML = '';
+        
+        // Create a text node with the original content
+        block.appendChild(document.createTextNode(text));
+        
+        // Mark as highlighted to avoid double processing
+        block.classList.add('highlighted');
+    });
+});
+</script>
+{% endblock %}

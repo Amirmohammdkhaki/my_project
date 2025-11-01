@@ -1,0 +1,195 @@
+/* =========================
+   General
+========================= */
+html {
+    scroll-behavior: smooth;
+    font-family: "Vazir", sans-serif;
+}
+body {
+    background: #f8f9fa;
+    color: #212529;
+    line-height: 1.6;
+}
+
+/* =========================
+   Navbar
+========================= */
+.navbar {
+    transition: all 0.4s ease;
+    background: linear-gradient(90deg, #212529, #343a40);
+    z-index: 1000;
+}
+.navbar-nav .nav-link {
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+}
+.navbar-nav .nav-link:hover::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #0dcaf0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 2px;
+}
+.navbar-nav .nav-link:hover {
+    color: #0dcaf0 !important;
+}
+.navbar-brand i {
+    font-size: 1.5rem;
+    transition: transform 0.3s;
+}
+.navbar-brand i:hover {
+    transform: rotate(15deg) scale(1.2);
+}
+
+/* =========================
+   Header Hero
+========================= */
+header.hero {
+    background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+    padding: 6rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+}
+header.hero h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-right: 3px solid rgba(255,255,255,0.8);
+    white-space: nowrap;
+    width: 0;
+    animation: typing 3s steps(40, end) forwards, blink .7s step-end infinite;
+}
+header.hero p {
+    font-size: 1.3rem;
+    opacity: 0;
+    animation: fadeInUp 2s ease forwards;
+    animation-delay: 3s;
+}
+
+/* Floating circles */
+header.hero .hero-decor span.circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.25;
+    background: #fff;
+    animation: float 6s ease-in-out infinite;
+}
+header.hero .circle-1 { width: 120px; height: 120px; top: 10%; left: 5%; }
+header.hero .circle-2 { width: 80px; height: 80px; bottom: 15%; right: 10%; animation-delay: 2s;}
+header.hero .circle-3 { width: 60px; height: 60px; top: 50%; right: 20%; animation-delay: 4s; }
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+@keyframes blink {
+    0%, 100% { border-color: transparent }
+    50% { border-color: white }
+}
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px) }
+    100% { opacity: 1; transform: translateY(0) }
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0) }
+    50% { transform: translateY(-20px) }
+}
+
+/* =========================
+   Cards / Main
+========================= */
+.card {
+    transition: all 0.4s ease;
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+.card img {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+.card:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+.card-body h5 { font-weight: 700; }
+.card-body p { font-size: 0.95rem; color: #495057; }
+
+.hover-card {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.hover-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border-radius: 1.2rem;
+}
+
+/* Buttons inside cards */
+.card .btn {
+    transition: all 0.3s ease;
+}
+.card .btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 12px rgba(13,110,253,0.2);
+}
+
+/* =========================
+   Footer
+========================= */
+footer {
+    background: linear-gradient(90deg, #212529, #343a40);
+    color: #adb5bd;
+    padding: 3rem 2rem;
+    font-size: 0.9rem;
+}
+footer h5 { color: #fff; margin-bottom: 0.6rem; }
+footer a {
+    color: #adb5bd;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+footer a:hover {
+    color: #0dcaf0;
+    transform: translateX(-3px);
+}
+footer .bi {
+    margin-left: 0.3rem;
+    transition: all 0.3s ease;
+}
+footer a:hover .bi {
+    transform: rotate(-15deg) scale(1.2);
+    color: #0dcaf0;
+}
+footer .text-center {
+    text-align: center;
+    margin-top: 1rem;
+    border-top: 1px solid #444;
+    padding-top: 0.8rem;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 992px) {
+    header.hero h1 { font-size: 2.5rem; }
+    header.hero p { font-size: 1.1rem; }
+}
+@media (max-width: 768px) {
+    .navbar-nav { gap: 1rem; }
+    header.hero { padding: 4rem 0; }
+    header.hero h1 { font-size: 2rem; }
+    header.hero p { font-size: 1rem; }
+}
+@media (max-width: 576px) {
+    header.hero h1 { font-size: 1.8rem; }
+    header.hero p { font-size: 0.95rem; }
+}

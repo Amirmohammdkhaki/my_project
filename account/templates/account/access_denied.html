@@ -1,0 +1,148 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block head_title %}دسترسی محدود - وبلاگ امیرمحمد{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">دسترسی محدود</li>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card shadow-lg border-0 fade-in">
+                <div class="card-body p-5">
+                    <div class="mb-4">
+                        <i class="bi bi-shield-exclamation text-danger" style="font-size: 4rem;"></i>
+                    </div>
+                    <h1 class="display-6 fw-bold text-danger mb-4">دسترسی محدود!</h1>
+                    
+                    {% if user.is_authenticated %}
+                        <!-- اگر کاربر لاگین کرده اما ادمین نیست -->
+                        <p class="lead mb-4">
+                            کاربر گرامی <strong class="text-primary">{{ user.username }}</strong>،<br>
+                            شما دسترسی لازم برای ایجاد پست جدید را ندارید.
+                        </p>
+                        <div class="alert alert-warning" role="alert">
+                            <i class="bi bi-info-circle me-2"></i>
+                            فقط کاربران مدیر (ادمین) می‌توانند پست جدید ایجاد کنند.
+                        </div>
+                    {% else %}
+                        <!-- اگر کاربر لاگین نکرده (میهمان) -->
+                        <p class="lead mb-4">
+                            برای دسترسی به این صفحه باید وارد حساب کاربری خود شوید.
+                        </p>
+                        <div class="alert alert-info" role="alert">
+                            <i class="bi bi-info-circle me-2"></i>
+                            اگر حساب کاربری ندارید، ابتدا ثبت‌نام کنید.
+                        </div>
+                    {% endif %}
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'post_list' %}" class="btn btn-primary me-3">
+                            <i class="bi bi-house-door me-2"></i>بازگشت به صفحه اصلی
+                        </a>
+                        
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-success me-2">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>ورود به سیستم
+                            </a>
+                            <a href="{% url 'signup' %}" class="btn btn-outline-primary">
+                                <i class="bi bi-person-plus me-2"></i>ثبت‌نام
+                            </a>
+                        {% else %}
+                            <a href="{% url 'post_list' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-newspaper me-2"></i>مشاهده پست‌ها
+                            </a>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- اطلاعات اضافی -->
+                    <div class="mt-5 pt-4 border-top">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center justify-content-center mb-3">
+                                    <i class="bi bi-shield-check text-success me-2"></i>
+                                    <span>دسترسی امن</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center justify-content-center mb-3">
+                                    <i class="bi bi-person-gear text-primary me-2"></i>
+                                    <span>مدیریت محتوا</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        border: none;
+        border-radius: 1rem;
+    }
+    
+    [data-theme="dark"] .card {
+        background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+        color: #e2e8f0;
+    }
+    
+    .alert {
+        border: none;
+        border-radius: 0.75rem;
+        background: rgba(255, 193, 7, 0.1);
+    }
+    
+    [data-theme="dark"] .alert-warning {
+        background: rgba(255, 193, 7, 0.15);
+        color: #fef3c7;
+    }
+    
+    [data-theme="dark"] .alert-info {
+        background: rgba(59, 130, 246, 0.15);
+        color: #dbeafe;
+    }
+    
+    .btn {
+        border-radius: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // انیمیشن مخصوص برای این صفحه
+    const card = document.querySelector('.card');
+    if (card) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 300);
+    }
+    
+    // نمایش نوتیفیکیشن
+    setTimeout(() => {
+        if (typeof showNotification === 'function') {
+            showNotification('دسترسی شما به این صفحه محدود است', 'error', 5000);
+        }
+    }, 1000);
+});
+</script>
+{% endblock %}

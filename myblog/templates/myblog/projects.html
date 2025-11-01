@@ -1,0 +1,867 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block head_title %}پروژه‌ها - وبلاگ امیرمحمد{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">پروژه‌ها</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 my-5">
+    <!-- بخش هدر اصلی -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10 text-center mb-5">
+            <div class="hero-section position-relative overflow-hidden rounded-4 shadow-lg p-5 bg-white">
+                <div class="hero-bg position-absolute top-0 start-0 w-100 h-100"></div>
+                <div class="position-relative z-1">
+                    <div class="d-inline-block mb-3">
+                        <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fs-6">
+                            <i class="bi bi-star-fill me-1"></i>نمونه کارهای حرفه‌ای
+                        </span>
+                    </div>
+                    <h1 class="display-3 fw-bold text-primary mb-4">
+                        پروژه‌های تخصصی
+                    </h1>
+                    <p class="lead text-muted mb-4">
+                        نمونه‌کارهای برجسته در زمینه توسعه وب، هوش مصنوعی و پردازش تصویر
+                    </p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <div class="stat-item">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                                <span class="fw-semibold">20+ پروژه موفق</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-award-fill text-warning"></i>
+                                <span class="fw-semibold">4+ سال تجربه</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-people-fill text-info"></i>
+                                <span class="fw-semibold">15+ مشتری راضی</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-decoration position-absolute"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- بخش تخصص‌های اصلی -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold mb-3">
+                    <span class="position-relative d-inline-block">
+                        تخصص‌های اصلی
+                        <span class="title-underline position-absolute"></span>
+                    </span>
+                </h2>
+                <p class="text-muted">مهارت‌های کلیدی و حوزه‌های تخصصی</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- فریمورک جنگو -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card border-0 bg-success text-white h-100 skill-card shadow-lg">
+                        <div class="card-body d-flex flex-column text-center p-4">
+                            <div class="icon-wrapper mx-auto mb-3">
+                                <i class="bi bi-window-stack display-4"></i>
+                            </div>
+                            <h3 class="fw-bold mb-2">فریمورک جنگو</h3>
+                            <p class="mb-0 flex-grow-1 small">توسعه وب، API و سیستم‌های مدیریت محتوا</p>
+                            <div class="mt-3">
+                                <span class="badge bg-white text-success">تکمیل شده</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- زبان پایتون -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card border-0 bg-warning text-dark h-100 skill-card shadow-lg">
+                        <div class="card-body d-flex flex-column text-center p-4">
+                            <div class="icon-wrapper mx-auto mb-3">
+                                <i class="bi bi-filetype-py display-4"></i>
+                            </div>
+                            <h3 class="fw-bold mb-2">زبان پایتون</h3>
+                            <p class="mb-0 flex-grow-1 small">مسلط هستم و برنامه‌های در حد مینی پروژه کار کردم</p>
+                            <div class="mt-3">
+                                <span class="badge bg-white text-warning">تکمیل شده</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- بینایی کامپیوتر -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card border-0 bg-info text-white h-100 skill-card shadow-lg">
+                        <div class="card-body d-flex flex-column text-center p-4">
+                            <div class="icon-wrapper mx-auto mb-3">
+                                <i class="bi bi-eye display-4"></i>
+                            </div>
+                            <h3 class="fw-bold mb-2">بینایی کامپیوتر</h3>
+                            <p class="mb-0 flex-grow-1 small">OpenCV، پردازش تصویر و تشخیص اشیاء</p>
+                            <div class="mt-3">
+                                <span class="badge bg-white text-info">تکمیل شده</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- گیت‌هاب -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card border-0 bg-dark text-white h-100 skill-card shadow-lg">
+                        <div class="card-body d-flex flex-column text-center p-4">
+                            <div class="icon-wrapper mx-auto mb-3">
+                                <i class="bi bi-github display-4"></i>
+                            </div>
+                            <h3 class="fw-bold mb-2">گیت‌هاب</h3>
+                            <p class="mb-0 flex-grow-1 small">مدیریت نسخه، همکاری تیمی و اشتراک‌گذاری کد</p>
+                            <div class="mt-3">
+                                <span class="badge bg-white text-dark">تکمیل شده</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- بخش پروژه‌ها -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold mb-3">
+                    <span class="position-relative d-inline-block">
+                        نمونه پروژه‌ها
+                        <span class="title-underline position-absolute"></span>
+                    </span>
+                </h2>
+                <p class="text-muted">آخرین پروژه‌های تکمیل شده</p>
+            </div>
+
+            <div class="row g-4" id="projectsContainer">
+                <!-- پروژه فریمورک جنگو -->
+                <div class="col-md-6 col-lg-4 project-item" data-categories="django python">
+                    <div class="card h-100 shadow-lg border-0 fade-in project-card overflow-hidden">
+                        <div class="card-header bg-success text-white text-center py-4 position-relative">
+                            <i class="bi bi-window-stack display-5"></i>
+                            <div class="position-absolute top-0 end-0 p-2">
+                                <span class="badge bg-white text-success">
+                                    <i class="bi bi-patch-check-fill me-1"></i>ویژه
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="card-title fw-bold">فریمورک جنگو</h5>
+                                <span class="badge bg-success-subtle text-success">تکمیل شده</span>
+                            </div>
+                            <p class="card-text flex-grow-1">
+                                توسعه اپلیکیشن‌های وب پیشرفته با Django، شامل سیستم‌های مدیریت محتوا، فروشگاه‌های آنلاین و پنل‌های مدیریت
+                            </p>
+                            <div class="project-features mb-3">
+                                <div class="feature-item mb-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        معماری MVT پیشرفته
+                                    </small>
+                                </div>
+                                <div class="feature-item mb-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        ORM قدرتمند
+                                    </small>
+                                </div>
+                                <div class="feature-item">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        امنیت داخلی
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="d-flex flex-wrap gap-1 mb-3">
+                                    <span class="badge bg-success-subtle text-success">Django</span>
+                                    <span class="badge bg-primary-subtle text-primary">Python</span>
+                                    <span class="badge bg-info-subtle text-info">PostgreSQL</span>
+                                    <span class="badge bg-warning-subtle text-warning">REST API</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pt-0 px-4 pb-4">
+                            <a href="{% url 'coputer_djngo' %}" class="btn btn-success w-100">
+                                <i class="bi bi-eye me-2"></i>مشاهده نمونه
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- پروژه زبان پایتون -->
+                <div class="col-md-6 col-lg-4 project-item" data-categories="python">
+                    <div class="card h-100 shadow-lg border-0 fade-in project-card overflow-hidden">
+                        <div class="card-header bg-warning text-dark text-center py-4">
+                            <i class="bi bi-filetype-py display-5"></i>
+                        </div>
+                        <div class="card-body d-flex flex-column p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="card-title fw-bold">زبان پایتون</h5>
+                                <span class="badge bg-warning-subtle text-warning">تکمیل شده</span>
+                            </div>
+                            <p class="card-text flex-grow-1">
+                                مسلط هستم و برنامه‌های در حد مینی پروژه کار کردم. اسکریپت‌های کاربردی برای اتوماسیون، تحلیل داده و توسعه ابزارهای کمکی
+                            </p>
+                            <div class="project-features mb-3">
+                                <div class="feature-item mb-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        اتوماسیون وظایف
+                                    </small>
+                                </div>
+                                <div class="feature-item mb-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        تحلیل داده‌ها
+                                    </small>
+                                </div>
+                                <div class="feature-item">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        وب اسکرپینگ
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="d-flex flex-wrap gap-1 mb-3">
+                                    <span class="badge bg-warning-subtle text-warning">Python</span>
+                                    <span class="badge bg-success-subtle text-success">Pandas</span>
+                                    <span class="badge bg-info-subtle text-info">Requests</span>
+                                    <span class="badge bg-danger-subtle text-danger">Selenium</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pt-0 px-4 pb-4">
+                            <a href="{% url 'computer_python' %}" class="btn btn-warning w-100" target="_blank">
+                                <i class="bi bi-file-code me-2"></i>مشاهده کد
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- پروژه گیت‌هاب -->
+                <div class="col-md-6 col-lg-4 project-item" data-categories="python">
+                    <div class="card h-100 shadow-lg border-0 fade-in project-card overflow-hidden">
+                        <div class="card-header bg-dark text-white text-center py-4">
+                            <i class="bi bi-github display-5"></i>
+                        </div>
+                        <div class="card-body d-flex flex-column p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="card-title fw-bold">گیت‌هاب</h5>
+                                <span class="badge bg-dark-subtle text-dark">تکمیل شده</span>
+                            </div>
+                            <p class="card-text flex-grow-1">
+                                مدیریت حرفه‌ای پروژه‌ها با Git و GitHub، شامل version control، collaboration و continuous integration
+                            </p>
+                            <div class="project-features mb-3">
+                                <div class="feature-item mb-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        کنترل نسخه پیشرفته
+                                    </small>
+                                </div>
+                                <div class="feature-item mb-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        همکاری تیمی
+                                    </small>
+                                </div>
+                                <div class="feature-item">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        CI/CD Pipeline
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="d-flex flex-wrap gap-1 mb-3">
+                                    <span class="badge bg-dark-subtle text-dark">Git</span>
+                                    <span class="badge bg-secondary-subtle text-secondary">GitHub</span>
+                                    <span class="badge bg-info-subtle text-info">Version Control</span>
+                                    <span class="badge bg-success-subtle text-success">Collaboration</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pt-0 px-4 pb-4">
+                            <a href="https://github.com/Amirmohammdkhaki" class="btn btn-dark w-100" target="_blank">
+                                <i class="bi bi-github me-2"></i>مشاهده پروفایل
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- پروژه OpenCV پیشرفته -->
+                <div class="col-md-6 col-lg-4 project-item" data-categories="opencv python ai">
+                    <div class="card h-100 shadow-lg border-0 fade-in project-card overflow-hidden">
+                        <div class="card-header bg-info text-white text-center py-4 position-relative">
+                            <i class="bi bi-eye display-5"></i>
+                            <div class="position-absolute top-0 end-0 p-2">
+                                <span class="badge bg-white text-info">
+                                    <i class="bi bi-sparkles me-1"></i>پیشرفته
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="card-title fw-bold">بینایی کامپیوتر</h5>
+                                <span class="badge bg-info-subtle text-info">تکمیل شده</span>
+                            </div>
+                            <p class="card-text flex-grow-1">
+                                پروژه‌های پیشرفته پردازش تصویر شامل تشخیص اشیاء، سگمنتیشن و آنالیز ویدئو با OpenCV
+                            </p>
+                            <div class="project-features mb-3">
+                                <div class="feature-item mb-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        تشخیص چهره
+                                    </small>
+                                </div>
+                                <div class="feature-item mb-2">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        فیلترهای تصویری
+                                    </small>
+                                </div>
+                                <div class="feature-item">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                        آنالیز حرکت
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="d-flex flex-wrap gap-1 mb-3">
+                                    <span class="badge bg-info-subtle text-info">OpenCV</span>
+                                    <span class="badge bg-primary-subtle text-primary">Python</span>
+                                    <span class="badge bg-success-subtle text-success">AI</span>
+                                    <span class="badge bg-warning-subtle text-warning">NumPy</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pt-0 px-4 pb-4">
+                            <a href="{% url 'computer_vision_codes' %}" class="btn btn-info w-100">
+                                <i class="bi bi-code-slash me-2"></i>نمونه کد
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8">
+            <div class="card bg-gradient-primary text-white shadow-lg cta-card overflow-hidden">
+                <div class="card-body p-5 text-center position-relative">
+                    <div class="cta-bg position-absolute top-0 start-0 w-100 h-100"></div>
+                    <div class="position-relative z-1">
+                        <div class="d-inline-block mb-3">
+                            <span class="badge bg-white text-primary px-3 py-2 rounded-pill">
+                                <i class="bi bi-handshake me-1"></i>آماده همکاری
+                            </span>
+                        </div>
+                        <h3 class="fw-bold mb-3">برای پروژه بعدی شما آماده‌ام!</h3>
+                        <p class="mb-4 lead">
+                            برای پروژه‌های Django، Python یا پردازش تصویر می‌توانیم با هم همکاری کنیم
+                        </p>
+                        <div class="d-flex flex-wrap justify-content-center gap-3">
+                            <a href="https://github.com/Amirmohammdkhaki" class="btn btn-light btn-lg px-4" target="_blank">
+                                <i class="bi bi-github me-2"></i>پروفایل GitHub
+                            </a>
+                            <a href="https://t.me/amirpc90" class="btn btn-outline-light btn-lg px-4" target="_blank">
+                                <i class="bi bi-telegram me-2"></i>تماس با من
+                            </a>
+                            <a href="{% url 'about_me' %}" class="btn btn-outline-light btn-lg px-4">
+                                <i class="bi bi-person me-2"></i>درباره من
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* استایل‌های اصلی */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        position: relative;
+    }
+    
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+        background-size: cover;
+        z-index: -1;
+    }
+    
+    .card {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border-radius: 1.5rem;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.98);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+    
+    .badge {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.75rem;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    
+    .badge:hover {
+        transform: scale(1.05);
+    }
+    
+    .fade-in {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* استایل‌های بخش هدر */
+    .hero-section {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-bg {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        z-index: 0;
+    }
+    
+    .hero-decoration {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 70%);
+        border-radius: 50%;
+        top: -200px;
+        right: -200px;
+        animation: float 8s ease-in-out infinite;
+    }
+    
+    .stat-item {
+        padding: 0.5rem 1rem;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 2rem;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+    
+    .stat-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* استایل‌های عنوان‌ها */
+    .title-underline {
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, var(--bs-primary), transparent);
+        border-radius: 2px;
+        animation: slide 3s ease-in-out infinite;
+    }
+    
+    @keyframes slide {
+        0%, 100% { width: 60%; opacity: 0.7; }
+        50% { width: 90%; opacity: 1; }
+    }
+    
+    /* استایل‌های کارت‌های مهارت */
+    .skill-card {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .skill-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+        transform: translateX(-100%);
+        transition: transform 0.8s ease;
+    }
+    
+    .skill-card:hover::before {
+        transform: translateX(100%);
+    }
+    
+    .skill-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .icon-wrapper {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .icon-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.5s ease;
+    }
+    
+    .skill-card:hover .icon-wrapper::before {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    
+    .skill-card:hover .icon-wrapper {
+        transform: scale(1.1) rotate(5deg);
+        background: rgba(255, 255, 255, 0.3);
+    }
+    
+    /* استایل‌های کارت‌های پروژه */
+    .project-card {
+        position: relative;
+    }
+    
+    .project-card::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient(90deg, var(--bs-primary), var(--bs-secondary));
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+    }
+    
+    .project-card:hover::after {
+        transform: translateX(0);
+    }
+    
+    .project-card .card-header {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .project-card .card-header::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.5s ease;
+    }
+    
+    .project-card:hover .card-header::before {
+        transform: translate(-50%, -50%) scale(2);
+    }
+    
+    .feature-item {
+        transition: all 0.3s ease;
+        padding: 0.25rem 0;
+        border-radius: 0.5rem;
+    }
+    
+    .feature-item:hover {
+        background: rgba(0, 0, 0, 0.02);
+        transform: translateX(5px);
+    }
+    
+    /* استایل‌های بخش CTA */
+    .cta-card {
+        position: relative;
+    }
+    
+    .cta-bg {
+        background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                            radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        animation: pulse-bg 6s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-bg {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+    }
+    
+    /* انیمیشن‌ها */
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .fade-in.visible {
+        animation: fadeInUp 0.8s ease forwards;
+    }
+    
+    /* استایل‌های دکمه‌ها */
+    .btn {
+        border-radius: 2rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        font-weight: 500;
+    }
+    
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.5s ease, height 0.5s ease;
+    }
+    
+    .btn:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* ریسپانسیو بودن */
+    @media (max-width: 768px) {
+        .display-3 {
+            font-size: 2.5rem;
+        }
+        
+        .hero-decoration {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -150px;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        
+        .stat-item {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+        }
+    }
+    
+    /* افکت‌های ویژه */
+    .badge {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .badge::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.6s ease;
+    }
+    
+    .badge:hover::before {
+        left: 100%;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // انیمیشن برای کارت‌ها با Intersection Observer
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 100); // انیمیشن آبشاری
+            }
+        });
+    }, observerOptions);
+    
+    fadeElements.forEach(element => {
+        observer.observe(element);
+    });
+
+    // انیمیشن برای آمار
+    const animateStats = () => {
+        const stats = document.querySelectorAll('.stat-item');
+        stats.forEach((stat, index) => {
+            setTimeout(() => {
+                stat.style.opacity = '0';
+                stat.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    stat.style.transition = 'all 0.5s ease';
+                    stat.style.opacity = '1';
+                    stat.style.transform = 'translateY(0)';
+                }, 100);
+            }, index * 200);
+        });
+    };
+
+    // اجرای انیمیشن آمار در بارگذاری صفحه
+    setTimeout(animateStats, 500);
+
+    // افکت پارالاکس برای دکوراسیون
+    const heroDecoration = document.querySelector('.hero-decoration');
+    if (heroDecoration) {
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = scrolled * 0.5;
+            heroDecoration.style.transform = `translateY(${parallax}px) rotate(${scrolled * 0.1}deg)`;
+        });
+    }
+
+    // انیمیشن برای تگ‌ها در هاور
+    const badges = document.querySelectorAll('.badge');
+    badges.forEach(badge => {
+        badge.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1) rotate(-2deg)';
+        });
+        
+        badge.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) rotate(0deg)';
+        });
+    });
+
+    // افکت تایپ برای عنوان اصلی
+    const mainTitle = document.querySelector('.display-3');
+    if (mainTitle) {
+        const text = mainTitle.textContent;
+        mainTitle.textContent = '';
+        let index = 0;
+        
+        const typeWriter = () => {
+            if (index < text.length) {
+                mainTitle.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50);
+            }
+        };
+        
+        setTimeout(typeWriter, 500);
+    }
+
+    // نمایش نوتیفیکیشن خوشامدگویی
+    setTimeout(() => {
+        if (typeof showNotification === 'function') {
+            showNotification('به صفحه پروژه‌ها خوش آمدید! 🎉', 'success', 4000);
+        }
+    }, 1500);
+
+    // انیمیشن برای کارت‌های مهارت در اسکرول
+    const skillCards = document.querySelectorAll('.skill-card');
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(30px) scale(0.9)';
+                    setTimeout(() => {
+                        entry.target.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0) scale(1)';
+                    }, 100);
+                }, index * 150);
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    skillCards.forEach(card => {
+        skillObserver.observe(card);
+    });
+});
+</script>
+{% endblock %}

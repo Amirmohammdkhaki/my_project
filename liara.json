@@ -1,0 +1,12 @@
+{
+  "platform": "python",
+  "app": "amirrmw",
+  "build": {
+    "requirements": true
+  },
+  "env": {
+    "ENVIRONMENT": "production",
+    "SECRET_KEY": "django-insecure-7k!z9q@v2r#s8u%p4m^t0c1b!y6e2w3f5h8j0l9n2x3z4a5",
+    "DEBUG": "False"
+  }
+}

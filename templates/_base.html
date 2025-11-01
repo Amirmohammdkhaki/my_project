@@ -1,0 +1,1423 @@
+{% load static %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- توضیحات سئو -->
+    <meta name="description" content="وبلاگ امیرمحمد خاکی | آموزش برنامه‌نویسی، Django و هوش مصنوعی">
+    <meta name="keywords" content="Django, Python, هوش مصنوعی, برنامه نویسی, آموزش, وبلاگ">
+    <meta name="author" content="Amirmohammad Khaki">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#6366f1"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="وبلاگ امیرمحمد">
+    <link rel="apple-touch-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+
+    <!-- فونت فارسی Vazir -->
+    <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+
+    <!-- Bootstrap RTL CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- فایل CSS پروژه -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>{% block head_title %}وبلاگ امیرمحمد | برنامه‌نویسی و هوش مصنوعی{% endblock %}</title>
+    <style>
+        /* ===== Variables ===== */
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #4f46e5;
+            --dark-bg: #0f0f23;
+            --light-bg: #f8f9fa;
+            --text-dark: #212529;
+            --text-light: #f8f9fa;
+            --transition: all 0.3s ease;
+        }
+
+        /* ===== Dark Mode Variables ===== */
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --border-color: #333;
+        }
+
+        /* ===== Base Styles ===== */
+        body {
+            background-color: var(--bg-color, #f8f9fa);
+            color: var(--text-color, #212529);
+            transition: var(--transition);
+        }
+
+        /* ===== Navbar Hover & Active ===== */
+        .navbar-nav .nav-link {
+            transition: var(--transition);
+        }
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color);
+        }
+        .navbar-nav .nav-link.active {
+            background: linear-gradient(135deg,var(--primary-color),var(--secondary-color));
+            color: #fff !important;
+            border-radius: 0.5rem;
+            padding: 0.3rem 0.8rem;
+        }
+        
+        /* ===== Hero Section ===== */
+        .hero {
+            background: linear-gradient(135deg,var(--dark-bg) 0%,#0a0a1a 100%);
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-decor span.circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(99,102,241,0.2);
+            animation: float 20s infinite ease-in-out;
+        }
+        .circle-1 { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+        .circle-2 { width: 120px; height: 120px; bottom: 10%; right: 15%; animation-delay: 5s; }
+        .circle-3 { width: 60px; height: 60px; top: 50%; right: 40%; animation-delay: 10s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        /* ===== Welcome Text ===== */
+        .welcome-text {
+            color: #fff;
+            font-size: 0.9rem;
+            padding: 0.4rem 1rem;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            transition: var(--transition);
+        }
+        .welcome-text:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* ===== Dark Mode Toggle ===== */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 0.4rem 0.8rem;
+            color: #fff;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* ===== Scroll to Top Button ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .scroll-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        /* ===== Loading Animation ===== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* ===== Breadcrumb ===== */
+        .breadcrumb {
+            background: transparent;
+            padding: 1rem 0;
+            margin-bottom: 0;
+        }
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: ">";
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* ===== Social Share Buttons ===== */
+        .social-share {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+        .social-share a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+        }
+        .social-share a:hover {
+            transform: scale(1.1);
+        }
+        .social-share .instagram { 
+            background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+        }
+        .social-share .github { 
+            background: #333; 
+        }
+        .social-share .telegram { 
+            background: #0088cc; 
+        }
+        
+        /* ===== Dark Mode Adjustments ===== */
+        [data-theme="dark"] .navbar {
+            background-color: #1e1e1e !important;
+        }
+        [data-theme="dark"] .hero {
+            background: linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);
+        }
+        [data-theme="dark"] .card {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+        }
+        [data-theme="dark"] .loading-overlay {
+            background: rgba(30, 30, 30, 0.9);
+        }
+        
+        /* ===== Additional Styles for Enhanced JS Features ===== */
+        .cursor-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.5);
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.1s ease-out;
+        }
+        
+        .typing-indicator {
+            display: inline-block;
+        }
+        
+        .typing-indicator::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            background: white;
+            color: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1001;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(10px);
+            pointer-events: auto;
+        }
+        
+        .progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1002;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .parallax-element {
+            will-change: transform;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom styles for login/logout buttons */
+        .btn-login, .btn-logout {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: #fff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        
+        .btn-login:hover, .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        /* استایل‌های جدید برای دکمه‌های ورود و ثبت‌نام */
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .auth-buttons .btn-login {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: #fff;
+            padding: 0.2rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .auth-buttons .btn-login:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+            transform: translateY(-1px);
+        }
+        
+        .auth-separator {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+        }
+
+        /* استایل‌های جدید برای دکمه Create Post غیرفعال */
+        .nav-link.text-muted {
+            opacity: 0.6;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-link.text-muted:hover {
+            opacity: 0.8;
+            background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .nav-link.text-muted::after {
+            content: "🔒";
+            font-size: 0.7rem;
+            margin-right: 0.3rem;
+            opacity: 0.7;
+        }
+
+        /* استایل برای skip link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* استایل‌های جدید برای PWA و Service Worker */
+        .pwa-install-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-left: 0.5rem;
+        }
+
+        .pwa-install-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .offline-indicator {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ef4444;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            z-index: 1003;
+            display: none;
+        }
+
+        .offline-indicator.show {
+            display: block;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Skip Link for Accessibility -->
+<a href="#main-content" class="skip-link">پرش به محتوای اصلی</a>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
+
+<!-- Offline Indicator -->
+<div class="offline-indicator" id="offlineIndicator">
+    <i class="bi bi-wifi-off"></i> شما آفلاین هستید
+</div>
+
+<!-- Progress Bar -->
+<div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<!-- Notification Container -->
+<div class="notification" id="notification"></div>
+
+<!-- Cursor Trail -->
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- Social Share Buttons -->
+<div class="social-share">
+    <a href="https://instagram.com/amirrmw" class="instagram" title="Follow on Instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+    <a href="https://github.com/Amirmohammdkhaki" class="github" title="Follow on GitHub" target="_blank"><i class="bi bi-github"></i></a>
+    <a href="https://t.me/amirpc90" class="telegram" title="Contact on Telegram" target="_blank"><i class="bi bi-telegram"></i></a>
+</div>
+
+<!-- Scroll to Top Button -->
+<div class="scroll-top" id="scrollTop">
+    <i class="bi bi-arrow-up"></i>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'post_list' %}">
+            <i class="bi bi-code-slash me-2"></i> Amirmohammad.khaki
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="تغییر ناوبری">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'post_list' %}active{% endif %}" href="{% url 'post_list' %}">
+                        <i class="bi bi-house-door"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    {% if user.is_authenticated and user.is_staff %}
+                        <!-- نمایش برای ادمین -->
+                        <a class="nav-link {% if request.resolver_match.url_name == 'post_create' %}active{% endif %}" 
+                           href="{% url 'post_create' %}">
+                            <i class="bi bi-plus-circle"></i> Create Post
+                        </a>
+                    {% else %}
+                        <!-- نمایش برای کاربران عادی و میهمان -->
+                        <a class="nav-link text-muted" 
+                           href="{% if user.is_authenticated %}{% url 'access_denied' %}{% else %}{% url 'login' %}?next={% url 'post_create' %}{% endif %}" 
+                           title="{% if user.is_authenticated %}فقط مدیران می‌توانند پست ایجاد کنند{% else %}برای ایجاد پست باید وارد شوید{% endif %}">
+                            <i class="bi bi-plus-circle"></i> Create Post
+                        </a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'about_me' %}active{% endif %}" href="{% url 'about_me' %}">
+                        <i class="bi bi-person"></i> About Me
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'projects' %}active{% endif %}" href="{% url 'projects' %}">
+                        <i class="bi bi-code"></i> Projects
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">
+                        <i class="bi bi-shield-lock"></i> Admin Panel
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="d-flex align-items-center gap-3">
+                <!-- PWA Install Button -->
+                <button class="pwa-install-btn" id="pwaInstallBtn" style="display: none;">
+                    <i class="bi bi-download"></i> نصب اپ
+                </button>
+
+                <!-- Dark Mode Toggle -->
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="bi bi-moon-fill" id="themeIcon"></i>
+                </button>
+                <div class="welcome-text">
+                    {% if user.is_authenticated %}
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="welcome-typing" id="welcomeMessage">خوش آمدی، {{ user.username }}</span>
+                            <form action="{% url 'logout' %}" method="post" class="d-inline m-0">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-logout">خروج</button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <div class="d-flex align-items-center gap-2 auth-buttons">
+                            <span>کاربر مهمان</span>
+                            <a href="{% url 'login' %}" class="btn-login">ورود</a>
+                            <span class="auth-separator">|</span>
+                            <a href="{% url 'signup' %}" class="btn-login">ثبت‌نام</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Breadcrumb -->
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb text-white">
+            <li class="breadcrumb-item"><a href="{% url 'post_list' %}">Home</a></li>
+            {% block breadcrumb_items %}{% endblock %}
+        </ol>
+    </div>
+</nav>
+{% endblock %}
+
+<!-- Header Hero -->
+<header class="hero text-white text-center parallax-element" data-speed="0.5">
+    <div class="container position-relative">
+        <h1 class="fw-bold mb-3 fade-in">Welcome to My Blog</h1>
+        <p class="lead mb-0 fade-in">Programming tutorials, Django, AI and open source projects</p>
+
+        <div class="hero-decor">
+            <span class="circle circle-1"></span>
+            <span class="circle circle-2"></span>
+            <span class="circle circle-3"></span>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="container my-5 flex-grow-1" id="main-content">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- Footer -->
+<footer class="text-white pt-5 mt-auto">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <h5>About Blog</h5>
+                <p class="small">A place to share programming experiences and AI projects.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled small">
+                    <li><a href="{% url 'post_list' %}" class="text-white text-decoration-none"><i class="bi bi-house-door"></i> Home</a></li>
+                    <li><a href="{% url 'projects' %}" class="text-white text-decoration-none"><i class="bi bi-code"></i> Projects</a></li>
+                    <li><a href="{% url 'about_me' %}" class="text-white text-decoration-none"><i class="bi bi-person"></i> About Me</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Contact Me</h5>
+                <a href="https://github.com/Amirmohammdkhaki" class="d-block mb-2 text-white text-decoration-none" target="_blank"><i class="bi bi-github"></i> GitHub</a>
+                <a href="https://t.me/amirpc90" class="d-block mb-2 text-white text-decoration-none" target="_blank"><i class="bi bi-telegram"></i> Telegram</a>
+                <a href="https://instagram.com/amirrmw" class="d-block mb-2 text-white text-decoration-none" target="_blank"><i class="bi bi-instagram"></i> Instagram</a>
+            </div>
+        </div>
+        <div class="text-center border-top border-secondary pt-3 mt-3">
+            <small>&copy; {% now "Y" %} Amirmohammad Khaki Blog | Powered by Django & Bootstrap</small>
+            <br>
+            <small class="text-muted">PWA Ready - Install for better experience</small>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/index.js' %}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    'use strict';
+    
+    // ===================================
+    // Global Variables and Constants
+    // ===================================
+    const html = document.documentElement;
+    const body = document.body;
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const scrollTop = document.getElementById('scrollTop');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const progressBar = document.getElementById('progressBar');
+    const notification = document.getElementById('notification');
+    const cursorTrail = document.getElementById('cursorTrail');
+    const heroSection = document.querySelector('.hero');
+    const socialButtons = document.querySelectorAll('.social-share a');
+    const welcomeMessage = document.getElementById('welcomeMessage');
+    const pwaInstallBtn = document.getElementById('pwaInstallBtn');
+    const offlineIndicator = document.getElementById('offlineIndicator');
+    
+    // PWA variables
+    let deferredPrompt = null;
+    
+    // Performance monitoring
+    const performanceData = {
+        pageLoadTime: Date.now(),
+        scrollEvents: 0,
+        clicks: 0,
+        keyPresses: 0
+    };
+    
+    // ===================================
+    // Utility Functions
+    // ===================================
+    
+    // Debounce function to limit function calls
+    function debounce(func, wait) {
+        let timeout;
+        return function() {
+            const context = this;
+            const args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
+    }
+    
+    // Throttle function to limit function calls
+    function throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+    
+    // Check if element is in viewport
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+    
+    // Show notification
+    function showNotification(message, type = 'info', duration = 3000) {
+        notification.textContent = message;
+        notification.className = 'notification show';
+        
+        if (type === 'success') {
+            notification.style.background = '#10b981';
+            notification.style.color = 'white';
+        } else if (type === 'error') {
+            notification.style.background = '#ef4444';
+            notification.style.color = 'white';
+        } else if (type === 'warning') {
+            notification.style.background = '#f59e0b';
+            notification.style.color = 'white';
+        } else {
+            notification.style.background = 'white';
+            notification.style.color = '#333';
+        }
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, duration);
+    }
+    
+    // Get random number between min and max
+    function randomBetween(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    
+    // Save data to localStorage
+    function saveToLocalStorage(key, data) {
+        try {
+            localStorage.setItem(key, JSON.stringify(data));
+            return true;
+        } catch (e) {
+            console.error('Error saving to localStorage:', e);
+            return false;
+        }
+    }
+    
+    // Get data from localStorage
+    function getFromLocalStorage(key) {
+        try {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : null;
+        } catch (e) {
+            console.error('Error getting from localStorage:', e);
+            return null;
+        }
+    }
+    
+    // ===================================
+    // PWA Functionality
+    // ===================================
+    
+    // Listen for beforeinstallprompt event
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        pwaInstallBtn.style.display = 'block';
+        
+        showNotification('اپلیکیشن قابل نصب است!', 'info');
+    });
+    
+    // Handle install button click
+    pwaInstallBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                showNotification('اپلیکیشن با موفقیت نصب شد!', 'success');
+                pwaInstallBtn.style.display = 'none';
+            }
+            
+            deferredPrompt = null;
+        }
+    });
+    
+    // Check if app is installed
+    window.addEventListener('appinstalled', () => {
+        pwaInstallBtn.style.display = 'none';
+        deferredPrompt = null;
+        console.log('PWA installed successfully');
+    });
+    
+    // ===================================
+    // Online/Offline Detection
+    // ===================================
+    
+    function updateOnlineStatus() {
+        if (navigator.onLine) {
+            offlineIndicator.classList.remove('show');
+            document.body.classList.remove('offline');
+        } else {
+            offlineIndicator.classList.add('show');
+            document.body.classList.add('offline');
+            showNotification('شما در حال حاضر آفلاین هستید', 'warning');
+        }
+    }
+    
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+    updateOnlineStatus(); // Check initial status
+    
+    // ===================================
+    // Loading Animation
+    // ===================================
+    window.addEventListener('load', function() {
+        // Calculate page load time
+        const loadTime = Date.now() - performanceData.pageLoadTime;
+        console.log(`Page loaded in ${loadTime}ms`);
+        
+        // Hide loading overlay with a slight delay for smooth transition
+        setTimeout(function() {
+            loadingOverlay.classList.add('hidden');
+            
+            // Show welcome notification
+            const isLoggedIn = document.querySelector('.welcome-text .welcome-typing');
+            if (isLoggedIn) {
+                const userName = isLoggedIn.textContent.replace('خوش آمدی، ', '');
+                showNotification(`Welcome back, ${userName}!`, 'success');
+            } else {
+                showNotification('Welcome to my blog!', 'info');
+            }
+            
+            // Initialize animations after page load
+            initializeAnimations();
+        }, 500);
+    });
+    
+    // ===================================
+    // Dark Mode Toggle
+    // ===================================
+    
+    // Check for saved theme preference or default to light
+    const currentTheme = getFromLocalStorage('theme') || 'light';
+    html.setAttribute('data-theme', currentTheme);
+    
+    if (currentTheme === 'dark') {
+        themeIcon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+    }
+    
+    themeToggle.addEventListener('click', function() {
+        const theme = html.getAttribute('data-theme');
+        const newTheme = theme === 'dark' ? 'light' : 'dark';
+        
+        html.setAttribute('data-theme', newTheme);
+        saveToLocalStorage('theme', newTheme);
+        
+        if (newTheme === 'dark') {
+            themeIcon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+            showNotification('Dark mode enabled', 'success');
+        } else {
+            themeIcon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+            showNotification('Light mode enabled', 'success');
+        }
+    });
+    
+    // ===================================
+    // Scroll to Top Button
+    // ===================================
+    
+    window.addEventListener('scroll', throttle(function() {
+        performanceData.scrollEvents++;
+        
+        if (window.pageYOffset > 300) {
+            scrollTop.classList.add('active');
+        } else {
+            scrollTop.classList.remove('active');
+        }
+        
+        // Update progress bar
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        progressBar.style.width = scrolled + '%';
+        
+        // Parallax effect for hero section
+        if (heroSection) {
+            const scrolled = window.pageYOffset;
+            const speed = heroSection.dataset.speed || 0.5;
+            heroSection.style.transform = `translateY(${scrolled * speed}px)`;
+        }
+        
+        // Check for elements to animate on scroll
+        checkElementsInView();
+    }, 10));
+    
+    scrollTop.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        performanceData.clicks++;
+    });
+    
+    // ===================================
+    // Cursor Trail Effect
+    // ===================================
+    
+    let cursorVisible = false;
+    let cursorGrowing = false;
+    
+    document.addEventListener('mousemove', function(e) {
+        if (!cursorVisible) {
+            cursorTrail.style.opacity = 1;
+            cursorVisible = true;
+        }
+        
+        cursorTrail.style.left = e.clientX - 10 + 'px';
+        cursorTrail.style.top = e.clientY - 10 + 'px';
+    });
+    
+    document.addEventListener('mousedown', function() {
+        if (!cursorGrowing) {
+            cursorTrail.style.transform = 'scale(1.5)';
+            cursorGrowing = true;
+        }
+    });
+    
+    document.addEventListener('mouseup', function() {
+        if (cursorGrowing) {
+            cursorTrail.style.transform = 'scale(1)';
+            cursorGrowing = false;
+        }
+    });
+    
+    document.addEventListener('mouseleave', function() {
+        cursorTrail.style.opacity = 0;
+        cursorVisible = false;
+    });
+    
+    // ===================================
+    // Social Media Interactions
+    // ===================================
+    
+    socialButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const platform = this.classList[1];
+            showNotification(`Opening ${platform} in a new tab`, 'info');
+            performanceData.clicks++;
+            
+            // Track social media clicks
+            trackEvent('social_click', {
+                platform: platform,
+                timestamp: new Date().toISOString()
+            });
+        });
+    });
+    
+    // ===================================
+    // Keyboard Navigation
+    // ===================================
+    
+    document.addEventListener('keydown', function(e) {
+        performanceData.keyPresses++;
+        
+        // Press 'T' to toggle theme
+        if (e.key === 't' || e.key === 'T') {
+            themeToggle.click();
+        }
+        
+        // Press 'Home' to scroll to top
+        if (e.key === 'Home') {
+            e.preventDefault();
+            scrollTop.click();
+        }
+        
+        // Press 'End' to scroll to bottom
+        if (e.key === 'End') {
+            e.preventDefault();
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Press '/' to focus search (if search exists)
+        if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            const searchInput = document.querySelector('input[type="search"], input[placeholder*="search"]');
+            if (searchInput) {
+                searchInput.focus();
+            }
+        }
+    });
+    
+    // ===================================
+    // Performance Monitoring
+    // ===================================
+    
+    // Track page visibility changes
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            // Page is hidden
+            trackEvent('page_hidden', {
+                time_on_page: Date.now() - performanceData.pageLoadTime,
+                scroll_events: performanceData.scrollEvents,
+                clicks: performanceData.clicks,
+                key_presses: performanceData.keyPresses
+            });
+        } else {
+            // Page is visible again
+            performanceData.pageLoadTime = Date.now();
+        }
+    });
+    
+    // Track page unload
+    window.addEventListener('beforeunload', function() {
+        trackEvent('page_unload', {
+            time_on_page: Date.now() - performanceData.pageLoadTime,
+            scroll_events: performanceData.scrollEvents,
+            clicks: performanceData.clicks,
+            key_presses: performanceData.keyPresses
+        });
+    });
+    
+    // ===================================
+    // Animation Functions
+    // ===================================
+    
+    function initializeAnimations() {
+        // Add fade-in class to elements
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        // Check which elements are already in view
+        fadeElements.forEach(element => {
+            if (isInViewport(element)) {
+                element.classList.add('visible');
+            }
+        });
+        
+        // Initialize typing effect for hero title
+        if (heroSection) {
+            const heroTitle = heroSection.querySelector('h1');
+            if (heroTitle) {
+                typeWriter(heroTitle, heroTitle.textContent, 50);
+            }
+        }
+        
+        // Initialize typing effect for welcome message
+        if (welcomeMessage) {
+            const welcomeText = welcomeMessage.textContent;
+            welcomeMessage.textContent = '';
+            welcomeMessage.classList.add('typing-indicator');
+            typeWriter(welcomeMessage, welcomeText, 50);
+        }
+        
+        // Add floating animation to circles
+        const circles = document.querySelectorAll('.circle');
+        circles.forEach((circle, index) => {
+            animateCircle(circle, index);
+        });
+    }
+    
+    function checkElementsInView() {
+        const fadeElements = document.querySelectorAll('.fade-in:not(.visible)');
+        
+        fadeElements.forEach(element => {
+            if (isInViewport(element)) {
+                element.classList.add('visible');
+            }
+        });
+    }
+    
+    function typeWriter(element, text, speed = 50) {
+        element.textContent = '';
+        element.classList.add('typing-indicator');
+        let i = 0;
+        
+        function type() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            } else {
+                element.classList.remove('typing-indicator');
+            }
+        }
+        
+        type();
+    }
+    
+    function animateCircle(circle, index) {
+        const duration = randomBetween(15, 25);
+        const delay = index * 2;
+        
+        circle.style.animation = `float ${duration}s infinite ease-in-out ${delay}s`;
+    }
+    
+    // ===================================
+    // Analytics Tracking
+    // ===================================
+    
+    function trackEvent(eventName, data) {
+        // In a real implementation, this would send data to an analytics service
+        console.log(`Event: ${eventName}`, data);
+        
+        // Store events locally for demo purposes
+        const events = getFromLocalStorage('events') || [];
+        events.push({
+            name: eventName,
+            data: data,
+            timestamp: new Date().toISOString()
+        });
+        
+        // Keep only the last 100 events
+        if (events.length > 100) {
+            events.shift();
+        }
+        
+        saveToLocalStorage('events', events);
+    }
+    
+    // ===================================
+    // Error Handling
+    // ===================================
+    
+    window.addEventListener('error', function(e) {
+        console.error('JavaScript error:', e.error);
+        trackEvent('javascript_error', {
+            message: e.message,
+            filename: e.filename,
+            lineno: e.lineno,
+            colno: e.colno,
+            stack: e.error ? e.error.stack : null
+        });
+    });
+    
+    // ===================================
+    // Service Worker Registration (for PWA)
+    // ===================================
+    
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('{% static "sw.js" %}')
+                .then(function(registration) {
+                    console.log('✅ ServiceWorker registration successful with scope: ', registration.scope);
+                    showNotification('اپلیکیشن آماده کار آفلاین است!', 'success');
+                })
+                .catch(function(error) {
+                    console.log('❌ ServiceWorker registration failed: ', error);
+                });
+        });
+    }
+    
+    // ===================================
+    // Intersection Observer for Lazy Loading
+    // ===================================
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    
+                    // Load the image
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                    }
+                    
+                    // Stop observing the image
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+        
+        // Observe all images with data-src attribute
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        lazyImages.forEach(function(img) {
+            imageObserver.observe(img);
+        });
+    }
+    
+    // ===================================
+    // Initialize Application
+    // ===================================
+    
+    // Save user info if available
+    if (welcomeMessage) {
+        const textContent = welcomeMessage.textContent;
+        const userNameMatch = textContent.match(/خوش آمدی، (.+)/);
+        
+        if (userNameMatch && userNameMatch[1] !== 'Guest') {
+            saveToLocalStorage('userName', userNameMatch[1]);
+        }
+    }
+    
+    // Track initial page load
+    trackEvent('page_load', {
+        timestamp: new Date().toISOString(),
+        referrer: document.referrer,
+        user_agent: navigator.userAgent,
+        viewport: {
+            width: window.innerWidth,
+            height: window.innerHeight
+        }
+    });
+    
+    // Log performance data every 30 seconds (for debugging)
+    setInterval(function() {
+        console.log('Performance data:', performanceData);
+    }, 30000);
+    
+    // Add some interactive particles to the hero section
+    if (heroSection) {
+        createParticles(heroSection, 20);
+    }
+    
+    // ===================================
+    // Particle System
+    // ===================================
+    
+    function createParticles(container, count) {
+        const particlesContainer = document.createElement('div');
+        particlesContainer.className = 'particles-container';
+        particlesContainer.style.position = 'absolute';
+        particlesContainer.style.top = '0';
+        particlesContainer.style.left = '0';
+        particlesContainer.style.width = '100%';
+        particlesContainer.style.height = '100%';
+        particlesContainer.style.overflow = 'hidden';
+        particlesContainer.style.pointerEvents = 'none';
+        particlesContainer.style.zIndex = '1';
+        
+        container.appendChild(particlesContainer);
+        
+        for (let i = 0; i < count; i++) {
+            createParticle(particlesContainer);
+        }
+    }
+    
+    function createParticle(container) {
+        const particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.width = randomBetween(2, 6) + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.backgroundColor = 'rgba(255, 255, 255, ' + (randomBetween(1, 8) / 10) + ')';
+        particle.style.borderRadius = '50%';
+        particle.style.left = randomBetween(0, 100) + '%';
+        particle.style.top = randomBetween(0, 100) + '%';
+        
+        // Random animation
+        const duration = randomBetween(10, 30);
+        const delay = randomBetween(0, 10);
+        
+        particle.style.animation = `float ${duration}s infinite ease-in-out ${delay}s`;
+        
+        container.appendChild(particle);
+        
+        // Remove particle after animation completes to prevent memory leaks
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+                createParticle(container); // Create a new particle to replace the old one
+            }
+        }, (duration + delay) * 1000);
+    }
+    
+    // ===================================
+    // Smooth Scroll for Anchor Links
+    // ===================================
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Update URL without triggering page reload
+                history.pushState(null, null, targetId);
+            }
+        });
+    });
+    
+    // ===================================
+    // Enhanced Welcome Message Animation
+    // ===================================
+    
+    const welcomeText = document.querySelector('.welcome-text');
+    if (welcomeText) {
+        // Add a subtle pulse animation to the welcome message
+        welcomeText.style.animation = 'pulse 2s infinite';
+        
+        // Create a custom pulse animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+                70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // ===================================
+    // Auto-save Form Data
+    // ===================================
+    
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        const formId = form.id || 'form-' + Math.random().toString(36).substr(2, 9);
+        form.id = formId;
+        
+        // Load saved form data
+        const savedData = getFromLocalStorage('form-' + formId);
+        if (savedData) {
+            Object.keys(savedData).forEach(fieldName => {
+                const field = form.querySelector(`[name="${fieldName}"]`);
+                if (field) {
+                    field.value = savedData[fieldName];
+                }
+            });
+        }
+        
+        // Save form data on input
+        form.addEventListener('input', debounce(function() {
+            const formData = {};
+            const inputs = form.querySelectorAll('input, textarea, select');
+            
+            inputs.forEach(input => {
+                if (input.name && input.value) {
+                    formData[input.name] = input.value;
+                }
+            });
+            
+            saveToLocalStorage('form-' + formId, formData);
+        }, 500));
+        
+        // Clear saved data on form submission
+        form.addEventListener('submit', function() {
+            localStorage.removeItem('form-' + formId);
+        });
+    });
+    
+    // ===================================
+    // Performance Optimization
+    // ===================================
+    
+    // Preload critical resources
+    const criticalResources = [
+        { url: '{% static "css/style.css" %}', as: 'style' },
+        { url: '{% static "js/index.js" %}', as: 'script' }
+    ];
+    
+    criticalResources.forEach(resource => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.href = resource.url;
+        link.as = resource.as;
+        document.head.appendChild(link);
+    });
+    
+    // Detect and report slow resources
+    const resourceObserver = new PerformanceObserver((list) => {
+        list.getEntries().forEach((entry) => {
+            if (entry.duration > 1000) { // Resources taking more than 1 second
+                console.warn(`Slow resource detected: ${entry.name} took ${entry.duration}ms`);
+                trackEvent('slow_resource', {
+                    name: entry.name,
+                    duration: entry.duration,
+                    size: entry.transferSize
+                });
+            }
+        });
+    });
+    
+    if ('PerformanceObserver' in window) {
+        resourceObserver.observe({ entryTypes: ['resource'] });
+    }
+    
+    // ===================================
+    // Accessibility Enhancements
+    // ===================================
+    
+    // Add focus indicators for keyboard navigation
+    const style = document.createElement('style');
+    style.textContent = `
+        *:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Ensure main content has an id for the skip link
+    const mainContent = document.querySelector('main');
+    if (mainContent && !mainContent.id) {
+        mainContent.id = 'main-content';
+    }
+    
+    // ===================================
+    // Final Initialization
+    // ===================================
+    
+    // Add a small delay before showing the page to ensure all scripts have loaded
+    setTimeout(() => {
+        body.classList.add('loaded');
+        trackEvent('page_ready', {
+            load_time: Date.now() - performanceData.pageLoadTime
+        });
+    }, 100);
+});
+</script>
+</body>
+</html>

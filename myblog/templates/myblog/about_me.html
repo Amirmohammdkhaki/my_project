@@ -1,0 +1,717 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block head_title %}درباره من | امیرمحمد خاکی{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active">About Me</li>
+{% endblock %}
+
+{% block content %}
+<style>
+    /* ===== VARIABLES ===== */
+    :root {
+        --primary-glow: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --python-glow: linear-gradient(135deg, #3776ab, #ffd343);
+        --django-glow: linear-gradient(135deg, #092e20, #44b78b);
+        --github-glow: linear-gradient(135deg, #333, #6e5494);
+        --git-glow: linear-gradient(135deg, #f05032, #f14e32);
+        --neon-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    .about-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 4rem 3rem;
+        text-align: center;
+        background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+        border-radius: 30px;
+        box-shadow: 
+            0 20px 60px rgba(0, 0, 0, 0.8),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* ===== BACKGROUND EFFECTS ===== */
+    .about-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+            from 0deg,
+            transparent,
+            rgba(99, 102, 241, 0.1),
+            rgba(168, 85, 247, 0.1),
+            transparent
+        );
+        animation: rotate 20s linear infinite;
+        z-index: 0;
+    }
+
+    .about-container::after {
+        content: '';
+        position: absolute;
+        inset: 2px;
+        background: linear-gradient(145deg, #121212, #0a0a0a);
+        border-radius: 28px;
+        z-index: 1;
+    }
+
+    /* ===== CONTENT WRAPPER ===== */
+    .content-wrapper {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* ===== PROFILE SECTION ===== */
+    .profile-section {
+        position: relative;
+        margin-bottom: 4rem;
+    }
+
+    .profile-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 250px;
+        height: 250px;
+        background: var(--primary-glow);
+        border-radius: 50%;
+        filter: blur(40px);
+        opacity: 0.3;
+        animation: pulse-glow 4s ease-in-out infinite;
+    }
+
+    .profile-img-wrapper {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 2rem;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid transparent;
+        background: linear-gradient(145deg, #667eea, #764ba2) border-box;
+        position: relative;
+        z-index: 2;
+        transition: all 0.5s ease;
+        box-shadow: 
+            0 10px 40px rgba(99, 102, 241, 0.3),
+            inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .profile-img-wrapper:hover {
+        transform: scale(1.05) rotate(5deg);
+        box-shadow: 
+            0 15px 50px rgba(99, 102, 241, 0.5),
+            0 0 30px rgba(99, 102, 241, 0.3),
+            inset 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    .about-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #667eea, #a855f7, #ec4899);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+        position: relative;
+        display: inline-block;
+    }
+
+    .about-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 25%;
+        width: 50%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #667eea, #a855f7, transparent);
+        border-radius: 2px;
+    }
+
+    .about-subtitle {
+        font-size: 1.4rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 3rem;
+        font-weight: 300;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        position: relative;
+        display: inline-block;
+    }
+
+    .about-subtitle::before,
+    .about-subtitle::after {
+        content: '✦';
+        color: #667eea;
+        margin: 0 1rem;
+        font-size: 1.2rem;
+    }
+
+    /* ===== TEXT CONTENT ===== */
+    .about-text {
+        font-size: 1.15rem;
+        line-height: 1.9;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 4rem;
+        text-align: justify;
+        position: relative;
+        padding: 0 2rem;
+    }
+
+    .about-text::before {
+        content: '"';
+        font-size: 4rem;
+        color: #667eea;
+        position: absolute;
+        top: -2rem;
+        left: 0;
+        opacity: 0.3;
+        font-family: serif;
+    }
+
+    .about-text p {
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-left: 1.5rem;
+    }
+
+    .about-text p::before {
+        content: '▹';
+        color: #667eea;
+        position: absolute;
+        left: 0;
+        font-size: 1.2rem;
+    }
+
+    /* ===== TECH ICONS ===== */
+    .tech-section {
+        margin: 4rem 0;
+        position: relative;
+    }
+
+    .tech-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
+    }
+
+    .tech-title {
+        font-size: 1.5rem;
+        color: #fff;
+        margin-bottom: 2.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .tech-title::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 25%;
+        width: 50%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #667eea, transparent);
+    }
+
+    .tech-icons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+        padding: 0 2rem;
+    }
+
+    .tech-icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 2rem 1rem;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .tech-icon::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .tech-icon:hover::before {
+        left: 100%;
+    }
+
+    .tech-icon i {
+        font-size: 3.5rem;
+        transition: all 0.4s ease;
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+    }
+
+    .tech-icon .icon-label {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+    }
+
+    /* Individual Icon Styles */
+    .python-icon { 
+        background: var(--python-glow); 
+        -webkit-background-clip: text; 
+        background-clip: text;
+        -webkit-text-fill-color: transparent; 
+    }
+    .django-icon { 
+        background: var(--django-glow); 
+        -webkit-background-clip: text; 
+        background-clip: text;
+        -webkit-text-fill-color: transparent; 
+    }
+    .github-icon { 
+        background: var(--github-glow); 
+        -webkit-background-clip: text; 
+        background-clip: text;
+        -webkit-text-fill-color: transparent; 
+    }
+    .git-icon { 
+        background: var(--git-glow); 
+        -webkit-background-clip: text; 
+        background-clip: text;
+        -webkit-text-fill-color: transparent; 
+    }
+
+    .tech-icon:hover {
+        transform: translateY(-10px) scale(1.05);
+        border-color: rgba(99, 102, 241, 0.3);
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.4),
+            0 0 30px rgba(99, 102, 241, 0.2);
+    }
+
+    .tech-icon:hover i {
+        transform: scale(1.2) rotate(5deg);
+        filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    }
+
+    .tech-icon:hover .icon-label {
+        color: #fff;
+        text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+
+    /* ===== SKILLS SECTION ===== */
+    .skills-section {
+        margin: 4rem 0;
+    }
+
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .skill-badge {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        color: #fff;
+        padding: 1rem 1.5rem;
+        border-radius: 15px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+    }
+
+    .skill-badge::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .skill-badge:hover::before {
+        left: 100%;
+    }
+
+    .skill-badge:hover {
+        transform: translateY(-5px);
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+        border-color: rgba(99, 102, 241, 0.4);
+        box-shadow: 
+            0 10px 25px rgba(99, 102, 241, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    /* ===== RESUME BUTTON ===== */
+    .resume-section {
+        margin: 4rem 0;
+        position: relative;
+    }
+
+    .resume-download {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        background: linear-gradient(135deg, #10b981, #059669, #047857);
+        color: white;
+        padding: 1.2rem 2.5rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 
+            0 10px 30px rgba(16, 185, 129, 0.4),
+            0 0 20px rgba(16, 185, 129, 0.2);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .resume-download::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .resume-download:hover::before {
+        left: 100%;
+    }
+
+    .resume-download:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 
+            0 15px 40px rgba(16, 185, 129, 0.6),
+            0 0 30px rgba(16, 185, 129, 0.4);
+        letter-spacing: 2px;
+    }
+
+    .resume-download:active {
+        transform: translateY(-2px) scale(1.02);
+    }
+
+    .download-icon {
+        font-size: 1.4rem;
+        transition: transform 0.3s ease;
+    }
+
+    .resume-download:hover .download-icon {
+        transform: translateY(-2px) rotate(10deg);
+    }
+
+    /* ===== SOCIAL LINKS ===== */
+    .social-section {
+        margin-top: 4rem;
+        padding-top: 3rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .social-link {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        color: #fff;
+        font-size: 1.5rem;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+    }
+
+    .social-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .social-link:hover::before {
+        left: 100%;
+    }
+
+    .social-link:hover {
+        transform: translateY(-8px) scale(1.1);
+        border-color: rgba(99, 102, 241, 0.5);
+        box-shadow: 
+            0 15px 30px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(99, 102, 241, 0.3);
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+        50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+
+    /* ===== FADE IN ANIMATIONS ===== */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+        .about-container {
+            padding: 2rem 1rem;
+            margin: 1rem;
+        }
+        
+        .about-title {
+            font-size: 2.5rem;
+        }
+        
+        .tech-icons {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .skills-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
+
+<div class="about-container">
+    <div class="content-wrapper">
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="profile-glow"></div>
+            <div class="profile-img-wrapper fade-in" style="animation-delay: 0.2s;">
+                <div class="profile-placeholder rounded-circle bg-gradient-primary d-flex align-items-center justify-content-center mx-auto"
+                     style="width: 100%; height: 100%; background: linear-gradient(135deg, #667eea, #764ba2);">
+                    <i class="bi bi-person-fill text-white" style="font-size: 4rem;"></i>
+                </div>
+            </div>
+            
+            <h1 class="about-title fade-in" style="animation-delay: 0.3s;">درباره من</h1>
+            <p class="about-subtitle fade-in" style="animation-delay: 0.4s;">مهندس نرم‌افزار | توسعه‌دهنده پایتون و جنگو</p>
+        </div>
+
+        <!-- Text Content -->
+        <div class="about-text fade-in" style="animation-delay: 0.5s;">
+            <p>
+                من یک مهندس نرم‌افزار فارغ‌التحصیل با مدرک لیسانس هستم. علاقه اصلی من به دنیای برنامه‌نویسی، ساخت راه‌حل‌های کاربردی و بهینه با استفاده از تکنولوژی‌های مدرن است.
+            </p>
+            <p>
+                من به طور خاص به <strong>پایتون</strong> و فریم‌ورک قدرتمند <strong>جنگو</strong> مسلط هستم، زیرا این ابزارها به من اجازه می‌دهند تا ایده‌هایم را به سرعت و با کیفیتی بالا به واقعیت تبدیل کنم. همچنین، کار با <strong>گیت</strong> و مدیریت نسخه‌های کد، بخش جدایی‌ناپذیر فرآیند کاری من است که به نظم و همکاری در پروژه‌ها کمک شایانی می‌کند.
+            </p>
+            <p>
+                همواره مشتاق یادگیری و به چالش کشیدن خود در پروژه‌های جدید هستم و به دنبال فرصت‌هایی برای رشد و ایجاد تأثیر مثبت در دنیای نرم‌افزار هستم.
+            </p>
+        </div>
+
+        <!-- Tech Icons -->
+        <div class="tech-section fade-in" style="animation-delay: 0.6s;">
+            <h3 class="tech-title">تکنولوژی‌های اصلی</h3>
+            <div class="tech-icons">
+                <div class="tech-icon">
+                    <i class="fab fa-python python-icon"></i>
+                    <span class="icon-label">Python</span>
+                </div>
+                <div class="tech-icon">
+                    <i class="fab fa-django django-icon"></i>
+                    <span class="icon-label">Django</span>
+                </div>
+                <div class="tech-icon">
+                    <i class="fab fa-github github-icon"></i>
+                    <span class="icon-label">GitHub</span>
+                </div>
+                <div class="tech-icon">
+                    <i class="fab fa-git-alt git-icon"></i>
+                    <span class="icon-label">Git</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="skills-section fade-in" style="animation-delay: 0.7s;">
+            <h3 class="tech-title">مهارت‌های تخصصی</h3>
+            <div class="skills-grid">
+                <div class="skill-badge">Python</div>
+                <div class="skill-badge">Django</div>
+                <div class="skill-badge">Git</div>
+                <div class="skill-badge">REST API</div>
+                <div class="skill-badge">PostgreSQL</div>
+                <div class="skill-badge">JavaScript</div>
+                <div class="skill-badge">Bootstrap</div>
+                <div class="skill-badge">Problem Solving</div>
+            </div>
+        </div>
+
+        <!-- Resume Download -->
+        <div class="resume-section fade-in" style="animation-delay: 0.8s;">
+            <a href="{% static 'pdf/resume.pdf' %}" 
+               class="resume-download" 
+               download="Amirmohammad_Khaki_Resume.pdf">
+                <i class="bi bi-download download-icon"></i>
+                دانلود رزومه کامل (PDF)
+            </a>
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-section fade-in" style="animation-delay: 0.9s;">
+            <div class="social-links">
+                <a href="https://github.com/Amirmohammdkhaki" target="_blank" class="social-link" title="GitHub">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/amirmohammad-khaki" target="_blank" class="social-link" title="LinkedIn">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+                <a href="https://t.me/amirpc90" target="_blank" class="social-link" title="Telegram">
+                    <i class="bi bi-telegram"></i>
+                </a>
+                <a href="mailto:khakia799@gmail.com" class="social-link" title="Email">
+                    <i class="bi bi-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome for Tech Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Advanced hover effects
+    const techIcons = document.querySelectorAll('.tech-icon');
+    const skillBadges = document.querySelectorAll('.skill-badge');
+    
+    // Tech icons advanced animation
+    techIcons.forEach((icon, index) => {
+        icon.style.animationDelay = `${0.6 + (index * 0.1)}s`;
+        
+        // Magnetic hover effect
+        icon.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const angleX = (y - centerY) / 10;
+            const angleY = (centerX - x) / 10;
+            
+            this.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(10px)`;
+        });
+        
+        icon.addEventListener('mouseleave', function() {
+            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+        });
+    });
+    
+    // Skill badges wave animation
+    skillBadges.forEach((badge, index) => {
+        badge.style.animationDelay = `${0.7 + (index * 0.05)}s`;
+    });
+    
+    // Floating animation for profile
+    const profileWrapper = document.querySelector('.profile-img-wrapper');
+    if (profileWrapper) {
+        setInterval(() => {
+            profileWrapper.style.transform = `scale(1.02) translateY(${Math.sin(Date.now() / 1000) * 5}px)`;
+        }, 50);
+    }
+    
+    // Particle background effect
+    createParticles();
+    
+    function createParticles() {
+        const container = document.querySelector('.about-container');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: absolute;
+                width: 2px;
+                height: 2px;
+                background: rgba(99, 102, 241, 0.5);
+                border-radius: 50%;
+                top: ${Math.random() * 100}%;
+                left: ${Math.random() * 100}%;
+                animation: float ${5 + Math.random() * 10}s infinite ease-in-out;
+                z-index: 1;
+            `;
+            container.appendChild(particle);
+        }
+    }
+});
+</script>
+{% endblock %}

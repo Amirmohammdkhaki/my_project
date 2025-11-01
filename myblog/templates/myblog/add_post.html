@@ -1,0 +1,117 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block head_title %}
+    {% if post %}ویرایش پست | {{ post.title }}{% else %}ایجاد پست جدید | وبلاگ حرفه‌ای{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row g-5">
+        <!-- فرم ایجاد/ویرایش پست -->
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header {% if post %}bg-warning{% else %}bg-primary{% endif %} text-white">
+                    {% if post %}✏️ ویرایش پست{% else %}📝 ایجاد پست جدید{% endif %}
+                </div>
+                <div class="card-body p-5">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- عنوان پست -->
+                        <div class="mb-4">
+                            <label for="{{ form.title.id_for_label }}" class="form-label fw-bold">عنوان پست</label>
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.title.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- متن پست -->
+                        <div class="mb-4">
+                            <label for="{{ form.text.id_for_label }}" class="form-label fw-bold">متن پست</label>
+                            {{ form.text }}
+                            {% if form.text.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.text.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- تصویر پست -->
+                        <div class="mb-4">
+                            <label for="{{ form.image.id_for_label }}" class="form-label fw-bold">تصویر شاخص</label>
+                            {{ form.image }}
+                            {% if form.image.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.image.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="form-text text-muted">
+                                {% if post and post.image %}
+                                <div class="mt-2">
+                                    <strong>تصویر فعلی:</strong>
+                                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-thumbnail mt-2" style="max-height: 150px;">
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- وضعیت پست -->
+                        <div class="mb-4">
+                            <label for="{{ form.status.id_for_label }}" class="form-label fw-bold">وضعیت انتشار</label>
+                            {{ form.status }}
+                            {% if form.status.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.status.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- دکمه‌های ارسال -->
+                        <div class="d-flex gap-3">
+                            <button type="submit" class="btn {% if post %}btn-warning{% else %}btn-primary{% endif %} btn-lg flex-grow-1">
+                                {% if post %}💾 ذخیره تغییرات{% else %}🚀 ثبت پست{% endif %}
+                            </button>
+                            <a href="{% url 'post_list' %}" class="btn btn-outline-secondary btn-lg">
+                                ❌ انصراف
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- بخش جانبی -->
+        <div class="col-lg-4">
+            <div class="card shadow-lg mb-4">
+                <div class="card-header card-header-secondary">
+                    💡 نکات مهم
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li>✅ عنوان جذاب انتخاب کنید</li>
+                        <li>✅ محتوای مفید بنویسید</li>
+                        <li>✅ تصویر مرتبط اضافه کنید</li>
+                        <li>✅ وضعیت انتشار را تنظیم کنید</li>
+                        {% if post %}
+                        <li>📅 ایجاد شده در: {{ post.datetime_create|date:"Y/m/d H:i" }}</li>
+                        <li>✏️ آخرین ویرایش: {{ post.datetime_modified|date:"Y/m/d H:i" }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

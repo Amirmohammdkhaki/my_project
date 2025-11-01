@@ -1,0 +1,406 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block head_title %}حذف پست | {{ post.title }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+<div class="container-fluid px-4 py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+            <!-- هدر صفحه حذف -->
+            <div class="delete-header text-center mb-5">
+                <div class="delete-icon mb-4">
+                    <i class="bi bi-trash3-fill text-danger"></i>
+                </div>
+                <h1 class="display-6 fw-bold text-white mb-3">حذف پست</h1>
+                <p class="lead text-light opacity-75">آیا از حذف این پست اطمینان دارید؟</p>
+            </div>
+
+            <!-- کارت تأیید حذف -->
+            <div class="card delete-confirmation-card shadow-lg border-0">
+                <div class="card-header bg-gradient-danger text-white py-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h3 class="h5 mb-0">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            تأیید حذف نهایی
+                        </h3>
+                        <span class="badge bg-light text-danger">عملیات غیرقابل بازگشت</span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- اطلاعات پست -->
+                    <div class="post-preview mb-4">
+                        <div class="row align-items-center">
+                            {% if post.image %}
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="post-image-preview rounded overflow-hidden">
+                                    <img src="{{ post.image.url }}" alt="{{ post.title }}" 
+                                         class="img-fluid w-100" style="height: 180px; object-fit: cover;">
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="{% if post.image %}col-md-8{% else %}col-12{% endif %}">
+                                <h4 class="post-title fw-bold text-dark mb-2">{{ post.title }}</h4>
+                                <p class="post-excerpt text-muted mb-3">
+                                    {{ post.text|truncatewords:30 }}
+                                </p>
+                                <div class="post-meta d-flex flex-wrap gap-3">
+                                    <span class="meta-item">
+                                        <i class="bi bi-person-circle text-primary me-1"></i>
+                                        {{ post.author.get_full_name|default:post.author.username }}
+                                    </span>
+                                    <span class="meta-item">
+                                        <i class="bi bi-calendar3 text-success me-1"></i>
+                                        {{ post.datetime_modified|date:"Y/m/d" }}
+                                    </span>
+                                    <span class="meta-item">
+                                        <i class="bi bi-eye text-info me-1"></i>
+                                        {% if post.status == 'pub' %}
+                                        <span class="badge bg-success">منتشر شده</span>
+                                        {% else %}
+                                        <span class="badge bg-warning">پیش نویس</span>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- هشدار امنیتی -->
+                    <div class="alert alert-warning border-warning bg-light-warning mb-4">
+                        <div class="d-flex">
+                            <i class="bi bi-shield-exclamation display-6 text-warning me-3"></i>
+                            <div>
+                                <h5 class="alert-heading mb-2">هشدار امنیتی!</h5>
+                                <p class="mb-2">این عمل <strong>غیرقابل بازگشت</strong> است. پس از حذف:</p>
+                                <ul class="mb-0 ps-3">
+                                    <li>تمام اطلاعات پست حذف خواهد شد</li>
+                                    <li>تصاویر مرتبط از سرور پاک می‌شوند</li>
+                                    <li>این عمل قابل بازگشت نیست</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- آمار پست -->
+                    <div class="post-stats bg-light rounded p-3 mb-4">
+                        <h6 class="fw-bold mb-3">آمار پست:</h6>
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="stat-item">
+                                    <div class="stat-number text-primary fw-bold">۰</div>
+                                    <div class="stat-label text-muted small">بازدید</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-item">
+                                    <div class="stat-number text-success fw-bold">۰</div>
+                                    <div class="stat-label text-muted small">نظر</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-item">
+                                    <div class="stat-number text-info fw-bold">{{ post.text|wordcount }}</div>
+                                    <div class="stat-label text-muted small">کلمه</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- فرم حذف -->
+                    <form method="POST" class="delete-form">
+                        {% csrf_token %}
+                        
+                        <!-- تأیید نهایی -->
+                        <div class="final-confirmation mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="confirmDelete" required>
+                                <label class="form-check-label text-danger fw-bold" for="confirmDelete">
+                                    <i class="bi bi-check-circle me-2"></i>
+                                    بله، من می‌دانم این عمل غیرقابل بازگشت است و می‌خواهم پست را حذف کنم
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- دکمه‌های اقدام -->
+                        <div class="action-buttons d-flex gap-3 flex-wrap">
+                            <button type="submit" class="btn btn-danger btn-lg px-5 flex-fill delete-btn" disabled>
+                                <i class="bi bi-trash3 me-2"></i>
+                                حذف نهایی پست
+                            </button>
+                            <a href="{% url 'post_list' %}" class="btn btn-outline-secondary btn-lg px-4">
+                                <i class="bi bi-arrow-right me-2"></i>
+                                بازگشت به لیست
+                            </a>
+                            {% if user == post.author %}
+                            <a href="{% url 'post_update' post.id %}" class="btn btn-outline-primary btn-lg px-4">
+                                <i class="bi bi-pencil me-2"></i>
+                                ویرایش پست
+                            </a>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- فوتر کارت -->
+                <div class="card-footer bg-light py-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <small class="text-muted">
+                                <i class="bi bi-info-circle me-1"></i>
+                                ایجاد شده در: {{ post.datetime_create|date:"Y/m/d - H:i" }}
+                            </small>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <small class="text-muted">آخرین ویرایش: {{ post.datetime_modified|date:"Y/m/d - H:i" }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- نکات مهم -->
+            <div class="important-notes mt-4">
+                <div class="card border-warning">
+                    <div class="card-body">
+                        <h6 class="fw-bold text-warning mb-3">
+                            <i class="bi bi-lightbulb me-2"></i>
+                            راهکارهای جایگزین
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="suggestion-item d-flex align-items-start mb-2">
+                                    <i class="bi bi-arrow-return-right text-success me-2 mt-1"></i>
+                                    <div>
+                                        <strong>ویرایش پست:</strong> اگر محتوا نیاز به تغییر دارد
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="suggestion-item d-flex align-items-start mb-2">
+                                    <i class="bi bi-eye-slash text-info me-2 mt-1"></i>
+                                    <div>
+                                        <strong>تغییر وضعیت:</strong> به "پیش نویس" تغییر دهید
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* استایل‌های اختصاصی صفحه حذف */
+    .delete-header .delete-icon i {
+        font-size: 4rem;
+        opacity: 0.8;
+    }
+
+    .delete-confirmation-card {
+        border-radius: 1.5rem;
+        overflow: hidden;
+    }
+
+    .bg-gradient-danger {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+    }
+
+    .bg-light-warning {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+        border: 1px solid #ffc107;
+    }
+
+    .post-preview {
+        background: rgba(0, 0, 0, 0.02);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .post-image-preview {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .post-image-preview:hover {
+        transform: scale(1.02);
+    }
+
+    .post-title {
+        font-size: 1.3rem;
+        line-height: 1.4;
+    }
+
+    
+
+    .meta-item {
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .stat-item {
+        padding: 0.5rem;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+    }
+
+    .delete-btn {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .delete-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .delete-btn:not(:disabled):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+    }
+
+    .form-check-input:checked {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .suggestion-item {
+        font-size: 0.9rem;
+    }
+
+    /* انیمیشن‌ها */
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    .delete-confirmation-card {
+        animation: fadeInUp 0.6s ease;
+    }
+
+    /* ریسپانسیو */
+    @media (max-width: 768px) {
+        .delete-header .delete-icon i {
+            font-size: 3rem;
+        }
+        
+        .action-buttons .btn {
+            flex: 1 1 100%;
+            margin-bottom: 0.5rem;
+        }
+        
+        .post-preview {
+            padding: 1rem;
+        }
+        
+        .post-title {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .delete-header h1 {
+            font-size: 1.8rem;
+        }
+        
+        .delete-header p.lead {
+            font-size: 1rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .post-meta {
+            flex-direction: column;
+            gap: 0.5rem !important;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const confirmCheckbox = document.getElementById('confirmDelete');
+    const deleteButton = document.querySelector('.delete-btn');
+    const deleteForm = document.querySelector('.delete-form');
+    
+    // فعال/غیرفعال کردن دکمه حذف
+    confirmCheckbox.addEventListener('change', function() {
+        deleteButton.disabled = !this.checked;
+    });
+    
+    // تأیید نهایی قبل از ارسال
+    deleteForm.addEventListener('submit', function(e) {
+        if (!confirmCheckbox.checked) {
+            e.preventDefault();
+            showAlert('لطفاً گزینه تأیید را انتخاب کنید', 'warning');
+            return;
+        }
+        
+        const finalConfirm = confirm('⚠️ آیا مطمئن هستید که می‌خواهید این پست را حذف کنید؟ این عمل غیرقابل بازگشت است!');
+        if (!finalConfirm) {
+            e.preventDefault();
+            showAlert('عملیات حذف لغو شد', 'info');
+        }
+    });
+    
+    // افکت hover روی دکمه حذف
+    deleteButton.addEventListener('mouseenter', function() {
+        if (!this.disabled) {
+            this.style.animation = 'shake 0.5s ease';
+        }
+    });
+    
+    deleteButton.addEventListener('animationend', function() {
+        this.style.animation = '';
+    });
+    
+    // نمایش alert زیبا
+    function showAlert(message, type) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+        alertDiv.style.cssText = `
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            min-width: 300px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        `;
+        alertDiv.innerHTML = `
+            <strong>${type === 'warning' ? '⚠️ ' : 'ℹ️ '}${message}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        document.body.appendChild(alertDiv);
+        
+        // حذف خودکار بعد از 5 ثانیه
+        setTimeout(() => {
+            if (alertDiv.parentNode) {
+                alertDiv.remove();
+            }
+        }, 5000);
+    }
+    
+    // پیشگیری از بازگشت به صفحه قبلی
+    window.addEventListener('beforeunload', function(e) {
+        if (confirmCheckbox.checked) {
+            e.preventDefault();
+            e.returnValue = 'تغییرات ذخیره نشده ممکن است از بین بروند. آیا مطمئن هستید که می‌خواهید صفحه را ترک کنید؟';
+        }
+    });
+});
+</script>
+{% endblock %}

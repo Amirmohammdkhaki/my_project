@@ -1,0 +1,256 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block head_title %}ورود به حساب کاربری 🔐{% endblock %}
+
+{% block extra_css %}
+<!-- فونت فارسی Vazirmatn -->
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* تنظیمات پایه */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Vazirmatn', sans-serif;
+    direction: rtl;
+    background: linear-gradient(135deg, #1e1e2f, #2a2a3d, #3a3a4f);
+    font-variation-settings: "wght" 400;
+    overflow: hidden;
+}
+
+/* پس‌زمینه متحرک ستاره‌ای */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url("{% static 'images/stars.gif' %}") repeat;
+    opacity: 0.05;
+    z-index: -1;
+}
+
+/* مرکزدهی فرم */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* کانتینر فرم */
+.form-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* کارت شیشه‌ای */
+.glass-card {
+    width: 100%;
+    max-width: 400px;
+    background: rgba(30,30,45,0.8);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow:
+        0 0 20px rgba(78, 106, 171, 0.4),
+        0 0 40px rgba(78, 106, 171, 0.2),
+        0 0 60px rgba(78, 106, 171, 0.1);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* انیمیشن ورود */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* عنوان فرم */
+h2 {
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* فرم وسط‌چین */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+/* لیبل‌ها */
+label {
+    font-weight: 600;
+    display: block;
+    text-align: right;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+/* فیلدهای ورودی */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 15px;
+}
+
+/* فوکوس روی فیلدها */
+input:focus {
+    outline: none;
+    background: rgba(255,255,255,0.2);
+    font-variation-settings: "wght" 600;
+}
+
+/* دکمه ورود */
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #4e6aab;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* افکت هاور */
+button:hover {
+    background: #3b588a;
+}
+
+/* افکت موجی Ripple */
+button::after {
+    content: "";
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* خطاهای فرم */
+.form-errors {
+    background: rgba(255, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: #ff6b6b;
+}
+
+/* لینک‌ها */
+a {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+/* بخش چک‌باکس و لینک فراموشی رمز */
+.checkbox-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    width: 100%;
+}
+
+/* فوتر فرم */
+.form-footer {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+/* واکنش‌گرایی موبایل */
+@media (max-width: 500px) {
+    .glass-card {
+        padding: 25px;
+        max-width: 90%;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-wrapper">
+    <div class="glass-card">
+        <h2>ورود به حساب کاربری</h2>
+
+        {% if form.non_field_errors %}
+        <div class="form-errors">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <!-- نام کاربری -->
+            <label for="{{ form.username.id_for_label }}">نام کاربری یا ایمیل</label>
+            <div style="width: 100%;">
+                {{ form.username }}
+            </div>
+
+            <!-- رمز عبور -->
+            <label for="{{ form.password.id_for_label }}">رمز عبور</label>
+            <div style="width: 100%;">
+                {{ form.password }}
+            </div>
+
+            <!-- چک‌باکس و لینک فراموشی -->
+            <div class="checkbox-wrapper">
+                <label>{{ form.remember_me }} مرا به خاطر بسپار</label>
+                <a href="{% url 'password_reset' %}">رمز عبور را فراموش کرده‌ام؟</a>
+            </div>
+
+            <!-- دکمه ورود -->
+            <button type="submit">ورود 🔐</button>
+        </form>
+
+        <!-- فوتر فرم -->
+        <div class="form-footer">
+            حساب کاربری ندارید؟ <a href="{% url 'signup' %}">ثبت‌نام کنید</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- اسکریپت افکت موجی -->
+<script>
+document.querySelector("button").addEventListener("click", function(e) {
+    const rect = this.getBoundingClientRect();
+    this.style.setProperty('--x', `${e.clientX - rect.left}px`);
+    this.style.setProperty('--y', `${e.clientY - rect.top}px`);
+});
+</script>
+{% endblock %}
