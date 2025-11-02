@@ -1,24 +1,47 @@
-# فایل‌های پایتون
+# Python
 __pycache__/
 *.py[cod]
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# محیط مجازی
+# Virtual Environment
 venv/
 env/
 
-# فایل‌های امنیتی و محیطی (بسیار مهم)
+# Security & Environment
 .env
 *.sqlite3
 db.sqlite3
 
-# فایل‌های استاتیک و مدیا
+# Static & Media Files
 /staticfiles/
 /media/
 
-# IDEها و ویرایشگرهای کد
+# Logs
+*.log
+
+# IDEs
 .vscode/
 .idea/
 
-# گیت
-.git/
+# OS
+.DS_Store
+Thumbs.db
 
+# Git
+.git/
